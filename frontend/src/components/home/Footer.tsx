@@ -1,5 +1,5 @@
-import LogoSrc from "../assets/logo/logo_footer.png";
-import Logo42 from "../assets/logo/logo_42.svg";
+import LogoSrc from "../../assets/logo/logo_footer.png";
+import Logo42 from "../../assets/logo/logo_42.svg";
 import styled from "styled-components";
 
 const FooterDiv = styled.footer.attrs({
