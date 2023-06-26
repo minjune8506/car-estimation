@@ -1,7 +1,9 @@
-import { useState } from "react";
 import styled from "styled-components";
-import HyundaiLogo from "../assets/logo/logo_main.svg";
+import HyundaiLogo from "../../assets/logo/logo_main.svg";
 import NavBar from "../navigation/NavBar";
+import { CategoryInfo } from "../navigation/types";
+import { useRecoilState } from "recoil";
+import { headerMenuState } from "./home_state";
 
 const Logo = styled.div`
   margin-left: 1rem;
@@ -30,15 +32,34 @@ const HeaderWrapper = styled.header`
 `;
 
 function Header() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const categories: CategoryInfo[] = [
+    {
+      categoryId: "0",
+      categoryName: "승용",
+      car: [
+        {
+          carId: "0",
+          name: "더 뉴 아반떼",
+          lowPrice: "19600000",
+          imgPath: "avante_small.png",
+        },
+      ],
+    },
+    {
+      categoryId: "1",
+      categoryName: "SUV",
+      car: [
+        {
+          carId: "1",
+          name: "투싼",
+          lowPrice: "25840000",
+          imgPath: "tucson_small.png",
+        },
+      ],
+    },
+  ];
 
-  const openMenu = () => {
-    setIsMenuOpen(true);
-  };
-
-  const closeMenu = () => {
-    setIsMenuOpen(false);
-  };
+  const [isMenuOpen, setIsMenuOpen] = useRecoilState(headerMenuState);
 
   return (
     <HeaderWrapper>
@@ -46,11 +67,14 @@ function Header() {
         <Logo>
           <img src={HyundaiLogo} alt="현대차 로고"></img>
         </Logo>
-        <MenuItems onMouseOver={openMenu} isMenuOpen={isMenuOpen}>
+        <MenuItems
+          onMouseOver={() => setIsMenuOpen(true)}
+          isMenuOpen={isMenuOpen}
+        >
           <div style={{ cursor: "pointer" }}>모델</div>
         </MenuItems>
       </MenuDiv>
-      <NavBar isMenuOpen={isMenuOpen} closeMenu={closeMenu}></NavBar>
+      <NavBar categories={categories}></NavBar>
     </HeaderWrapper>
   );
 }

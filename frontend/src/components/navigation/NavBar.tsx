@@ -1,8 +1,9 @@
-import { useState } from "react";
 import styled from "styled-components";
 import Category from "./Category";
 import NavItems from "./NavItems";
 import { CategoryInfo } from "./types";
+import { useRecoilState } from "recoil";
+import { headerMenuState } from "../home/home_state";
 
 const NavBarDiv = styled.div<{ isMenuOpen?: boolean }>`
   display: ${(props) => (props.isMenuOpen ? "flex" : "none")};
@@ -13,52 +14,19 @@ const NavBarDiv = styled.div<{ isMenuOpen?: boolean }>`
 `;
 
 interface NavBarProps {
-  isMenuOpen: boolean;
-  closeMenu: () => void;
+  categories: CategoryInfo[];
 }
 
-const responses: Array<CategoryInfo> = [
-  {
-    categoryId: "0",
-    categoryName: "승용",
-    car: [
-      {
-        carId: "0",
-        name: "더 뉴 아반떼",
-        lowPrice: "19600000",
-        imgPath: "avante_small.png",
-      },
-    ],
-  },
-  {
-    categoryId: "1",
-    categoryName: "SUV",
-    car: [
-      {
-        carId: "1",
-        name: "투싼",
-        lowPrice: "25840000",
-        imgPath: "tucson_small.png",
-      },
-    ],
-  },
-];
-
-function NavBar({ isMenuOpen, closeMenu }: NavBarProps) {
-  const [current, setCurrent] = useState(responses[0].categoryId);
-
-  const onMouseOver = (categroyId: string) => {
-    setCurrent(categroyId);
-  };
+function NavBar({ categories }: NavBarProps) {
+  const [isMenuOpen, setIsMenuOpen] = useRecoilState(headerMenuState);
 
   return (
-    <NavBarDiv isMenuOpen={isMenuOpen} onMouseLeave={closeMenu}>
-      <Category
-        current={current}
-        responses={responses}
-        onMouseOver={onMouseOver}
-      />
-      <NavItems current={current} responses={responses} closeMenu={closeMenu} />
+    <NavBarDiv
+      isMenuOpen={isMenuOpen}
+      onMouseLeave={() => setIsMenuOpen(false)}
+    >
+      <Category categories={categories} />
+      <NavItems responses={categories} />
     </NavBarDiv>
   );
 }

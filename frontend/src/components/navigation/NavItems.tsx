@@ -4,6 +4,8 @@ import { AiOutlineClose } from "react-icons/ai";
 import { IconContext } from "react-icons";
 import { CategoryInfo } from "./types";
 import { useState } from "react";
+import { focusedCategoryState, headerMenuState } from "../home/home_state";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 
 const ItemsDiv = styled.ul`
   display: flex;
@@ -34,13 +36,13 @@ const CloseButtonImg = styled.div`
 `;
 
 interface NavItemsProps {
-  current: string;
   responses: Array<CategoryInfo>;
-  closeMenu: () => void;
 }
 
-function NavItems({ current, responses, closeMenu }: NavItemsProps) {
+function NavItems({ responses }: NavItemsProps) {
   const [currentCar, setCurrentCar] = useState<string | null>(null);
+  const setIsMenuOpen = useSetRecoilState(headerMenuState);
+  const focusedCategory = useRecoilValue(focusedCategoryState);
 
   const onMouseOver = (carId: string) => {
     setCurrentCar(carId);
@@ -53,7 +55,7 @@ function NavItems({ current, responses, closeMenu }: NavItemsProps) {
   return (
     <ItemsWrap>
       <CloseButton>
-        <CloseButtonImg onClick={closeMenu}>
+        <CloseButtonImg onClick={() => setIsMenuOpen(false)}>
           <IconContext.Provider
             value={{ style: { width: "20px", height: "20px" } }}
           >
@@ -63,7 +65,7 @@ function NavItems({ current, responses, closeMenu }: NavItemsProps) {
       </CloseButton>
       <ItemsDiv>
         {responses
-          .filter((response) => response.categoryId === current)[0]
+          .filter((response) => response.categoryId === focusedCategory)[0]
           .car.map((c) => (
             <Car
               car={c}

@@ -1,6 +1,8 @@
 import styled from "styled-components";
 import { AiOutlineRight } from "react-icons/ai";
 import { CategoryInfo } from "./types";
+import { useRecoilState } from "recoil";
+import { focusedCategoryState } from "../home/home_state";
 
 const CategoryWrapper = styled.div`
   display: flex;
@@ -25,23 +27,24 @@ const Arrow = styled.div<{ isMouseOver: boolean }>`
 `;
 
 interface CategoryProps {
-  current: string;
-  onMouseOver: (n: string) => void;
-  responses: Array<CategoryInfo>;
+  categories: CategoryInfo[];
 }
 
-function Category({ current, onMouseOver, responses }: CategoryProps) {
+function Category({ categories }: CategoryProps) {
+  const [focusedCategory, setFocusedCategory] =
+    useRecoilState(focusedCategoryState);
+
   return (
     <CategoryWrapper>
-      {responses.map((response) => {
+      {categories.map((category) => {
         return (
           <CategoryItem
-            isMouseOver={response.categoryId === current}
-            onMouseOver={() => onMouseOver(response.categoryId)}
-            key={response.categoryId}
+            isMouseOver={category.categoryId === focusedCategory}
+            onMouseOver={() => setFocusedCategory(category.categoryId)}
+            key={category.categoryId}
           >
-            {response.categoryName}
-            <Arrow isMouseOver={response.categoryId === current}>
+            {category.categoryName}
+            <Arrow isMouseOver={category.categoryId === focusedCategory}>
               <AiOutlineRight />
             </Arrow>
           </CategoryItem>
