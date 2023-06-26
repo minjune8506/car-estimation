@@ -1,7 +1,7 @@
 import { useState } from "react";
 import styled from "styled-components";
-import NavBar from "./navigation/NavBar";
 import HyundaiLogo from "../assets/logo/logo_main.svg";
+import NavBar from "../navigation/NavBar";
 
 const Logo = styled.div`
   margin-left: 1rem;

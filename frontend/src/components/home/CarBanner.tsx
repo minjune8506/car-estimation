@@ -17,16 +17,6 @@ const cars = [
     name: "투싼",
     src: Tucson,
   },
-  {
-    id: 3,
-    name: "더 뉴 아반떼",
-    src: Avante,
-  },
-  {
-    id: 4,
-    name: "투싼",
-    src: Tucson,
-  },
 ];
 
 const SliderContainer = styled.main<{ backgroundImg: string }>`

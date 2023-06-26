@@ -1,6 +1,6 @@
-import CarBanner from "../components/CarBanner";
-import Footer from "../components/Footer";
-import Header from "../components/Header";
+import CarBanner from "../components/home/CarBanner";
+import Footer from "../components/home/Footer";
+import Header from "../components/home/Header";
 
 function Root() {
   return (
