@@ -1,7 +1,8 @@
 import styled from "styled-components";
 import { CarInfo } from "./types";
+import { Link } from "react-router-dom";
 
-const Card = styled.li`
+const CardLink = styled(Link)`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -29,10 +30,11 @@ const CarName = styled.div`
   padding-bottom: 0.5rem;
 `;
 
-const Navigation = styled.div`
+const Navigation = styled.div<{ isMouseOver: boolean }>`
   color: #002c5f;
   font-size: small;
   font-weight: bold;
+  display: ${(props) => (props.isMouseOver ? "block" : "none")};
 `;
 
 function toPrice(price: string): string {
@@ -42,16 +44,23 @@ function toPrice(price: string): string {
 
 interface CarInfoProps {
   car: CarInfo;
+  isMouseOver: boolean;
+  onMouseOver: (carId: string) => void;
+  onMouseLeave: () => void;
 }
 
-function Car({ car }: CarInfoProps) {
+function Car({ car, isMouseOver, onMouseOver, onMouseLeave }: CarInfoProps) {
   return (
-    <Card>
+    <CardLink
+      to={`estimation/model`}
+      onMouseOver={() => onMouseOver(car.carId)}
+      onMouseLeave={onMouseLeave}
+    >
       <img src={`src/assets/car/${car.imgPath}`} alt="차량 이미지"></img>
       <CarName>{car.name}</CarName>
       <Price>{toPrice(car.lowPrice)}</Price>
-      <Navigation>내 차 만들기</Navigation>
-    </Card>
+      <Navigation isMouseOver={isMouseOver}>내 차 만들기</Navigation>
+    </CardLink>
   );
 }
 

@@ -1,12 +1,28 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import App from "./App.tsx";
 import "./index.css";
 import { GlobalStyle } from "./GlobalStyle.tsx";
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import Root from "./pages/Root.tsx";
+import ErrorPage from "./error-page.tsx";
+import Model from "./pages/Model.tsx";
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <Root />,
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: "estimation/model",
+    element: <Model />,
+    errorElement: <ErrorPage />,
+  },
+]);
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
     <GlobalStyle />
-    <App />
+    <RouterProvider router={router} />
   </React.StrictMode>
 );
