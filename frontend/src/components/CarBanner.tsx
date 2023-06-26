@@ -29,7 +29,7 @@ const cars = [
   },
 ];
 
-const SliderContainer = styled.div<{ backgroundImg: string }>`
+const SliderContainer = styled.main<{ backgroundImg: string }>`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -37,6 +37,7 @@ const SliderContainer = styled.div<{ backgroundImg: string }>`
   background: no-repeat center url(${(props) => props.backgroundImg});
   width: 100%;
   height: 100%;
+  z-index: 1;
 `;
 
 const fade = keyframes`
@@ -57,7 +58,7 @@ const Slide = styled.div<{ isCurrent: boolean }>`
   animation-name: ${fade};
   animation-duration: 1.5s;
   position: relative;
-  top: +50px;
+  top: 50px;
 `;
 
 const PrevButton = styled.div`
@@ -96,7 +97,7 @@ function CarBanner() {
       </PrevButton>
 
       {cars.map((car, idx) => (
-        <Slide isCurrent={current === idx}>
+        <Slide isCurrent={current === idx} key={car.id}>
           <CarName>{cars[current].name}</CarName>
           <img src={car.src} key={car.id} style={{ width: "1024px" }}></img>
         </Slide>

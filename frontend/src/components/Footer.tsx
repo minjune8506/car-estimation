@@ -2,8 +2,8 @@ import LogoSrc from "../assets/logo/logo_footer.png";
 import Logo42 from "../assets/logo/logo_42.svg";
 import styled from "styled-components";
 
-const StyledFooter = styled.footer.attrs({
-  className: "text-white w-full absolute bottom-0",
+const FooterDiv = styled.footer.attrs({
+  className: "text-white w-screen relative bottom-0",
 })`
   background-color: #1c1b1b;
 `;
@@ -26,7 +26,7 @@ const Name = styled.li.attrs({ className: "mb-2" })``;
 
 function Footer() {
   return (
-    <StyledFooter>
+    <FooterDiv>
       <FooterUl>
         <li>
           <HyundaiLogo src={LogoSrc}></HyundaiLogo>
@@ -39,7 +39,7 @@ function Footer() {
           <FourtyTwoLogo src={Logo42}></FourtyTwoLogo>
         </li>
       </FooterUl>
-    </StyledFooter>
+    </FooterDiv>
   );
 }
 

@@ -1,14 +1,12 @@
 import CarBanner from "./CarBanner";
 import Footer from "./Footer";
-import Nav from "./Nav";
+import Header from "./Header";
 
 function Main() {
   return (
     <>
-      <Nav />
-      <main>
-        <CarBanner />
-      </main>
+      <Header />
+      <CarBanner />
       <Footer />
     </>
   );
