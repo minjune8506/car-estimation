@@ -1,0 +1,25 @@
+= Car Category API
+
+include::{docdir}/include.adoc[]
+
+[[Car-Category]]
+== Car Category
+
+[[Car-Category-API-GET]]
+=== 카테고리별 차량 조회
+
+==== HTTP request
+
+include::{snippets}/categoryCars/http-request.adoc[]
+
+==== HTTP response
+
+include::{snippets}/categoryCars/http-response.adoc[]
+
+==== request fields
+
+None
+
+==== response fields
+
+include::{snippets}/categoryCars/response-fields.adoc[]
