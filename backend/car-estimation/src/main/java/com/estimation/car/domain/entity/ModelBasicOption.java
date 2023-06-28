@@ -1,6 +1,6 @@
-package com.estimation.car.domain;
+package com.estimation.car.domain.entity;
 
-import com.estimation.car.domain.id.ModelBasicOptionId;
+import com.estimation.car.domain.entity.id.ModelBasicOptionId;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;

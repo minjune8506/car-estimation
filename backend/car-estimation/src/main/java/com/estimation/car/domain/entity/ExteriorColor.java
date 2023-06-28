@@ -1,4 +1,4 @@
-package com.estimation.car.domain;
+package com.estimation.car.domain.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -9,11 +9,11 @@ import lombok.Getter;
 
 @Getter
 @Entity
-public class OptionCategory {
+public class ExteriorColor {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(length = 100, nullable = false)
+    @Column(length = 20, nullable = false)
     private String name;
 }

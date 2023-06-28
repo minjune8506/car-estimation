@@ -1,4 +1,4 @@
-package com.estimation.car.domain;
+package com.estimation.car.domain.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

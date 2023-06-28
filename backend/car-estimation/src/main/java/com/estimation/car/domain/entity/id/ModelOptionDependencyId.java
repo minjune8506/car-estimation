@@ -1,16 +1,16 @@
-package com.estimation.car.domain.id;
+package com.estimation.car.domain.entity.id;
 
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
-import java.util.Objects;
 
 @EqualsAndHashCode
 @AllArgsConstructor
 @NoArgsConstructor
-public class ModelBasicOptionId implements Serializable {
-    private Integer model;
-    private Integer option;
+public class ModelOptionDependencyId implements Serializable {
+    private Integer choosableOption;
+
+    private Integer otherChoosableOption;
 }

@@ -1,6 +1,5 @@
-package com.estimation.car.domain.id;
+package com.estimation.car.domain.entity.id;
 
-import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;

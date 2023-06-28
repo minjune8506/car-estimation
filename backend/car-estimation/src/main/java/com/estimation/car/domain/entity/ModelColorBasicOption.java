@@ -1,6 +1,6 @@
-package com.estimation.car.domain;
+package com.estimation.car.domain.entity;
 
-import com.estimation.car.domain.id.ModelColorBasicOptionId;
+import com.estimation.car.domain.entity.id.ModelColorBasicOptionId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.IdClass;
