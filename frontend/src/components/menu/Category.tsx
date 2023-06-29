@@ -1,8 +1,10 @@
 import styled from "styled-components";
 import { AiOutlineRight } from "react-icons/ai";
-import { CategoryInfo } from "./types";
-import { useRecoilState } from "recoil";
-import { focusedCategoryState } from "../home/home_state";
+import { useRecoilState, useRecoilValue } from "recoil";
+import {
+  carCategoryCarsState,
+  focusedCarCategoryState,
+} from "../home/home_state";
 
 const CategoryWrapper = styled.div`
   display: flex;
@@ -26,25 +28,23 @@ const Arrow = styled.div<{ isMouseOver: boolean }>`
   color: ${(props) => (props.isMouseOver ? "#007FA8" : "none")};
 `;
 
-interface CategoryProps {
-  categories: CategoryInfo[];
-}
-
-function Category({ categories }: CategoryProps) {
-  const [focusedCategory, setFocusedCategory] =
-    useRecoilState(focusedCategoryState);
+function CarCategory() {
+  const [focusedCarCategory, setFocusedCarCategory] = useRecoilState(
+    focusedCarCategoryState
+  );
+  const carCategoryCars = useRecoilValue(carCategoryCarsState);
 
   return (
     <CategoryWrapper>
-      {categories.map((category) => {
+      {carCategoryCars.map((category) => {
         return (
           <CategoryItem
-            isMouseOver={category.categoryId === focusedCategory}
-            onMouseOver={() => setFocusedCategory(category.categoryId)}
+            isMouseOver={category.categoryId === focusedCarCategory}
+            onMouseOver={() => setFocusedCarCategory(category.categoryId)}
             key={category.categoryId}
           >
             {category.categoryName}
-            <Arrow isMouseOver={category.categoryId === focusedCategory}>
+            <Arrow isMouseOver={category.categoryId === focusedCarCategory}>
               <AiOutlineRight />
             </Arrow>
           </CategoryItem>
@@ -54,4 +54,4 @@ function Category({ categories }: CategoryProps) {
   );
 }
 
-export default Category;
+export default CarCategory;

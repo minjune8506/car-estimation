@@ -1,6 +1,8 @@
 import styled from "styled-components";
-import { CarInfo } from "./types";
+import { Car } from "./types";
 import { Link } from "react-router-dom";
+import { useRecoilState } from "recoil";
+import { focusedCarState } from "../home/home_state";
 
 const CardLink = styled(Link)`
   display: flex;
@@ -37,29 +39,31 @@ const Navigation = styled.div<{ isMouseOver: boolean }>`
   display: ${(props) => (props.isMouseOver ? "block" : "none")};
 `;
 
-function toPrice(price: string): string {
-  const koreanPrice = price.substring(0, price.length - 4);
-  return koreanPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + "만원~";
+function toPrice(price: number): string {
+  const priceStr = price.toString();
+  const koreanPrice = priceStr.substring(0, priceStr.length - 4);
+  return koreanPrice.replace(/\B(?=(\d{3})+(?!\d))/g, ",") + "만원~";
 }
 
-interface CarInfoProps {
-  car: CarInfo;
-  isMouseOver: boolean;
-  onMouseOver: (carId: string) => void;
-  onMouseLeave: () => void;
+interface CarProps {
+  car: Car;
 }
 
-function Car({ car, isMouseOver, onMouseOver, onMouseLeave }: CarInfoProps) {
+function Car({ car }: CarProps) {
+  const [focusedCar, setFocusedCar] = useRecoilState(focusedCarState);
+
   return (
     <CardLink
       to={`estimation/model`}
-      onMouseOver={() => onMouseOver(car.carId)}
-      onMouseLeave={onMouseLeave}
+      onMouseOver={() => setFocusedCar(car.carId)}
+      onMouseLeave={() => setFocusedCar(null)}
     >
-      <img src={`src/assets/car/${car.imgPath}`} alt="차량 이미지"></img>
-      <CarName>{car.name}</CarName>
+      <img src={`src/assets/${car.carImg}`} alt="차량 이미지"></img>
+      <CarName>{car.carName}</CarName>
       <Price>{toPrice(car.lowPrice)}</Price>
-      <Navigation isMouseOver={isMouseOver}>내 차 만들기</Navigation>
+      <Navigation isMouseOver={focusedCar === car.carId}>
+        내 차 만들기
+      </Navigation>
     </CardLink>
   );
 }
