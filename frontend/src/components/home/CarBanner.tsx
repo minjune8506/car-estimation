@@ -1,8 +1,8 @@
 import { useState } from "react";
 import styled, { keyframes } from "styled-components";
 import Background from "../../assets/car/background.png";
-import Avante from "../../assets/car/avante.png";
-import Tucson from "../../assets/car/tucson.png";
+import Avante from "../../assets/car/avante/avante.png";
+import Tucson from "../../assets/car/tucson/tucson.png";
 import LeftArrowImg from "../../assets/icon/arrow_left.svg";
 import RightArrowImg from "../../assets/icon/arrow_right.svg";
 
