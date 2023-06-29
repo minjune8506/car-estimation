@@ -7,6 +7,8 @@ import Root from "./pages/Root.tsx";
 import ErrorPage from "./pages/ErrorPage.tsx";
 import Model from "./pages/Model.tsx";
 import { RecoilRoot } from "recoil";
+import { QueryClient, QueryClientProvider } from "react-query";
+import { ReactQueryDevtools } from 'react-query/devtools'
 
 const router = createBrowserRouter([
   {
@@ -21,11 +23,16 @@ const router = createBrowserRouter([
   },
 ]);
 
+const queryClient = new QueryClient();
+
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
     <GlobalStyle />
-    <RecoilRoot>
-      <RouterProvider router={router} />
-    </RecoilRoot>
+    <QueryClientProvider client={queryClient}>
+      <RecoilRoot>
+        <RouterProvider router={router} />
+      </RecoilRoot>
+	  <ReactQueryDevtools initialIsOpen={false} position='bottom-right' />
+    </QueryClientProvider>
   </React.StrictMode>
 );
