@@ -1,10 +1,10 @@
 import { useState } from "react";
 import styled, { keyframes } from "styled-components";
-import Background from "../../assets/car/background.png";
-import Avante from "../../assets/car/avante/avante.png";
-import Tucson from "../../assets/car/tucson/tucson.png";
-import LeftArrowImg from "../../assets/icon/arrow_left.svg";
-import RightArrowImg from "../../assets/icon/arrow_right.svg";
+import Background from "/images/car/background.png";
+import Avante from "/images/car/avante/avante.png";
+import Tucson from "/images/car/tucson/tucson.png";
+import LeftArrowImg from "/images/icon/arrow_left.svg";
+import RightArrowImg from "/images/icon/arrow_right.svg";
 
 const cars = [
   {
@@ -67,7 +67,7 @@ const CarName = styled.div.attrs({
   className: "text-5xl font-bold absolute top-5 left-5",
 })``;
 
-function CarBanner() {
+export default () => {
   const [current, setCurrent] = useState(0);
 
   const showNext = () => {
@@ -98,6 +98,4 @@ function CarBanner() {
       </NextButton>
     </SliderContainer>
   );
-}
-
-export default CarBanner;
+};

@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { useRecoilState } from "recoil";
 import ModelNavigation from "./ModelNavigation";
-import { isMenuOpenState } from "../home/home_state";
+import IsMainMenuOpen from "../../states/menu/IsMainMenuOpenState";
 
 const NavBarDiv = styled.div<{ isMenuOpen: boolean }>`
   display: ${(props) => (props.isMenuOpen ? "block" : "none")};
@@ -10,14 +10,12 @@ const NavBarDiv = styled.div<{ isMenuOpen: boolean }>`
   z-index: 5;
 `;
 
-function Navigation() {
-  const [isMenuOpen, setMenuState] = useRecoilState(isMenuOpenState);
+export default () => {
+  const [isMenuOpen, setMenuState] = useRecoilState(IsMainMenuOpen);
 
   return (
     <NavBarDiv isMenuOpen={isMenuOpen} onMouseLeave={() => setMenuState(false)}>
       {isMenuOpen && <ModelNavigation />}
     </NavBarDiv>
   );
-}
-
-export default Navigation;
+};

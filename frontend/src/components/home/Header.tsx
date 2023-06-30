@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import Menu from "../menu/Menu";
-import Navigation from "../menu/Navigation";
+import MenuNavigation from "../navigation/MenuNavigation";
 
 const HeaderWrapper = styled.header`
   width: 100%;
@@ -13,7 +13,7 @@ function Header() {
   return (
     <HeaderWrapper>
       <Menu />
-      <Navigation></Navigation>
+      <MenuNavigation />
     </HeaderWrapper>
   );
 }

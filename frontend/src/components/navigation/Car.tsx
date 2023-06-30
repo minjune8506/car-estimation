@@ -1,10 +1,10 @@
 import styled from "styled-components";
-import { Car } from "./types";
+import { Car } from "../../types/Car";
 import { Link } from "react-router-dom";
 import { useRecoilState } from "recoil";
-import { focusedCarState } from "../home/home_state";
+import FocusedCarState from "../../states/menu/FocusedCarState";
 
-const CardLink = styled(Link)`
+const CarLink = styled(Link)`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -32,7 +32,7 @@ const CarName = styled.div`
   padding-bottom: 0.5rem;
 `;
 
-const Navigation = styled.div<{ isMouseOver: boolean }>`
+const MakingCarLink = styled.div<{ isMouseOver: boolean }>`
   color: #002c5f;
   font-size: small;
   font-weight: bold;
@@ -49,23 +49,21 @@ interface CarProps {
   car: Car;
 }
 
-function Car({ car }: CarProps) {
-  const [focusedCar, setFocusedCar] = useRecoilState(focusedCarState);
+export default ({ car }: CarProps) => {
+  const [focusedCar, setFocusedCar] = useRecoilState(FocusedCarState);
 
   return (
-    <CardLink
+    <CarLink
       to={`estimation/model`}
       onMouseOver={() => setFocusedCar(car.carId)}
       onMouseLeave={() => setFocusedCar(null)}
     >
-      <img src={`src/assets/${car.carImg}`} alt="차량 이미지"></img>
+      <img src={`/images/${car.carImg}`} alt="차량 이미지"></img>
       <CarName>{car.carName}</CarName>
       <Price>{toPrice(car.lowPrice)}</Price>
-      <Navigation isMouseOver={focusedCar === car.carId}>
+      <MakingCarLink isMouseOver={focusedCar === car.carId}>
         내 차 만들기
-      </Navigation>
-    </CardLink>
+      </MakingCarLink>
+    </CarLink>
   );
-}
-
-export default Car;
+};

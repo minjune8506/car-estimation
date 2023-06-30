@@ -3,13 +3,11 @@ import Car from "./Car";
 import { AiOutlineClose } from "react-icons/ai";
 import { IconContext } from "react-icons";
 import { useRecoilValue, useSetRecoilState } from "recoil";
-import {
-  carCategoryCarsState,
-  focusedCarCategoryState,
-  isMenuOpenState,
-} from "../home/home_state";
+import IsMainMenuOpenState from "../../states/menu/IsMainMenuOpenState";
+import FocusedCarCategoryState from "../../states/menu/FocusedCarCategoryState";
+import CarsPerCategoryState from "../../states/menu/CarsPerCategoryState";
 
-const ItemsDiv = styled.ul`
+const Cars = styled.ul`
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -37,10 +35,10 @@ const CloseButtonImg = styled.div`
   }
 `;
 
-function NavItems() {
-  const setIsMenuOpen = useSetRecoilState(isMenuOpenState);
-  const focusedCategory = useRecoilValue(focusedCarCategoryState);
-  const categoryCars = useRecoilValue(carCategoryCarsState);
+export default () => {
+  const setIsMenuOpen = useSetRecoilState(IsMainMenuOpenState);
+  const focusedCategory = useRecoilValue(FocusedCarCategoryState);
+  const categoryCars = useRecoilValue(CarsPerCategoryState);
 
   return (
     <ItemsWrap>
@@ -53,15 +51,13 @@ function NavItems() {
           </IconContext.Provider>
         </CloseButtonImg>
       </CloseButton>
-      <ItemsDiv>
+      <Cars>
         {categoryCars
           .filter((category) => category.categoryId === focusedCategory)[0]
           .cars.map((car) => (
             <Car car={car} key={car.carId}></Car>
           ))}
-      </ItemsDiv>
+      </Cars>
     </ItemsWrap>
   );
-}
-
-export default NavItems;
+};

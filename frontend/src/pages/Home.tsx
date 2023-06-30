@@ -1,15 +1,13 @@
-import CarBanner from "../components/home/CarBanner";
+import CarSlider from "../components/home/CarSlider";
 import Footer from "../components/home/Footer";
 import Header from "../components/home/Header";
 
-function Root() {
+export default () => {
   return (
     <>
       <Header />
-      <CarBanner />
+      <CarSlider />
       <Footer />
     </>
   );
-}
-
-export default Root;
+};

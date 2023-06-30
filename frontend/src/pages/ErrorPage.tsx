@@ -16,18 +16,14 @@ const ErrorText = styled.h1`
   margin-bottom: 2rem;
 `;
 
-function ErrorPage() {
+export default () => {
   const error: any = useRouteError();
-  console.error(error);
-
   return (
     <Error>
-      <ErrorText>에러가 발생했습니다.</ErrorText>
+      <ErrorText>오류가 발생했습니다.</ErrorText>
       <p>
         <i>{error.statusText || error.message}</i>
       </p>
     </Error>
   );
-}
-
-export default ErrorPage;
+};

@@ -3,7 +3,7 @@ import ReactDOM from "react-dom/client";
 import "./index.css";
 import { GlobalStyle } from "./GlobalStyle.tsx";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
-import Root from "./pages/Root.tsx";
+import Root from "./pages/Home.tsx";
 import ErrorPage from "./pages/ErrorPage.tsx";
 import Model from "./pages/Model.tsx";
 import { RecoilRoot } from "recoil";
