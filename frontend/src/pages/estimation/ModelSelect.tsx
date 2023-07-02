@@ -1,14 +1,21 @@
 import ModelContainer from "../../components/estimation/ModelCards";
 import ModelTypeInfo from "../../components/estimation/ModelTypes";
 import ModelSelectHeader from "../../components/estimation/ModelSelectHeader";
-import CarSelectModal from "../../components/estimation/CarSelectModal";
-import { useRecoilState } from "recoil";
+import { useSetRecoilState } from "recoil";
 import IsSelectModalOpenState from "../../states/model-select/IsSelectModalOpenState";
+import { useEffect } from "react";
+import IsCloseModalOpenState from "../../states/model-select/IsCloseModalOpenState";
 
 export default () => {
-  const [isSelectModalOpen, setIsSelectModalOpen] = useRecoilState(
-    IsSelectModalOpenState
-  );
+  const setIsSelectModalOpen = useSetRecoilState(IsSelectModalOpenState);
+
+  const setIsCloseModalOpen = useSetRecoilState(IsCloseModalOpenState);
+
+  useEffect(() => {
+    setIsSelectModalOpen(false);
+    setIsCloseModalOpen(false);
+  });
+
   return (
     <>
       <ModelSelectHeader />
