@@ -5,7 +5,7 @@ import { IconContext } from "react-icons";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import IsMainMenuOpenState from "../../states/menu/IsMainMenuOpenState";
 import FocusedCarCategoryState from "../../states/menu/FocusedCarCategoryState";
-import CarsPerCategoryState from "../../states/menu/CarsPerCategoryState";
+import { CarsPerCategory } from "../../types/Car";
 
 const Cars = styled.ul`
   display: flex;
@@ -35,10 +35,14 @@ const CloseButtonImg = styled.div`
   }
 `;
 
-export default () => {
+interface CarsProps {
+  carsPerCategory: CarsPerCategory[];
+}
+
+export default ({ carsPerCategory }: CarsProps) => {
+  console.log("Cars Rendered");
   const setIsMenuOpen = useSetRecoilState(IsMainMenuOpenState);
   const focusedCategory = useRecoilValue(FocusedCarCategoryState);
-  const categoryCars = useRecoilValue(CarsPerCategoryState);
 
   return (
     <ItemsWrap>
@@ -52,11 +56,10 @@ export default () => {
         </CloseButtonImg>
       </CloseButton>
       <Cars>
-        {categoryCars
-          .filter((category) => category.categoryId === focusedCategory)[0]
-          .cars.map((car) => (
-            <Car car={car} key={car.carId}></Car>
-          ))}
+        {focusedCategory &&
+          carsPerCategory
+            .filter((category) => category.categoryId === focusedCategory)[0]
+            .cars.map((car) => <Car car={car} key={car.carId}></Car>)}
       </Cars>
     </ItemsWrap>
   );

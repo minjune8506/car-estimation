@@ -1,7 +1,6 @@
 import styled from "styled-components";
-import { useRecoilValue } from "recoil";
-import CarsPerCategoryState from "../../states/menu/CarsPerCategoryState";
 import Category from "./Category";
+import { CarsPerCategory } from "../../types/Car";
 
 const Categories = styled.div`
   display: flex;
@@ -11,12 +10,16 @@ const Categories = styled.div`
   cursor: pointer;
 `;
 
-export default () => {
-  const carCategoryCars = useRecoilValue(CarsPerCategoryState);
+interface CategoriesProps {
+  carsPerCategory: CarsPerCategory[];
+}
+
+export default ({ carsPerCategory }: CategoriesProps) => {
+  console.log("Categories Rendered");
 
   return (
     <Categories>
-      {carCategoryCars.map((category) => {
+      {carsPerCategory.map((category) => {
         return <Category category={category} key={category.categoryId} />;
       })}
     </Categories>

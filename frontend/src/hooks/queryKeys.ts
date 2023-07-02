@@ -1,3 +1,3 @@
-export const CarsPerCategoryKeys = {
+export const CarsPerCategoryKey = {
   all: ["carsPerCategory"] as const,
 };
