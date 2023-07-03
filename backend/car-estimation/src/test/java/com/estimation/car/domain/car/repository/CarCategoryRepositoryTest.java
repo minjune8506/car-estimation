@@ -1,7 +1,9 @@
 package com.estimation.car.domain.car.repository;
 
-import com.estimation.car.domain.entity.Car;
-import com.estimation.car.domain.entity.CarCategory;
+import com.estimation.car.repository.CarCategoryRepository;
+import com.estimation.car.entity.Car;
+import com.estimation.car.entity.CarCategory;
+import com.estimation.car.repository.CarRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;

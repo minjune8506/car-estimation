@@ -1,8 +1,9 @@
 package com.estimation.car.domain.car.controller;
 
-import com.estimation.car.domain.car.dto.CarResponseDto;
-import com.estimation.car.domain.car.dto.CategoryCarsResponseDto;
-import com.estimation.car.domain.car.service.CarCategoryService;
+import com.estimation.car.dto.response.car.CarResponseDto;
+import com.estimation.car.controller.CarCategoryController;
+import com.estimation.car.dto.response.carcategory.CategoryCarsResponseDto;
+import com.estimation.car.service.CarCategoryService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;

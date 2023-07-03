@@ -1,9 +1,10 @@
 package com.estimation.car.domain.car.service;
 
-import com.estimation.car.domain.car.dto.CategoryCarsResponseDto;
-import com.estimation.car.domain.car.repository.CarCategoryRepository;
-import com.estimation.car.domain.entity.Car;
-import com.estimation.car.domain.entity.CarCategory;
+import com.estimation.car.dto.response.carcategory.CategoryCarsResponseDto;
+import com.estimation.car.repository.CarCategoryRepository;
+import com.estimation.car.service.CarCategoryService;
+import com.estimation.car.entity.Car;
+import com.estimation.car.entity.CarCategory;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
