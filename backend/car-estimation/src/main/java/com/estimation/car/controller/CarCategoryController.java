@@ -13,15 +13,13 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/v1/car")
+@RequestMapping("api/v1/car/categories")
 @RequiredArgsConstructor
 public class CarCategoryController {
 
     private final CarCategoryService menuService;
 
-    // GET api/v1/car/category/cars
-    // 자동차 카테고리의 자동차들을 반환한다.
-    @GetMapping("/category/cars")
+    @GetMapping("/cars")
     public ResponseEntity<Response<List<CategoryCarsResponseDto>>> categoryCars() {
         List<CategoryCarsResponseDto> responses = menuService.findAllCategoryWithCars();
         return ResponseEntity.ok()
