@@ -8,6 +8,9 @@ import { useRecoilValue } from "recoil";
 import SelectedEngine from "../../states/model-select/SelectedEngine";
 import SelectedMission from "../../states/model-select/SelectedMission";
 import SelectedDrivingType from "../../states/model-select/SelectedDrivingType";
+import { ErrorBoundary } from "react-error-boundary";
+import ErrorFallBack from "../../components/common/ErrorFallback";
+import { useQueryErrorResetBoundary } from "@tanstack/react-query";
 
 export default function ModelSelect() {
   const location = useLocation();
@@ -24,21 +27,26 @@ export default function ModelSelect() {
   const carIdNumber = parseInt(carId as string);
 
   const isReady = selectedEngine && selectedMission && selectedDrivingType;
+  const { reset } = useQueryErrorResetBoundary();
 
   return (
     <>
       <ModelSelectHeader carId={carIdNumber} />
       <main className="flex flex-col px-6">
         <div className="w-full flex flex-row py-6">
-          <ModelTypeInfos carId={carIdNumber}></ModelTypeInfos>
+          <ErrorBoundary FallbackComponent={ErrorFallBack} onReset={reset}>
+            <ModelTypeInfos carId={carIdNumber}></ModelTypeInfos>
+          </ErrorBoundary>
         </div>
         {isReady && (
-          <ModelContainer
-            carId={carIdNumber}
-            engineId={selectedEngine}
-            missionId={selectedMission}
-            drivingTypeId={selectedDrivingType}
-          />
+          <ErrorBoundary FallbackComponent={ErrorFallBack} onReset={reset}>
+            <ModelContainer
+              carId={carIdNumber}
+              engineId={selectedEngine}
+              missionId={selectedMission}
+              drivingTypeId={selectedDrivingType}
+            />
+          </ErrorBoundary>
         )}
       </main>
     </>
