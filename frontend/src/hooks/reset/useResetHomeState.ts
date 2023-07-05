@@ -10,8 +10,10 @@ export function useResetHomeState() {
   const resetSelectedCar = useResetRecoilState(SelectedCar);
 
   useEffect(() => {
-    resetIsMainMenuOpen();
-    resetSelectedCarCategory();
-    resetSelectedCar();
+    return () => {
+      resetIsMainMenuOpen();
+      resetSelectedCarCategory();
+      resetSelectedCar();
+    };
   });
 }

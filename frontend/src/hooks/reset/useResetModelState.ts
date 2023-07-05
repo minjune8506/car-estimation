@@ -27,19 +27,21 @@ export default function useResetModelState(location: Location) {
   const queryClient = useQueryClient();
 
   useEffect(() => {
-    // reset model state
-    resetCloseModal();
-    resetSelectModal();
-    resetSelectedCategory();
-    resetEnableDirvingTypes();
-    resetEnableMissions();
-    resetSelectedDrivingType();
-    resetSelectedEngine();
-    resetselectedMission();
+    return () => {
+      // reset model state
+      resetCloseModal();
+      resetSelectModal();
+      resetSelectedCategory();
+      resetEnableDirvingTypes();
+      resetEnableMissions();
+      resetSelectedDrivingType();
+      resetSelectedEngine();
+      resetselectedMission();
 
-    // invalidate query
-    queryClient.invalidateQueries({
-      queryKey: ModelKeys.filterAll,
-    });
+      // invalidate query
+      queryClient.invalidateQueries({
+        queryKey: ModelKeys.filterAll,
+      });
+    };
   }, [location]);
 }
