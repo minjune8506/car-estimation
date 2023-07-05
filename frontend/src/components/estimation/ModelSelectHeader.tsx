@@ -5,33 +5,33 @@ import { RxTriangleDown, RxTriangleUp } from "react-icons/rx";
 import { MdLogout } from "react-icons/md";
 import Modal from "../common/Modal";
 import { useRecoilState, useRecoilValue } from "recoil";
-import IsCloseModalOpenState from "../../states/model-select/IsCloseModalOpenState";
-import IsSelectModalOpenState from "../../states/model-select/IsSelectModalOpenState";
+import IsSelectCarModalOpen from "../../states/model-select/IsSelectCarModalOpen";
+import { CategoryCars } from "../../types/CarCategory";
+import IsCloseModalOpen from "../../states/model-select/IsCloseModalOpen";
 import CarSelectModal from "./CarSelectModal";
-import BackDrop from "../common/BackDrop";
+import useCategoryCars from "../../hooks/queries/menu/useCategoryCars";
+import { memo } from "react";
 
 const ModelSelectHeader = styled.header`
   background-color: #e4dcd3;
 `;
 
-const StyledButton = styled.button`
-  display: flex;
-  flex-direction: row;
-`;
+interface CarSelectModalButtonProps {
+  carName: string;
+}
 
-function CarSelectModalButton() {
-  const [isSelectModalOpen, setIsSelectModalOpen] = useRecoilState(
-    IsSelectModalOpenState
-  );
+function CarSelectModalButton({ carName }: CarSelectModalButtonProps) {
+  const [isSelectModalOpen, setIsSelectModalOpen] =
+    useRecoilState(IsSelectCarModalOpen);
 
   return (
-    <StyledButton
+    <button
       className="flex flex-row"
       onClick={() => setIsSelectModalOpen(!isSelectModalOpen)}
     >
-      <div className="mr-1">더 뉴 아반떼</div>
+      <div className="mr-1 text-sm">{carName}</div>
       {isSelectModalOpen ? <RxTriangleUp /> : <RxTriangleDown />}
-    </StyledButton>
+    </button>
   );
 }
 
@@ -40,10 +40,11 @@ const PageIndexDiv = styled.div<{ isSelectModalOpen: boolean }>`
   flex-direction: row;
   font-weight: bold;
   display: ${(props) => props.isSelectModalOpen && "none"};
+  padding-left: 1.5rem;
 `;
 
 function PageIndex() {
-  const isSelectModalOpen = useRecoilValue(IsSelectModalOpenState);
+  const isSelectModalOpen = useRecoilValue(IsSelectCarModalOpen);
 
   return (
     <PageIndexDiv isSelectModalOpen={isSelectModalOpen}>
@@ -54,33 +55,52 @@ function PageIndex() {
   );
 }
 
-export default () => {
+interface ModelSelectHeaderProps {
+  carId: number;
+}
+
+function getCarName(data: CategoryCars[], carId: number): string {
+  for (const category of data) {
+    const found = category.cars.find((car) => car.carId === carId);
+    if (found) {
+      return found.carName;
+    }
+  }
+  return "Error";
+}
+
+export default memo(({ carId }: ModelSelectHeaderProps) => {
   const navigate = useNavigate();
 
-  const [isCloseModalOpen, setIsCloseModalOpen] = useRecoilState(
-    IsCloseModalOpenState
-  );
+  const [isCloseModalOpen, setIsCloseModalOpen] =
+    useRecoilState(IsCloseModalOpen);
 
-  const [isSelectModalOpen, setIsSelectModalOpen] = useRecoilState(
-    IsSelectModalOpenState
-  );
+  const isSelectModalOpen = useRecoilValue(IsSelectCarModalOpen);
+
+  const { isLoading, error, data } = useCategoryCars();
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>{error.message}</div>;
+  }
 
   return (
     <>
       <ModelSelectHeader>
         <div className="flex flex-col py-4 w-full">
-          <div className="flex flex-row items-center mb-6">
+          <div className="flex flex-row items-center mb-6 px-6">
             <button onClick={() => setIsCloseModalOpen(true)}>
               <img src={HyundaiLogo}></img>
             </button>
             <div className="px-4">|</div>
-            <CarSelectModalButton />
+            <CarSelectModalButton carName={getCarName(data, carId)} />
           </div>
           <div className="relative">
             {isSelectModalOpen && (
-              <BackDrop>
-                <CarSelectModal />
-              </BackDrop>
+              <CarSelectModal data={data} currentCarId={carId} />
             )}
             <PageIndex />
           </div>
@@ -102,4 +122,4 @@ export default () => {
       </ModelSelectHeader>
     </>
   );
-};
+});

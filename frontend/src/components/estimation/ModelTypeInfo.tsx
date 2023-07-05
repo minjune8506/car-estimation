@@ -1,14 +1,13 @@
 import { IconContext } from "react-icons";
 import { AiFillInfoCircle } from "react-icons/ai";
-import { ModelSelectButton } from "../common/button/Button";
-import { ModelType } from "../../types/ModelTypes";
+import { ReactNode } from "react";
 
 interface ModelTypeProps {
   type: string;
-  data: ModelType[];
+  children: ReactNode;
 }
 
-export default ({ type, data }: ModelTypeProps) => {
+export default ({ type, children }: ModelTypeProps) => {
   return (
     <div className="[&:not(:last-child)]:mr-16">
       <div className="flex flex-row my-2">
@@ -17,13 +16,7 @@ export default ({ type, data }: ModelTypeProps) => {
           <AiFillInfoCircle></AiFillInfoCircle>
         </IconContext.Provider>
       </div>
-      <div className="flex flex-row border-collapse w-44">
-        {data.map((data) => (
-          <ModelSelectButton selected={true} key={data.id}>
-            <span className="py-2">{data.name}</span>
-          </ModelSelectButton>
-        ))}
-      </div>
+      <div className="flex flex-row border-collapse w-44">{children}</div>
     </div>
   );
 };

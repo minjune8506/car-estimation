@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import { Car } from "../../types/Car";
 
 interface CarProps {
@@ -5,8 +6,17 @@ interface CarProps {
 }
 
 function Car({ car }: CarProps) {
+  const navigate = useNavigate();
+
+  const onClick = () => {
+    navigate(`?carId=${car.carId}`);
+  };
+
   return (
-    <button className="flex flex-col items-center px-2 py-2 w-44">
+    <button
+      className="flex flex-col items-center px-2 py-2 w-44"
+      onClick={onClick}
+    >
       <div>
         <img src={`/images/${car.carImg}`} className="object-cover"></img>
       </div>

@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import ModelCard from "./ModelCard";
+import useModelTrim from "../../hooks/queries/model/useModelTrim";
 
 const Container = styled.div`
   width: 100%;
@@ -11,12 +12,40 @@ const Container = styled.div`
   }
 `;
 
-export default () => {
+interface ModelCardsProps {
+  carId: number;
+  engineId: number;
+  missionId: number;
+  drivingTypeId: number;
+}
+
+export default ({
+  carId,
+  engineId,
+  missionId,
+  drivingTypeId,
+}: ModelCardsProps) => {
+  const { data, error, isLoading } = useModelTrim({
+    carId,
+    engineId,
+    missionId,
+    drivingTypeId,
+  });
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+  if (error) {
+    return <div>{error.message}</div>;
+  }
+
+  const trims = data;
+
   return (
     <Container>
-      <ModelCard />
-      <ModelCard />
-      <ModelCard />
+      {trims.map((trim) => (
+        <ModelCard trimInfo={trim} key={trim.id} />
+      ))}
     </Container>
   );
 };

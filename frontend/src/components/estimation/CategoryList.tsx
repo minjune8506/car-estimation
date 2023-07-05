@@ -1,7 +1,7 @@
 import styled from "styled-components";
-import { CarsPerCategory } from "../../types/Car";
 import { useRecoilState } from "recoil";
-import SelectedCategoryState from "../../states/model-select/SelectedCategoryState";
+import SelectedCategoryState from "../../states/model-select/SelectedCategory";
+import { CategoryCars } from "../../types/CarCategory";
 
 const CategoryButton = styled.button<{ isClicked: boolean }>`
   background-color: ${(props) => (props.isClicked ? "white" : "#444")};
@@ -9,7 +9,7 @@ const CategoryButton = styled.button<{ isClicked: boolean }>`
 `;
 
 interface CategoryProps {
-  category: CarsPerCategory;
+  category: CategoryCars;
 }
 
 function Category({ category }: CategoryProps) {
@@ -28,7 +28,7 @@ function Category({ category }: CategoryProps) {
 }
 
 interface CategoryListProps {
-  categories: CarsPerCategory[];
+  categories: CategoryCars[];
 }
 
 export default ({ categories }: CategoryListProps) => {
