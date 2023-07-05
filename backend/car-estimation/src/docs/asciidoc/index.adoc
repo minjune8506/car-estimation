@@ -1,6 +1,12 @@
-= 차량 견적 시스템 API
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 2
+:sectlinks:
+:hide-uri-scheme:
 
-include::{docdir}/include.adoc[]
+= 차량 견적 시스템 API
 
 [[Car-Category-API]]
 == Car Category API

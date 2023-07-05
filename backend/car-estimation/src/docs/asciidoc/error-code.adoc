@@ -5,3 +5,10 @@
 :toclevels: 2
 :sectlinks:
 :hide-uri-scheme:
+
+= Error Code
+
+[[Error-Code]]
+== Error Code
+
+include::{snippets}/error-code/error-code-fields.adoc[]
