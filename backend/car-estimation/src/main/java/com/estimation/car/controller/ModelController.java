@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v1/models")
@@ -22,9 +23,8 @@ public class ModelController {
 
     @GetMapping("/filter")
     public ResponseEntity<Response<ModelFilterResponseDto>> filterModel(@RequestParam("carId") int carId,
-                                                                        @RequestParam(value = "engineId", required = false) Integer engineId,
-                                                                        @RequestParam(value = "missionId", required = false) Integer missionId,
-                                                                        @RequestParam(value = "drivingTypeId", required = false) Integer drivingTypeId) {
+                                                                        @RequestParam(value = "engineId", required = false) Optional<Integer> engineId,
+                                                                        @RequestParam(value = "missionId", required = false) Optional<Integer> missionId) {
         ModelFilterResponseDto result = modelService.filterModel(carId, engineId, missionId);
         return ResponseEntity.ok()
                              .body(Response.of(Code.SUCCESS, result));
