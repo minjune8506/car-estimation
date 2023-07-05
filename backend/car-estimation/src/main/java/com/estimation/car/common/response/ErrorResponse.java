@@ -8,23 +8,14 @@ import lombok.RequiredArgsConstructor;
 @Getter
 @Builder
 @RequiredArgsConstructor
-public class ErrorResponse<T> {
+public class ErrorResponse {
     private final Integer code;
     private final String message;
-    private final T data;
 
-    public static ErrorResponse <Void> of(ErrorCode code) {
-        return ErrorResponse.<Void>builder()
-                       .code(code.getValue())
-                       .message(code.getMessage())
-                       .build();
-    }
-
-    public static <T> ErrorResponse<T> of(ErrorCode code, T data) {
-        return ErrorResponse.<T>builder()
-                       .code(code.getValue())
-                       .message(code.getMessage())
-                       .data(data)
-                       .build();
+    public static ErrorResponse of(ErrorCode code) {
+        return ErrorResponse.builder()
+                            .code(code.getValue())
+                            .message(code.getMessage())
+                            .build();
     }
 }
