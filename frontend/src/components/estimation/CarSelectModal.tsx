@@ -1,20 +1,19 @@
 import styled from "styled-components";
-import useCarsPerCategory from "../../hooks/queries/menu/useCategoryCars";
 import { useEffect, useRef } from "react";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilState } from "recoil";
 import SelectedCategoryState from "../../states/model-select/SelectedCategory";
 import IsSelectModalOpenState from "../../states/model-select/IsSelectCarModalOpen";
 import CategoryList from "./CategoryList";
 import CarList from "./CarList";
 import BackDrop from "../common/BackDrop";
-import { CarsPerCategory } from "../../types/Car";
+import { CategoryCars } from "../../types/CarCategory";
 
 const CarSelectModal = styled.div<{ isSelectModalOpen: boolean }>`
   display: ${(props) => (props.isSelectModalOpen ? "block" : "none")};
 `;
 
 interface CarSelectModalProps {
-  data: CarsPerCategory[];
+  data: CategoryCars[];
   currentCarId: number;
 }
 

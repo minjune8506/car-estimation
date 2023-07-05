@@ -1,11 +1,13 @@
 import styled from "styled-components";
-import Car from "./Car";
 import { AiOutlineClose } from "react-icons/ai";
 import { IconContext } from "react-icons";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import IsMainMenuOpenState from "../../states/home/IsMainMenuOpen";
 import FocusedCarCategoryState from "../../states/home/SelectedCarCategory";
 import { CategoryCars } from "../../types/CarCategory";
+import { Link } from "react-router-dom";
+import CarItem from "./CarItem";
+import { useState } from "react";
 
 const Cars = styled.ul`
   display: flex;
@@ -35,6 +37,13 @@ const CloseButtonImg = styled.div`
   }
 `;
 
+const StyledText = styled.span`
+  color: #002c5f;
+  font-weight: bold;
+  font-size: small;
+  margin-top: 1rem;
+`;
+
 interface CarsProps {
   carsPerCategory: CategoryCars[];
 }
@@ -42,6 +51,15 @@ interface CarsProps {
 export default ({ carsPerCategory }: CarsProps) => {
   const setIsMenuOpen = useSetRecoilState(IsMainMenuOpenState);
   const focusedCategory = useRecoilValue(FocusedCarCategoryState);
+  const [selectedCar, setSelectedCar] = useState<undefined | number>(undefined);
+
+  const onCarItemMouseOver = (id: number) => {
+    setSelectedCar(id);
+  };
+
+  const onCarItemMouseLeave = () => {
+    setSelectedCar(undefined);
+  };
 
   return (
     <ItemsWrap>
@@ -57,8 +75,23 @@ export default ({ carsPerCategory }: CarsProps) => {
       <Cars>
         {focusedCategory &&
           carsPerCategory
-            .filter((category) => category.categoryId === focusedCategory)[0]
-            .cars.map((car) => <Car car={car} key={car.carId}></Car>)}
+            .find((category) => category.categoryId === focusedCategory)
+            ?.cars.map((car) => (
+              <Link to={`estimation/model?carId=${car.carId}`}>
+                <CarItem
+                  car={car}
+                  key={car.carId}
+                  onMouseOver={onCarItemMouseOver}
+                  onMouseLeave={onCarItemMouseLeave}
+                  isHover={car.carId === selectedCar}
+                  hoverBackground="white"
+                  width="200px"
+                  height="200px"
+                >
+                  <StyledText>내 차 만들기</StyledText>
+                </CarItem>
+              </Link>
+            ))}
       </Cars>
     </ItemsWrap>
   );

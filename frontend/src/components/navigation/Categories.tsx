@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import Category from "./Category";
-import { CarsPerCategory } from "../../types/Car";
+import { CategoryCars } from "../../types/CarCategory";
 
 const Categories = styled.div`
   display: flex;
@@ -11,7 +11,7 @@ const Categories = styled.div`
 `;
 
 interface CategoriesProps {
-  carsPerCategory: CarsPerCategory[];
+  carsPerCategory: CategoryCars[];
 }
 
 export default ({ carsPerCategory }: CategoriesProps) => {
