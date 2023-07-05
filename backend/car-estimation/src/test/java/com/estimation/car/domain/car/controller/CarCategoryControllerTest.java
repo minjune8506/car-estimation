@@ -1,7 +1,7 @@
 package com.estimation.car.domain.car.controller;
 
-import com.estimation.car.dto.response.car.CarResponseDto;
 import com.estimation.car.controller.CarCategoryController;
+import com.estimation.car.dto.response.car.CarResponseDto;
 import com.estimation.car.dto.response.carcategory.CategoryCarsResponseDto;
 import com.estimation.car.service.CarCategoryService;
 import org.junit.jupiter.api.Test;
@@ -55,7 +55,7 @@ class CarCategoryControllerTest {
                                                            .build()));
         // when & then
         mockMvc.perform(
-                       get("/api/v1/car/category/cars")
+                       get("/api/v1/car/categories/cars")
                                .accept(MediaType.APPLICATION_JSON))
                .andDo(print())
                .andExpect(status().isOk())

@@ -1,13 +1,15 @@
 package com.estimation.car.domain.car.repository;
 
-import com.estimation.car.repository.CarCategoryRepository;
+import com.estimation.car.common.config.QuerydslConfig;
 import com.estimation.car.entity.Car;
 import com.estimation.car.entity.CarCategory;
+import com.estimation.car.repository.CarCategoryRepository;
 import com.estimation.car.repository.CarRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
+import org.springframework.context.annotation.Import;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,6 +18,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 
 @DataJpaTest
+@Import(QuerydslConfig.class)
 class CarCategoryRepositoryTest {
 
     @Autowired
@@ -26,6 +29,7 @@ class CarCategoryRepositoryTest {
 
     @Autowired
     private TestEntityManager em;
+
 
     @Test
     void 카테고리별_차량들이_조회된다() {
