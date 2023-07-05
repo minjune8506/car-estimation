@@ -1,7 +1,7 @@
 import { useRecoilValue } from "recoil";
 import HyundaiLogo from "/images/logo/logo_main.svg";
 import styled from "styled-components";
-import IsMainMenuOpenState from "../../states/menu/IsMainMenuOpenState";
+import IsMainMenuOpenState from "../../states/home/IsMainMenuOpen";
 import MenuItems from "./MenuItems";
 
 const MenuDiv = styled.div<{ isMenuOpen: boolean }>`

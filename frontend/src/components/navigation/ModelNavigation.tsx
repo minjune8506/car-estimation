@@ -1,10 +1,10 @@
 import styled from "styled-components";
-import useCarsPerCategory from "../../hooks/queries/menu/useCarsPerCategory";
+import useCarsPerCategory from "../../hooks/queries/menu/useCategoryCars";
 import Cars from "./Cars";
 import Categories from "./Categories";
-import { memo, useEffect } from "react";
+import { useEffect } from "react";
 import { useSetRecoilState } from "recoil";
-import FocusedCarCategoryState from "../../states/menu/FocusedCarCategoryState";
+import FocusedCarCategoryState from "../../states/home/SelectedCarCategory";
 
 const Wrapper = styled.div`
   display: flex;

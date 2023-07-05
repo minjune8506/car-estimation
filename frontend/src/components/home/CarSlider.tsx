@@ -24,7 +24,10 @@ const SliderContainer = styled.main<{ backgroundImg: string }>`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  background: no-repeat center url(${(props) => props.backgroundImg});
+  background-image: url(${(props) => props.backgroundImg});
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
   width: 100%;
   height: 100%;
   z-index: 1;
@@ -41,7 +44,6 @@ const fade = keyframes`
 `;
 
 const Slide = styled.div<{ isCurrent: boolean }>`
-  flex-grow: 1;
   display: ${(props) => (props.isCurrent ? "flex" : "none")};
   align-items: center;
   justify-content: center;

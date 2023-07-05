@@ -1,6 +1,6 @@
 import { useRecoilState } from "recoil";
 import styled from "styled-components";
-import FocusedCarCategoryState from "../../states/menu/FocusedCarCategoryState";
+import FocusedCarCategoryState from "../../states/home/SelectedCarCategory";
 import { CarCategory } from "../../types/CarCategory";
 import { AiOutlineRight } from "react-icons/ai";
 

@@ -3,9 +3,9 @@ import Car from "./Car";
 import { AiOutlineClose } from "react-icons/ai";
 import { IconContext } from "react-icons";
 import { useRecoilValue, useSetRecoilState } from "recoil";
-import IsMainMenuOpenState from "../../states/menu/IsMainMenuOpenState";
-import FocusedCarCategoryState from "../../states/menu/FocusedCarCategoryState";
-import { CarsPerCategory } from "../../types/Car";
+import IsMainMenuOpenState from "../../states/home/IsMainMenuOpen";
+import FocusedCarCategoryState from "../../states/home/SelectedCarCategory";
+import { CategoryCars } from "../../types/CarCategory";
 
 const Cars = styled.ul`
   display: flex;
@@ -36,11 +36,10 @@ const CloseButtonImg = styled.div`
 `;
 
 interface CarsProps {
-  carsPerCategory: CarsPerCategory[];
+  carsPerCategory: CategoryCars[];
 }
 
 export default ({ carsPerCategory }: CarsProps) => {
-  console.log("Cars Rendered");
   const setIsMenuOpen = useSetRecoilState(IsMainMenuOpenState);
   const focusedCategory = useRecoilValue(FocusedCarCategoryState);
 

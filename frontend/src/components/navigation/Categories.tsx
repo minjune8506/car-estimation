@@ -15,8 +15,6 @@ interface CategoriesProps {
 }
 
 export default ({ carsPerCategory }: CategoriesProps) => {
-  console.log("Categories Rendered");
-
   return (
     <Categories>
       {carsPerCategory.map((category) => {

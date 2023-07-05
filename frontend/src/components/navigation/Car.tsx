@@ -2,7 +2,8 @@ import styled from "styled-components";
 import { Car } from "../../types/Car";
 import { Link } from "react-router-dom";
 import { useRecoilState } from "recoil";
-import FocusedCarState from "../../states/menu/FocusedCarState";
+import FocusedCarState from "../../states/home/SelectedCar";
+import { convertPrice } from "../../common/utils/price_utils";
 
 const CarLink = styled(Link)`
   display: flex;
@@ -39,12 +40,6 @@ const MakingCarLink = styled.div<{ isMouseOver: boolean }>`
   display: ${(props) => (props.isMouseOver ? "block" : "none")};
 `;
 
-function toPrice(price: number): string {
-  const priceStr = price.toString();
-  const koreanPrice = priceStr.substring(0, priceStr.length - 4);
-  return koreanPrice.replace(/\B(?=(\d{3})+(?!\d))/g, ",") + "만원~";
-}
-
 interface CarProps {
   car: Car;
 }
@@ -54,13 +49,13 @@ export default ({ car }: CarProps) => {
 
   return (
     <CarLink
-      to={`estimation/model`}
+      to={`estimation/model?carId=${car.carId}`}
       onMouseOver={() => setFocusedCar(car.carId)}
       onMouseLeave={() => setFocusedCar(null)}
     >
       <img src={`/images/${car.carImg}`} alt="차량 이미지"></img>
       <CarName>{car.carName}</CarName>
-      <Price>{toPrice(car.lowPrice)}</Price>
+      <Price>{convertPrice(car.lowPrice, 10000) + "만원~"}</Price>
       <MakingCarLink isMouseOver={focusedCar === car.carId}>
         내 차 만들기
       </MakingCarLink>

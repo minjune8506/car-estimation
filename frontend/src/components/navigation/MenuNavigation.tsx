@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { useRecoilState } from "recoil";
 import ModelNavigation from "./ModelNavigation";
-import IsMainMenuOpen from "../../states/menu/IsMainMenuOpenState";
+import IsMainMenuOpen from "../../states/home/IsMainMenuOpen";
 
 const NavBarDiv = styled.div<{ isMenuOpen: boolean }>`
   display: ${(props) => (props.isMenuOpen ? "block" : "none")};

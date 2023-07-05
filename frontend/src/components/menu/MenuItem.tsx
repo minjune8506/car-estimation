@@ -1,7 +1,7 @@
 import { ReactNode } from "react";
 import { useRecoilState } from "recoil";
 import styled from "styled-components";
-import IsMainMenuOpenState from "../../states/menu/IsMainMenuOpenState";
+import IsMainMenuOpenState from "../../states/home/IsMainMenuOpen";
 
 const MenuItem = styled.li<{ isMenuOpen: boolean }>`
   font-size: 0.8rem;

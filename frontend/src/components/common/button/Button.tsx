@@ -21,4 +21,9 @@ export const ModelSelectButton = styled(Button)<{ selected?: boolean }>`
   border: ${(props) =>
     props.selected ? "1px solid #007fa8" : "1px solid gray"};
   font-size: x-small;
+
+  &:disabled {
+    color: #cccccc;
+    cursor: not-allowed;
+  }
 `;
