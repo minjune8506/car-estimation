@@ -8,16 +8,20 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-@Entity
 @Getter
 @ToString
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Entity
 public class Model {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private int id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "CAR_ID", nullable = false)
@@ -59,4 +63,19 @@ public class Model {
     @Column(length = 100)
     private String modelDetailImg3;
 
+    @Builder
+    public Model(final Car car, final Engine engine, final DrivingType drivingType, final Mission mission, final String trimName, final String name, final String basicInfo, final int price, final String modelImg, final String modelDetailImg1, final String modelDetailImg2, final String modelDetailImg3) {
+        this.car = car;
+        this.engine = engine;
+        this.drivingType = drivingType;
+        this.mission = mission;
+        this.trimName = trimName;
+        this.name = name;
+        this.basicInfo = basicInfo;
+        this.price = price;
+        this.modelImg = modelImg;
+        this.modelDetailImg1 = modelDetailImg1;
+        this.modelDetailImg2 = modelDetailImg2;
+        this.modelDetailImg3 = modelDetailImg3;
+    }
 }

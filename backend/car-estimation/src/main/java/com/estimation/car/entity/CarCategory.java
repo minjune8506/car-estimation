@@ -22,7 +22,7 @@ import java.util.List;
 public class CarCategory {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private int id;
 
     @Column(length = 50, nullable = false)
     private String name;

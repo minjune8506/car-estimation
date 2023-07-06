@@ -9,13 +9,13 @@ import java.util.List;
 
 @Getter
 public class CategoryCarsResponseDto {
-    private final Integer categoryId;
+    private final int categoryId;
     private final String categoryName;
     private final List<CarResponseDto> cars;
 
 
     @Builder
-    public CategoryCarsResponseDto(final Integer categoryId, final String categoryName, final List<CarResponseDto> cars) {
+    public CategoryCarsResponseDto(final int categoryId, final String categoryName, final List<CarResponseDto> cars) {
         this.categoryId = categoryId;
         this.categoryName = categoryName;
         this.cars = cars;

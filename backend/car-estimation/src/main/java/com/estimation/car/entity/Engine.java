@@ -5,21 +5,31 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-@Entity
 @Getter
 @ToString
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Entity
 public class Engine {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private int id;
 
     @Column(length = 10, nullable = false)
     private String name;
 
     @Column(length = 500)
     private String description;
+
+    @Builder
+    public Engine(final String name, final String description) {
+        this.name = name;
+        this.description = description;
+    }
 }
