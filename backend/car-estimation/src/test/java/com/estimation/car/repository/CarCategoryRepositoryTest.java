@@ -1,17 +1,16 @@
-package com.estimation.car.domain.car.repository;
+package com.estimation.car.repository;
 
 import com.estimation.car.common.config.QuerydslConfig;
 import com.estimation.car.entity.Car;
 import com.estimation.car.entity.CarCategory;
-import com.estimation.car.repository.CarCategoryRepository;
-import com.estimation.car.repository.CarRepository;
+import com.estimation.car.support.CarCategoryFixture;
+import com.estimation.car.support.CarFixture;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.context.annotation.Import;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -34,26 +33,13 @@ class CarCategoryRepositoryTest {
     @Test
     void 카테고리별_차량들이_조회된다() {
         // given
-        CarCategory category = CarCategory.builder()
-                                          .name("SUV")
-                                          .build();
-        categoryRepository.save(category);
+        CarCategory suv = categoryRepository.save(CarCategoryFixture.SUV);
 
-        List<Car> cars = new ArrayList<>();
-        Car c1 = Car.builder()
-                    .name("투싼")
-                    .lowPrice(12_000_000)
-                    .build();
-        c1.changeCategory(category);
-        cars.add(c1);
+        Car c1 = CarFixture.createCar("투싼", suv);
+        c1 = carRepository.save(c1);
 
-        Car c2 = Car.builder()
-                    .name("싼타페")
-                    .lowPrice(14_000_000)
-                    .build();
-        c2.changeCategory(category);
-        cars.add(c2);
-        carRepository.saveAll(cars);
+        Car c2 = CarFixture.createCar("싼타페", suv);
+        c2 = carRepository.save(c2);
 
         em.clear();
 

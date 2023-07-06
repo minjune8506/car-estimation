@@ -1,10 +1,9 @@
-package com.estimation.car.domain.car.service;
+package com.estimation.car.service;
 
 import com.estimation.car.dto.response.carcategory.CategoryCarsResponseDto;
-import com.estimation.car.repository.CarCategoryRepository;
-import com.estimation.car.service.CarCategoryService;
 import com.estimation.car.entity.Car;
 import com.estimation.car.entity.CarCategory;
+import com.estimation.car.repository.CarCategoryRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -32,8 +31,8 @@ class CarCategoryServiceTest {
         List<CarCategory> categories = new ArrayList<>();
 
         CarCategory category = CarCategory.builder()
-                                    .name("SUV")
-                                    .build();
+                                          .name("SUV")
+                                          .build();
         Car car = Car.builder()
                      .name("투싼")
                      .lowPrice(12_000_000)

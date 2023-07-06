@@ -1,6 +1,5 @@
-package com.estimation.car.domain.car.controller;
+package com.estimation.car.controller;
 
-import com.estimation.car.controller.CarCategoryController;
 import com.estimation.car.dto.response.car.CarResponseDto;
 import com.estimation.car.dto.response.carcategory.CategoryCarsResponseDto;
 import com.estimation.car.service.CarCategoryService;
@@ -77,6 +76,5 @@ class CarCategoryControllerTest {
                                                                     .description("차량 이미지")
                                                                     .attributes(key("Nullable").value("true")))
                ));
-        ;
     }
 }
