@@ -1,5 +1,7 @@
 package com.estimation.car.service;
 
+import com.estimation.car.common.code.ErrorCode;
+import com.estimation.car.common.exception.ModelNotFoundException;
 import com.estimation.car.dto.response.model.ModelFilterResponseDto;
 import com.estimation.car.dto.response.model.ModelTrimResponseDto;
 import com.estimation.car.entity.Model;
@@ -20,7 +22,10 @@ public class ModelService {
                                               final Optional<Integer> engineId,
                                               final Optional<Integer> missionId) {
         List<Model> models = modelRepository.filterModels(carId, engineId, missionId);
-        // TODO: 예외처리 (size <= 0 error)
+
+        if (models.isEmpty()) {
+            throw new ModelNotFoundException(ErrorCode.NO_MODEL);
+        }
         return ModelFilterResponseDto.toDto(models);
     }
 
@@ -29,7 +34,10 @@ public class ModelService {
                                                 final int missionId,
                                                 final int drivingTypeId) {
         List<Model> models = modelRepository.findTrims(carId, engineId, missionId, drivingTypeId);
-        // TODO: 예외처리 (size <= 0 error)
+
+        if (models.isEmpty()) {
+            throw new ModelNotFoundException(ErrorCode.NO_MODEL);
+        }
         return models.stream()
                      .map(ModelTrimResponseDto::toDto)
                      .toList();

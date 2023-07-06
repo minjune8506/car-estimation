@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 @RestControllerAdvice()
 @Slf4j
@@ -19,10 +20,18 @@ public class GlobalControllerAdvice {
                              .body(ErrorResponse.of(ErrorCode.SYSTEM_ERROR));
     }
 
-    @ExceptionHandler()
-    public ResponseEntity<ErrorResponse> handleMissionParams(MissingServletRequestParameterException ex) {
+    @ExceptionHandler({MissingServletRequestParameterException.class, MethodArgumentTypeMismatchException.class})
+    public ResponseEntity<ErrorResponse> handleMissionParams(Exception ex) {
         log.error(ex.getMessage());
-        return ResponseEntity.status(ErrorCode.MISSING_PARAMS.getStatus())
-                             .body(ErrorResponse.of(ErrorCode.MISSING_PARAMS));
+        return ResponseEntity.status(ErrorCode.BAD_REQUEST.getStatus())
+                             .body(ErrorResponse.of(ErrorCode.BAD_REQUEST));
+    }
+
+    @ExceptionHandler(CustomException.class)
+    public ResponseEntity<ErrorResponse> handleCustomException(CustomException ex) {
+        log.error(ex.getMessage());
+        return ResponseEntity.status(ex.getErrorCode().getStatus())
+                             .body(ErrorResponse.of(ex.getErrorCode()));
+
     }
 }
