@@ -25,4 +25,11 @@ public class ApiDocumentUtils {
                 fieldWithPath("message").description("결과 메시지")
         );
     }
+
+    public static ResponseFieldsSnippet commonResponseErrorBody() {
+        return responseFields(
+                fieldWithPath("code").description("에러 코드"),
+                fieldWithPath("message").description("에러 메시지")
+        );
+    }
 }

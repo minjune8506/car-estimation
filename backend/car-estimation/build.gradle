@@ -76,6 +76,10 @@ bootJar {
     }
 }
 
+tasks.register("cleanDocument", Delete) {
+    delete 'src/main/resources/static/docs'
+}
+
 tasks.register('copyDocument', Copy) {
     dependsOn asciidoctor
     from file("build/docs/asciidoc")
@@ -83,5 +87,6 @@ tasks.register('copyDocument', Copy) {
 }
 
 build {
+    dependsOn cleanDocument
     dependsOn copyDocument
 }

@@ -1,0 +1,17 @@
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 2
+:sectlinks:
+:hide-uri-scheme:
+
+= Model-Trims API
+
+== API 정보
+
+operation::model-trims[snippets='http-request,query-parameters,http-response,response-fields']
+
+== Error
+
+operation::model-trims-error[snippets='http-response']

@@ -8,13 +8,36 @@
 
 = 차량 견적 시스템 API
 
+[[Error-Code]]
+== Error Code
+
+에러 코드 정의
+
+link:http://localhost:8080/docs/common/error-code.html[Error-Codes]
+
 [[Car-Category-API]]
 == Car Category API
 
 [[카테고리별-차량-조회]]
 === 카테고리별 차량 조회
 
-link:http://localhost:8080/docs/CarCategory.html[/api/v1/category/car/cars/]
+카테고리별 차량들을 조회하는 API
 
+link:http://localhost:8080/docs/car-category/car-category.html[/api/v1/category/car/cars/]
 
+[[Model-API]]
+== Model API
 
+[[모델-필터링]]
+=== 모델 필터링
+
+차량에서 선택 가능한 엔진, 변속기, 구동방식들을 필터링하는 API
+
+link:http://localhost:8080/docs/models/filter.html[/api/v1/models/filter]
+
+[[트림-정보]]
+=== 트림 정보
+
+차량, 엔진, 변속기, 구동 방식 정보를 이용하여 트림들을 조회하는 API
+
+link:http://localhost:8080/docs/models/trims.html[/api/v1/models/trims]
