@@ -6,13 +6,18 @@ import lombok.Getter;
 import lombok.ToString;
 
 @Getter
-@Builder
 @ToString
 public class EngineFilterResponseDto {
     private final int id;
     private final String name;
 
-    public static EngineFilterResponseDto toDto(Engine engine) {
+    @Builder
+    public EngineFilterResponseDto(final int id, final String name) {
+        this.id = id;
+        this.name = name;
+    }
+
+    public static EngineFilterResponseDto toDto(final Engine engine) {
         return EngineFilterResponseDto.builder()
                                       .id(engine.getId())
                                       .name(engine.getName())

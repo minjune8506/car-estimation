@@ -7,21 +7,28 @@ import lombok.Getter;
 
 import java.util.List;
 
-@Builder
 @Getter
 public class CategoryCarsResponseDto {
-    private Integer categoryId;
-    private String categoryName;
-    private List<CarResponseDto> cars;
+    private final Integer categoryId;
+    private final String categoryName;
+    private final List<CarResponseDto> cars;
 
-    public static CategoryCarsResponseDto toDto(CarCategory carCategory) {
+
+    @Builder
+    public CategoryCarsResponseDto(final Integer categoryId, final String categoryName, final List<CarResponseDto> cars) {
+        this.categoryId = categoryId;
+        this.categoryName = categoryName;
+        this.cars = cars;
+    }
+
+    public static CategoryCarsResponseDto toDto(final CarCategory carCategory) {
         return CategoryCarsResponseDto.builder()
                                       .categoryId(carCategory.getId())
                                       .categoryName(carCategory.getName())
                                       .cars(carCategory.getCars()
-                                                      .stream()
-                                                      .map(CarResponseDto::toDto)
-                                                      .toList())
+                                                       .stream()
+                                                       .map(CarResponseDto::toDto)
+                                                       .toList())
                                       .build();
     }
 }

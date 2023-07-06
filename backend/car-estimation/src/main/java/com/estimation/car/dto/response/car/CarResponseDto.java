@@ -4,15 +4,22 @@ import com.estimation.car.entity.Car;
 import lombok.Builder;
 import lombok.Getter;
 
-@Builder
 @Getter
 public class CarResponseDto {
-    private Integer carId;
-    private String carName;
-    private Integer lowPrice;
-    private String carImg;
+    private final Integer carId;
+    private final String carName;
+    private final Integer lowPrice;
+    private final String carImg;
 
-    public static CarResponseDto toDto(Car car) {
+    @Builder
+    public CarResponseDto(final Integer carId, final String carName, final Integer lowPrice, final String carImg) {
+        this.carId = carId;
+        this.carName = carName;
+        this.lowPrice = lowPrice;
+        this.carImg = carImg;
+    }
+
+    public static CarResponseDto toDto(final Car car) {
         return CarResponseDto.builder()
                              .carId(car.getId())
                              .carName(car.getName())

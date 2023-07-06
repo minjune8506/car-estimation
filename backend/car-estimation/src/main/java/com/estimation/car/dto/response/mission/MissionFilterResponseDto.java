@@ -6,13 +6,18 @@ import lombok.Getter;
 import lombok.ToString;
 
 @Getter
-@Builder
 @ToString
 public class MissionFilterResponseDto {
     private final int id;
     private final String name;
 
-    public static MissionFilterResponseDto toDto(Mission mission) {
+    @Builder
+    public MissionFilterResponseDto(final int id, final String name) {
+        this.id = id;
+        this.name = name;
+    }
+
+    public static MissionFilterResponseDto toDto(final Mission mission) {
         return MissionFilterResponseDto.builder()
                                        .id(mission.getId())
                                        .name(mission.getName())

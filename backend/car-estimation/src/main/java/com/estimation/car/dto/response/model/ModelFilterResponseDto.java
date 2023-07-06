@@ -11,36 +11,53 @@ import lombok.ToString;
 import java.util.List;
 
 @Getter
-@Builder
 @ToString
 public class ModelFilterResponseDto {
     private final List<EngineFilterResponseDto> engines;
     private final List<MissionFilterResponseDto> missions;
     private final List<DrivingTypeFilterResponseDto> drivingTypes;
 
-    public static ModelFilterResponseDto toDto(List<Model> models) {
-        List<EngineFilterResponseDto> engines = models.stream()
-                                                      .map(Model::getEngine)
-                                                      .distinct()
-                                                      .map(EngineFilterResponseDto::toDto)
-                                                      .toList();
+    @Builder
+    public ModelFilterResponseDto(final List<EngineFilterResponseDto> engines, final List<MissionFilterResponseDto> missions, final List<DrivingTypeFilterResponseDto> drivingTypes) {
+        this.engines = engines;
+        this.missions = missions;
+        this.drivingTypes = drivingTypes;
+    }
 
-        List<MissionFilterResponseDto> missions = models.stream()
-                                                        .map(Model::getMission)
-                                                        .distinct()
-                                                        .map(MissionFilterResponseDto::toDto)
-                                                        .toList();
+    public static ModelFilterResponseDto toDto(final List<Model> models) {
+        List<EngineFilterResponseDto> engines = toEngineFilterDto(models);
+        List<MissionFilterResponseDto> missions = toMissoinFilterDto(models);
+        List<DrivingTypeFilterResponseDto> drivingTypes = toDrivingTypeFilterDto(models);
 
-        List<DrivingTypeFilterResponseDto> drivingTypes = models.stream()
-                                                                .map(Model::getDrivingType)
-                                                                .distinct()
-                                                                .map(DrivingTypeFilterResponseDto::toDto)
-                                                                .toList();
         return ModelFilterResponseDto.builder()
                                      .engines(engines)
                                      .missions(missions)
                                      .drivingTypes(drivingTypes)
                                      .build();
+    }
+
+    private static List<DrivingTypeFilterResponseDto> toDrivingTypeFilterDto(final List<Model> models) {
+        return models.stream()
+                     .map(Model::getDrivingType)
+                     .distinct()
+                     .map(DrivingTypeFilterResponseDto::toDto)
+                     .toList();
+    }
+
+    private static List<EngineFilterResponseDto> toEngineFilterDto(final List<Model> models) {
+        return models.stream()
+                     .map(Model::getEngine)
+                     .distinct()
+                     .map(EngineFilterResponseDto::toDto)
+                     .toList();
+    }
+
+    private static List<MissionFilterResponseDto> toMissoinFilterDto(final List<Model> models) {
+        return models.stream()
+                     .map(Model::getMission)
+                     .distinct()
+                     .map(MissionFilterResponseDto::toDto)
+                     .toList();
     }
 
 }

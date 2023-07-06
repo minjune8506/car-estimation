@@ -7,7 +7,6 @@ import lombok.Getter;
 import java.util.List;
 
 @Getter
-@Builder
 public class ModelTrimResponseDto {
     private final int id;
     private final String trimName;
@@ -16,8 +15,17 @@ public class ModelTrimResponseDto {
     private final String modelImg;
     private final List<String> detailImgs;
 
-    public static ModelTrimResponseDto toDto(Model model) {
+    @Builder
+    public ModelTrimResponseDto(final int id, final String trimName, final int price, final String basicInfo, final String modelImg, final List<String> detailImgs) {
+        this.id = id;
+        this.trimName = trimName;
+        this.price = price;
+        this.basicInfo = basicInfo;
+        this.modelImg = modelImg;
+        this.detailImgs = detailImgs;
+    }
 
+    public static ModelTrimResponseDto toDto(final Model model) {
         return ModelTrimResponseDto.builder()
                                    .id(model.getId())
                                    .trimName(model.getTrimName())

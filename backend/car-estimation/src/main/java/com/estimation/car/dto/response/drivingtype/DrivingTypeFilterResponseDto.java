@@ -6,11 +6,16 @@ import lombok.Getter;
 import lombok.ToString;
 
 @Getter
-@Builder
 @ToString
 public class DrivingTypeFilterResponseDto {
     private final int id;
     private final String name;
+
+    @Builder
+    public DrivingTypeFilterResponseDto(final int id, final String name) {
+        this.id = id;
+        this.name = name;
+    }
 
     public static DrivingTypeFilterResponseDto toDto(DrivingType drivingType) {
         return DrivingTypeFilterResponseDto.builder()
