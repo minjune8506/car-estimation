@@ -1,15 +1,11 @@
 import styled from "styled-components";
 import ModelCard from "./ModelCard";
-import useModelTrim from "../../hooks/queries/model/useModelTrim";
+import useModelTrim from "../../../hooks/queries/model/useModelTrim";
 
-const Container = styled.div`
+const ModelCards = styled.ol`
   width: 100%;
   display: flex;
   flex-direction: row;
-
-  #model_info:not(:last-child) {
-    margin-right: 1.5rem;
-  }
 `;
 
 interface ModelCardsProps {
@@ -42,10 +38,10 @@ export default ({
   const trims = data;
 
   return (
-    <Container>
+    <ModelCards>
       {trims.map((trim) => (
         <ModelCard trimInfo={trim} key={trim.id} />
       ))}
-    </Container>
+    </ModelCards>
   );
 };

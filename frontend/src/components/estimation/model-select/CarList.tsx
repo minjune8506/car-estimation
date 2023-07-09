@@ -9,14 +9,14 @@ interface CarProps {
 function Car({ car }: CarProps) {
   const navigate = useNavigate();
 
-  const onClick = () => {
-    navigate(`?carId=${car.carId}`);
+  const navigateToModelSelect = () => {
+    navigate(`/estimation/model?carId=${car.carId}`);
   };
 
   return (
     <button
       className="flex flex-col items-center px-2 py-2 w-44"
-      onClick={onClick}
+      onClick={navigateToModelSelect}
     >
       <div>
         <img src={`/images/${car.carImg}`} className="object-cover"></img>
