@@ -46,7 +46,17 @@ export default function CarMaking() {
             isInterior={true}
           ></Colors>
           <h2 className="text-2xl font-bold my-6">옵션</h2>
-          <OptionCards options={options}></OptionCards>
+          <OptionCards options={options} title="상세 품목"></OptionCards>
+          <OptionCards
+            options={options}
+            backgroundImg="/images/HGenuineAccessories.png"
+            title="H Genuine Accessories"
+          ></OptionCards>
+          <OptionCards
+            options={options}
+            backgroundImg="/images/NPerformance.png"
+            title="N 퍼포먼스 파츠"
+          ></OptionCards>
           <div className="flex items-center justify-center my-8">
             <button className="bg-[#002C5F] text-white text-sm py-3 px-6">
               내 차 만들기 완료

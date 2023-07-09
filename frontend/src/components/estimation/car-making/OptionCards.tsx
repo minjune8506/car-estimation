@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { Option } from "types/Option";
 import { IconContext } from "react-icons";
 import { BsFillExclamationCircleFill as ExclamationCircle } from "react-icons/bs";
@@ -8,36 +8,35 @@ import {
 } from "react-icons/ai";
 import { convertPrice } from "common/utils/price-utils";
 
+interface OptionCardsProps {
+  options: Option[];
+  title?: string;
+  backgroundImg?: string;
+}
+
+function OptionCards({ options, title, backgroundImg }: OptionCardsProps) {
+  return (
+    <section>
+      <Title backgroundImg={backgroundImg}>{title}</Title>
+      <ul className="flex flex-row flex-wrap justify-between">
+        {options.map((option) => (
+          <OptionCard
+            option={option}
+            selected={option.id === 1}
+            key={option.id}
+          ></OptionCard>
+        ))}
+      </ul>
+    </section>
+  );
+}
+
+export default OptionCards;
+
 interface OptionProps {
   option: Option;
   selected?: boolean;
 }
-
-const StyledOptionCard = styled.li<{
-  selected?: boolean;
-  isWide?: boolean;
-}>`
-  height: 225px;
-  border: 1px solid gray;
-  display: flex;
-  flex-direction: column;
-  flex-wrap: wrap;
-
-  flex-basis: 23%;
-  border-width: ${(props) => (props.selected ? "2px" : "1px")};
-  border-color: ${(props) => (props.selected ? "#00cbfe" : "gray")};
-  margin: 1rem 0;
-`;
-
-const OptionImageDiv = styled.div<{ disabled?: boolean }>`
-  min-height: 150px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-
-  background-color: ${(props) => (props.disabled ? "#dddddd" : "white")};
-`;
 
 function OptionCard({ option, selected }: OptionProps) {
   return (
@@ -73,26 +72,45 @@ function OptionCard({ option, selected }: OptionProps) {
   );
 }
 
-interface OptionCardsProps {
-  options: Option[];
-}
+const StyledOptionCard = styled.li<{
+  selected?: boolean;
+  isWide?: boolean;
+}>`
+  height: 225px;
+  border: 1px solid gray;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
 
-function OptionCards({ options }: OptionCardsProps) {
-  return (
-    <section>
-      <h3 className="text-lg font-bold">상세 품목</h3>
-      <hr className="my-2" />
-      <ul className="flex flex-row flex-wrap justify-between">
-        {options.map((option) => (
-          <OptionCard
-            option={option}
-            selected={option.id === 1}
-            key={option.id}
-          ></OptionCard>
-        ))}
-      </ul>
-    </section>
-  );
-}
+  flex-basis: 23%;
+  border-width: ${(props) => (props.selected ? "2px" : "1px")};
+  border-color: ${(props) => (props.selected ? "#00cbfe" : "gray")};
+  margin: 1rem 0;
+`;
 
-export default OptionCards;
+const OptionImageDiv = styled.div<{ disabled?: boolean }>`
+  min-height: 150px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+
+  background-color: ${(props) => (props.disabled ? "#dddddd" : "white")};
+`;
+
+const Title = styled.h3<{ backgroundImg?: string }>`
+  font-size: large;
+  font-weight: bold;
+  margin-top: 0.5rem;
+  margin-bottom: 0.25rem;
+  ${(props) =>
+    props.backgroundImg &&
+    css`
+      background: url(${props.backgroundImg}) no-repeat center;
+      background-size: contain;
+      width: 120px;
+      height: 40px;
+      color: none;
+      text-indent: -9999px;
+    `}
+`;
