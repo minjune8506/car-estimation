@@ -1,29 +1,22 @@
 import styled from "styled-components";
 import { useEffect, useRef } from "react";
 import { useRecoilState } from "recoil";
-import SelectedCategoryState from "../../states/model-select/SelectedCategory";
-import IsSelectModalOpenState from "../../states/model-select/IsSelectCarModalOpen";
 import CategoryList from "./CategoryList";
 import CarList from "./CarList";
-import BackDrop from "../common/BackDrop";
-import { CategoryCars } from "../../types/CarCategory";
-
-const CarSelectModal = styled.div<{ isSelectModalOpen: boolean }>`
-  display: ${(props) => (props.isSelectModalOpen ? "block" : "none")};
-`;
-
+import { CategoryCars } from "../../../types/CarCategory";
+import BackDrop from "../../common/BackDrop";
+import SelectedCategory from "../../../states/model-select/SelectedCategory";
+import IsSelectCarModalOpen from "../../../states/model-select/IsSelectCarModalOpen";
 interface CarSelectModalProps {
   data: CategoryCars[];
   currentCarId: number;
 }
 
 export default ({ data, currentCarId }: CarSelectModalProps) => {
-  const [selectedCategory, setSelectedCategory] = useRecoilState(
-    SelectedCategoryState
-  );
-  const [isSelectModalOpen, setIsSelectModalOpen] = useRecoilState(
-    IsSelectModalOpenState
-  );
+  const [selectedCategory, setSelectedCategory] =
+    useRecoilState(SelectedCategory);
+  const [isSelectModalOpen, setIsSelectModalOpen] =
+    useRecoilState(IsSelectCarModalOpen);
 
   useEffect(() => {
     data.forEach((category) => {
@@ -62,3 +55,7 @@ export default ({ data, currentCarId }: CarSelectModalProps) => {
     </BackDrop>
   );
 };
+
+const CarSelectModal = styled.div<{ isSelectModalOpen: boolean }>`
+  display: ${(props) => (props.isSelectModalOpen ? "block" : "none")};
+`;

@@ -1,4 +1,4 @@
-import useModelFilter from "../../hooks/queries/model/useModelFilter";
+import useModelFilter from "hooks/queries/model/useModelFilter";
 import Engine from "./Engine";
 import Mission from "./Mission";
 import Drivingtype from "./Drivingtype";

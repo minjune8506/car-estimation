@@ -1,18 +1,15 @@
 import styled from "styled-components";
 import { AiOutlineClose } from "react-icons/ai";
 import { IconContext } from "react-icons";
-import { useRecoilValue, useSetRecoilState } from "recoil";
+import { useSetRecoilState } from "recoil";
 import IsMainMenuOpenState from "../../states/home/IsMainMenuOpen";
-import FocusedCarCategoryState from "../../states/home/SelectedCarCategory";
 import { CategoryCars } from "../../types/CarCategory";
-import { Link } from "react-router-dom";
-import CarItem from "./CarItem";
+import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import CarItem from "./Car";
 
 const Cars = styled.ul`
   display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
   padding: 0 2rem;
 `;
 
@@ -46,19 +43,24 @@ const StyledText = styled.span`
 
 interface CarsProps {
   carsPerCategory: CategoryCars[];
+  selectedCategory?: number;
 }
 
-export default ({ carsPerCategory }: CarsProps) => {
+export default ({ carsPerCategory, selectedCategory }: CarsProps) => {
   const setIsMenuOpen = useSetRecoilState(IsMainMenuOpenState);
-  const focusedCategory = useRecoilValue(FocusedCarCategoryState);
-  const [selectedCar, setSelectedCar] = useState<undefined | number>(undefined);
+  const [currentCar, setCurrentCar] = useState<number | undefined>(undefined);
+  const navigate = useNavigate();
 
   const onCarItemMouseOver = (id: number) => {
-    setSelectedCar(id);
+    setCurrentCar(id);
   };
 
   const onCarItemMouseLeave = () => {
-    setSelectedCar(undefined);
+    setCurrentCar(undefined);
+  };
+
+  const navigateToModelSelect = (carId: number) => {
+    navigate(`/estimation/model?carId=${carId}`);
   };
 
   return (
@@ -73,24 +75,22 @@ export default ({ carsPerCategory }: CarsProps) => {
         </CloseButtonImg>
       </CloseButton>
       <Cars>
-        {focusedCategory &&
+        {selectedCategory &&
           carsPerCategory
-            .find((category) => category.categoryId === focusedCategory)
+            .find((category) => category.categoryId === selectedCategory)
             ?.cars.map((car) => (
-              <Link to={`estimation/model?carId=${car.carId}`}>
-                <CarItem
-                  car={car}
-                  key={car.carId}
-                  onMouseOver={onCarItemMouseOver}
-                  onMouseLeave={onCarItemMouseLeave}
-                  isHover={car.carId === selectedCar}
-                  hoverBackground="white"
-                  width="200px"
-                  height="200px"
-                >
-                  <StyledText>내 차 만들기</StyledText>
-                </CarItem>
-              </Link>
+              <CarItem
+                car={car}
+                hoverBackground="white"
+                onMouseOver={onCarItemMouseOver}
+                onMouseLeave={onCarItemMouseLeave}
+                onClick={navigateToModelSelect}
+                showChildren={car.carId === currentCar}
+                width="200px"
+                height="200px"
+              >
+                <StyledText>내 차 만들기</StyledText>
+              </CarItem>
             ))}
       </Cars>
     </ItemsWrap>

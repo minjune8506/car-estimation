@@ -4,18 +4,6 @@ import styled from "styled-components";
 import IsMainMenuOpenState from "../../states/home/IsMainMenuOpen";
 import MenuItems from "./MenuItems";
 
-const MenuDiv = styled.div<{ isMenuOpen: boolean }>`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  background-color: ${(props) => (props.isMenuOpen ? "white" : "")};
-`;
-
-const Logo = styled.div`
-  margin: 1rem;
-  cursor: pointer;
-`;
-
 function Menu() {
   const isMenuOpen = useRecoilValue(IsMainMenuOpenState);
 
@@ -30,3 +18,15 @@ function Menu() {
 }
 
 export default Menu;
+
+const MenuDiv = styled.div<{ isMenuOpen: boolean }>`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  background-color: ${(props) => (props.isMenuOpen ? "white" : "")};
+`;
+
+const Logo = styled.div`
+  margin: 1rem;
+  cursor: pointer;
+`;

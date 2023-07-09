@@ -1,43 +1,28 @@
 import { useNavigate } from "react-router-dom";
 import { Car } from "../../../types/Car";
-import { convertPrice } from "../../../common/utils/price-utils";
-
-interface CarProps {
-  car: Car;
-}
-
-function Car({ car }: CarProps) {
-  const navigate = useNavigate();
-
-  const navigateToModelSelect = () => {
-    navigate(`/estimation/model?carId=${car.carId}`);
-  };
-
-  return (
-    <button
-      className="flex flex-col items-center px-2 py-2 w-44"
-      onClick={navigateToModelSelect}
-    >
-      <div>
-        <img src={`/images/${car.carImg}`} className="object-cover"></img>
-      </div>
-      <div className="font-bold text-sm">{car.carName}</div>
-      <div className="text-xs text-gray-500">
-        {convertPrice(car.lowPrice, 10000)}만원 ~
-      </div>
-    </button>
-  );
-}
+import CarItem from "src/components/navigation/Car";
 
 interface CarListProps {
   cars: Car[];
 }
 
 export default ({ cars }: CarListProps) => {
+  const navigate = useNavigate();
+  const navigateToModelSelect = (carId: number) => {
+    navigate(`/estimation/model?carId=${carId}`);
+  };
+
   return (
     <div className="flex flex-row">
       {cars.map((car) => (
-        <Car car={car} key={car.carId}></Car>
+        <CarItem
+          car={car}
+          key={car.carId}
+          onClick={navigateToModelSelect}
+          hoverBackground="#F6F3F2"
+          width="200px"
+          height="150px"
+        />
       ))}
     </div>
   );

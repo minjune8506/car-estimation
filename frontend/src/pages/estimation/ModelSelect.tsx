@@ -1,16 +1,16 @@
-import ModelContainer from "../../components/estimation/ModelCards";
-import ModelSelectHeader from "../../components/estimation/Header";
 import { useLocation } from "react-router-dom";
-import QueryString from "qs";
-import ModelTypeInfos from "../../components/estimation/ModelTypeInfos";
-import useResetModelState from "../../hooks/reset/useResetModelState";
 import { useRecoilValue } from "recoil";
-import SelectedEngine from "../../states/model-select/SelectedEngine";
-import SelectedMission from "../../states/model-select/SelectedMission";
-import SelectedDrivingType from "../../states/model-select/SelectedDrivingType";
 import { ErrorBoundary } from "react-error-boundary";
-import ErrorFallBack from "../../components/common/ErrorFallback";
 import { useQueryErrorResetBoundary } from "@tanstack/react-query";
+import useResetModelState from "hooks/reset/useResetModelState";
+import SelectedEngine from "states/model-select/SelectedEngine";
+import SelectedMission from "states/model-select/SelectedMission";
+import SelectedDrivingType from "states/model-select/SelectedDrivingType";
+import ErrorFallBack from "components/common/ErrorFallback";
+import ModelTypeInfos from "components/estimation/model-select/ModelTypeInfos";
+import Header from "components/estimation/Header";
+import ModelCards from "components/estimation/model-select/ModelCards";
+import QueryString from "qs";
 
 export default function ModelSelect() {
   const location = useLocation();
@@ -20,10 +20,9 @@ export default function ModelSelect() {
   const selectedMission = useRecoilValue(SelectedMission);
   const selectedDrivingType = useRecoilValue(SelectedDrivingType);
 
-  const queryString = QueryString.parse(location.search, {
+  const { carId } = QueryString.parse(location.search, {
     ignoreQueryPrefix: true,
   });
-  const { carId } = queryString;
   const carIdNumber = parseInt(carId as string);
 
   const isReady = selectedEngine && selectedMission && selectedDrivingType;
@@ -31,7 +30,7 @@ export default function ModelSelect() {
 
   return (
     <>
-      <ModelSelectHeader carId={carIdNumber} current="Model-Select" />
+      <Header carId={carIdNumber} current="Model-Select" />
       <main className="flex flex-col px-6">
         <div className="w-full flex flex-row py-6">
           <ErrorBoundary FallbackComponent={ErrorFallBack} onReset={reset}>
@@ -40,7 +39,7 @@ export default function ModelSelect() {
         </div>
         {isReady && (
           <ErrorBoundary FallbackComponent={ErrorFallBack} onReset={reset}>
-            <ModelContainer
+            <ModelCards
               carId={carIdNumber}
               engineId={selectedEngine}
               missionId={selectedMission}

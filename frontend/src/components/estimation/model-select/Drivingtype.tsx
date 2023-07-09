@@ -1,9 +1,9 @@
 import { useRecoilState, useRecoilValue } from "recoil";
-import { Filter, ModelType } from "../../types/ModelFilter";
-import { ModelSelectButton } from "../common/button/Button";
+import { Filter, ModelType } from "../../../types/ModelFilter";
+import { ModelSelectButton } from "../../common/button/Button";
 import ModelTypeInfo from "./ModelTypeInfo";
-import SelectedDrivingType from "../../states/model-select/SelectedDrivingType";
-import EnableDrivingTypes from "../../states/model-select/EnableDrivingTypes";
+import SelectedDrivingType from "../../../states/model-select/SelectedDrivingType";
+import EnableDrivingTypes from "../../../states/model-select/EnableDrivingTypes";
 
 interface DrivingTypeProps {
   drivingTypes: ModelType[];
