@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
-import { Car } from "../../types/Car";
-import { convertPrice } from "../../common/utils/price-utils";
+import { Car } from "../../../types/Car";
+import { convertPrice } from "../../../common/utils/price-utils";
 
 interface CarProps {
   car: Car;
