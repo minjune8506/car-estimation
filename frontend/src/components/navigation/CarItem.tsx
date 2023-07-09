@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { Car } from "../../types/Car";
-import { convertPrice } from "../../common/utils/price_utils";
+import { convertPrice } from "../../common/utils/price-utils";
 import { ReactNode } from "react";
 
 const Price = styled.div`

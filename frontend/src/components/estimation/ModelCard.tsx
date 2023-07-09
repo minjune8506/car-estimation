@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import { SelectButton } from "../common/button/Button";
-import { addCommaToPrice } from "../../common/utils/price_utils";
 import { ModelTrim } from "../../types/ModelTrim";
 
 const BoldText = styled.span<{ fontSize?: string }>`

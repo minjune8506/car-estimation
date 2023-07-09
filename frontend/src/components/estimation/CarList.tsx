@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { Car } from "../../types/Car";
+import { convertPrice } from "../../common/utils/price-utils";
 
 interface CarProps {
   car: Car;
@@ -21,7 +22,9 @@ function Car({ car }: CarProps) {
         <img src={`/images/${car.carImg}`} className="object-cover"></img>
       </div>
       <div className="font-bold text-sm">{car.carName}</div>
-      <div className="text-xs text-gray-500">{car.lowPrice}만원 ~</div>
+      <div className="text-xs text-gray-500">
+        {convertPrice(car.lowPrice, 10000)}만원 ~
+      </div>
     </button>
   );
 }

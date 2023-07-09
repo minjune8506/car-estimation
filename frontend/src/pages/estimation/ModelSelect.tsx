@@ -1,5 +1,5 @@
 import ModelContainer from "../../components/estimation/ModelCards";
-import ModelSelectHeader from "../../components/estimation/ModelSelectHeader";
+import ModelSelectHeader from "../../components/estimation/Header";
 import { useLocation } from "react-router-dom";
 import QueryString from "qs";
 import ModelTypeInfos from "../../components/estimation/ModelTypeInfos";
@@ -31,7 +31,7 @@ export default function ModelSelect() {
 
   return (
     <>
-      <ModelSelectHeader carId={carIdNumber} />
+      <ModelSelectHeader carId={carIdNumber} current="Model-Select" />
       <main className="flex flex-col px-6">
         <div className="w-full flex flex-row py-6">
           <ErrorBoundary FallbackComponent={ErrorFallBack} onReset={reset}>
