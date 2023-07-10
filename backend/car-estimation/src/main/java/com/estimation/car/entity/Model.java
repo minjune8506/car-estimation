@@ -52,19 +52,19 @@ public class Model {
     private int price;
 
     @Column(length = 100)
-    private String modelImg;
+    private String imgPath;
 
     @Column(length = 100)
-    private String modelDetailImg1;
+    private String detailImgPath1;
 
     @Column(length = 100)
-    private String modelDetailImg2;
+    private String detailImgPath2;
 
     @Column(length = 100)
-    private String modelDetailImg3;
+    private String detailImgPath3;
 
     @Builder
-    public Model(final Car car, final Engine engine, final DrivingType drivingType, final Mission mission, final String trimName, final String name, final String basicInfo, final int price, final String modelImg, final String modelDetailImg1, final String modelDetailImg2, final String modelDetailImg3) {
+    public Model(final Car car, final Engine engine, final DrivingType drivingType, final Mission mission, final String trimName, final String name, final String basicInfo, final int price, final String imgPath, final String detailImgPath1, final String detailImgPath2, final String detailImgPath3) {
         this.car = car;
         this.engine = engine;
         this.drivingType = drivingType;
@@ -73,9 +73,9 @@ public class Model {
         this.name = name;
         this.basicInfo = basicInfo;
         this.price = price;
-        this.modelImg = modelImg;
-        this.modelDetailImg1 = modelDetailImg1;
-        this.modelDetailImg2 = modelDetailImg2;
-        this.modelDetailImg3 = modelDetailImg3;
+        this.imgPath = imgPath;
+        this.detailImgPath1 = detailImgPath1;
+        this.detailImgPath2 = detailImgPath2;
+        this.detailImgPath3 = detailImgPath3;
     }
 }

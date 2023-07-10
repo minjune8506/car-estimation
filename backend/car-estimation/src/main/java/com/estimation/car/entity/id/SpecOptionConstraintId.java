@@ -9,7 +9,7 @@ import java.io.Serializable;
 @EqualsAndHashCode
 @AllArgsConstructor
 @NoArgsConstructor
-public class ModelBasicOptionId implements Serializable {
-    private Integer model;
-    private Integer option;
+public class SpecOptionConstraintId implements Serializable {
+    private int source;
+    private int target;
 }

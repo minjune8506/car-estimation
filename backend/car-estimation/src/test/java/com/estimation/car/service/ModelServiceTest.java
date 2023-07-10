@@ -80,9 +80,9 @@ class ModelServiceTest {
                            .mission(MissionFixture.AUTO)
                            .drivingType(DrivingTypeFixture._2WD)
                            .trimName("Modern")
-                           .modelDetailImg1("1")
-                           .modelDetailImg2("2")
-                           .modelDetailImg3("3")
+                           .detailImgPath1("1")
+                           .detailImgPath2("2")
+                           .detailImgPath3("3")
                            .price(12340000)
                            .build();
 
