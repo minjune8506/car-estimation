@@ -78,4 +78,8 @@ public class Model {
         this.detailImgPath2 = detailImgPath2;
         this.detailImgPath3 = detailImgPath3;
     }
+
+    public int getCarId() {
+        return car.getId();
+    }
 }

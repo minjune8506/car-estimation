@@ -33,4 +33,20 @@ public class SpecColor {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "INTERIOR_COLOR_ID")
     private InteriorColor interiorColor;
+
+    public int getModelId() {
+        return spec.getModel().getId();
+    }
+
+    public int getInteriorColorId() {
+        return interiorColor.getId();
+    }
+
+    public int getExteriorColorId() {
+        return exteriorColor.getId();
+    }
+
+    public char getSpecCode() {
+        return spec.getSpecCode();
+    }
 }
