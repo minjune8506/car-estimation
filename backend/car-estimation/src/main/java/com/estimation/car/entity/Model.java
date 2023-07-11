@@ -1,18 +1,7 @@
 package com.estimation.car.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import jakarta.persistence.*;
+import lombok.*;
 
 @Getter
 @ToString
@@ -54,14 +43,8 @@ public class Model {
     @Column(length = 100)
     private String imgPath;
 
-    @Column(length = 100)
-    private String detailImgPath1;
-
-    @Column(length = 100)
-    private String detailImgPath2;
-
-    @Column(length = 100)
-    private String detailImgPath3;
+    @Embedded
+    private ModelDetail modelDetail;
 
     @Builder
     public Model(final Car car, final Engine engine, final DrivingType drivingType, final Mission mission, final String trimName, final String name, final String basicInfo, final int price, final String imgPath, final String detailImgPath1, final String detailImgPath2, final String detailImgPath3) {
@@ -74,9 +57,11 @@ public class Model {
         this.basicInfo = basicInfo;
         this.price = price;
         this.imgPath = imgPath;
-        this.detailImgPath1 = detailImgPath1;
-        this.detailImgPath2 = detailImgPath2;
-        this.detailImgPath3 = detailImgPath3;
+        this.modelDetail = ModelDetail.builder()
+                .detailImgPath1(detailImgPath1)
+                .detailImgPath2(detailImgPath2)
+                .detailImgPath3(detailImgPath3)
+                .build();
     }
 
     public int getCarId() {

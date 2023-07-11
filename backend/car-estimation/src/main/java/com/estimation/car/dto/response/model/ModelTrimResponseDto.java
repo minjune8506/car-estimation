@@ -18,12 +18,12 @@ public class ModelTrimResponseDto {
 
     public static ModelTrimResponseDto from(final Model model) {
         return ModelTrimResponseDto.builder()
-                                   .id(model.getId())
-                                   .trimName(model.getTrimName())
-                                   .price(model.getPrice())
-                                   .basicInfo(model.getBasicInfo())
-                                   .modelImg(model.getImgPath())
-                                   .detailImgs(List.of(model.getDetailImgPath1(), model.getDetailImgPath2(), model.getDetailImgPath3()))
-                                   .build();
+                .id(model.getId())
+                .trimName(model.getTrimName())
+                .price(model.getPrice())
+                .basicInfo(model.getBasicInfo())
+                .modelImg(model.getImgPath())
+                .detailImgs(List.of(model.getModelDetail().getDetailImgPath1(), model.getModelDetail().getDetailImgPath2(), model.getModelDetail().getDetailImgPath3()))
+                .build();
     }
 }
