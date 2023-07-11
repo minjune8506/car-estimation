@@ -2,7 +2,7 @@ package com.estimation.car.controller;
 
 import com.estimation.car.common.code.Code;
 import com.estimation.car.common.response.Response;
-import com.estimation.car.dto.response.carcategory.CategoryCarsResponseDto;
+import com.estimation.car.dto.response.car.category.CategoryCarsResponseDto;
 import com.estimation.car.service.CarCategoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

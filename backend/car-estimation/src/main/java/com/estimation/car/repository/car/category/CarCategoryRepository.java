@@ -1,4 +1,4 @@
-package com.estimation.car.repository;
+package com.estimation.car.repository.car.category;
 
 import com.estimation.car.entity.CarCategory;
 import org.springframework.data.jpa.repository.JpaRepository;

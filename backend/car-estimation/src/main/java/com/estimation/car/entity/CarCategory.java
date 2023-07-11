@@ -28,7 +28,7 @@ public class CarCategory {
     private String name;
 
     @OneToMany(mappedBy = "carCategory")
-    private List<Car> cars = new ArrayList<>();
+    private final List<Car> cars = new ArrayList<>();
 
     @Builder
     public CarCategory(String name) {

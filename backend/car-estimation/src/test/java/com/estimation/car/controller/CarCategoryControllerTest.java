@@ -1,7 +1,7 @@
 package com.estimation.car.controller;
 
 import com.estimation.car.dto.response.car.CarResponseDto;
-import com.estimation.car.dto.response.carcategory.CategoryCarsResponseDto;
+import com.estimation.car.dto.response.car.category.CategoryCarsResponseDto;
 import com.estimation.car.service.CarCategoryService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

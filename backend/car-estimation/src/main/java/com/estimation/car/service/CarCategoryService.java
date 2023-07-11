@@ -1,8 +1,8 @@
 package com.estimation.car.service;
 
+import com.estimation.car.dto.response.car.category.CategoryCarsResponseDto;
 import com.estimation.car.entity.CarCategory;
-import com.estimation.car.dto.response.carcategory.CategoryCarsResponseDto;
-import com.estimation.car.repository.CarCategoryRepository;
+import com.estimation.car.repository.car.category.CarCategoryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +18,7 @@ public class CarCategoryService {
     public List<CategoryCarsResponseDto> findAllCategoryWithCars() {
         List<CarCategory> categories = carCategoryRepository.findAllCategoryWithCar();
         return categories.stream()
-                         .map(CategoryCarsResponseDto::toDto)
+                         .map(CategoryCarsResponseDto::from)
                          .toList();
     }
 }

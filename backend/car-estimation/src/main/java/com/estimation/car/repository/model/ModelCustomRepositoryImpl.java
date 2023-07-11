@@ -1,7 +1,6 @@
-package com.estimation.car.repository.impl;
+package com.estimation.car.repository.model;
 
 import com.estimation.car.entity.Model;
-import com.estimation.car.repository.ModelCustomRepository;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;

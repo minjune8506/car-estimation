@@ -5,21 +5,14 @@ import lombok.Builder;
 import lombok.Getter;
 
 @Getter
+@Builder
 public class CarResponseDto {
     private final int carId;
     private final String carName;
     private final Integer lowPrice;
     private final String carImg;
 
-    @Builder
-    public CarResponseDto(final int carId, final String carName, final Integer lowPrice, final String carImg) {
-        this.carId = carId;
-        this.carName = carName;
-        this.lowPrice = lowPrice;
-        this.carImg = carImg;
-    }
-
-    public static CarResponseDto toDto(final Car car) {
+    public static CarResponseDto from(final Car car) {
         return CarResponseDto.builder()
                              .carId(car.getId())
                              .carName(car.getName())

@@ -6,25 +6,17 @@ import com.estimation.car.dto.response.mission.MissionFilterResponseDto;
 import com.estimation.car.entity.Model;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.ToString;
 
 import java.util.List;
 
 @Getter
-@ToString
+@Builder
 public class ModelFilterResponseDto {
     private final List<EngineFilterResponseDto> engines;
     private final List<MissionFilterResponseDto> missions;
     private final List<DrivingTypeFilterResponseDto> drivingTypes;
 
-    @Builder
-    public ModelFilterResponseDto(final List<EngineFilterResponseDto> engines, final List<MissionFilterResponseDto> missions, final List<DrivingTypeFilterResponseDto> drivingTypes) {
-        this.engines = engines;
-        this.missions = missions;
-        this.drivingTypes = drivingTypes;
-    }
-
-    public static ModelFilterResponseDto toDto(final List<Model> models) {
+    public static ModelFilterResponseDto from(final List<Model> models) {
         List<EngineFilterResponseDto> engines = toEngineFilterDto(models);
         List<MissionFilterResponseDto> missions = toMissoinFilterDto(models);
         List<DrivingTypeFilterResponseDto> drivingTypes = toDrivingTypeFilterDto(models);
@@ -40,7 +32,7 @@ public class ModelFilterResponseDto {
         return models.stream()
                      .map(Model::getDrivingType)
                      .distinct()
-                     .map(DrivingTypeFilterResponseDto::toDto)
+                     .map(DrivingTypeFilterResponseDto::from)
                      .toList();
     }
 
@@ -48,7 +40,7 @@ public class ModelFilterResponseDto {
         return models.stream()
                      .map(Model::getEngine)
                      .distinct()
-                     .map(EngineFilterResponseDto::toDto)
+                     .map(EngineFilterResponseDto::from)
                      .toList();
     }
 
@@ -56,7 +48,7 @@ public class ModelFilterResponseDto {
         return models.stream()
                      .map(Model::getMission)
                      .distinct()
-                     .map(MissionFilterResponseDto::toDto)
+                     .map(MissionFilterResponseDto::from)
                      .toList();
     }
 

@@ -3,6 +3,8 @@ package com.estimation.car.repository;
 import com.estimation.car.common.config.QuerydslConfig;
 import com.estimation.car.entity.Car;
 import com.estimation.car.entity.CarCategory;
+import com.estimation.car.repository.car.CarRepository;
+import com.estimation.car.repository.car.category.CarCategoryRepository;
 import com.estimation.car.support.CarCategoryFixture;
 import com.estimation.car.support.CarFixture;
 import org.junit.jupiter.api.Test;

@@ -4,7 +4,7 @@ import com.estimation.car.common.exception.ModelNotFoundException;
 import com.estimation.car.dto.response.model.ModelFilterResponseDto;
 import com.estimation.car.dto.response.model.ModelTrimResponseDto;
 import com.estimation.car.entity.Model;
-import com.estimation.car.repository.ModelRepository;
+import com.estimation.car.repository.model.ModelRepository;
 import com.estimation.car.support.DrivingTypeFixture;
 import com.estimation.car.support.EngineFixture;
 import com.estimation.car.support.MissionFixture;

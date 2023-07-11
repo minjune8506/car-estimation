@@ -1,4 +1,4 @@
-package com.estimation.car.repository;
+package com.estimation.car.repository.model;
 
 import com.estimation.car.entity.Model;
 
