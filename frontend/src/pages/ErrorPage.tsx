@@ -1,4 +1,4 @@
-import { useRouteError } from "react-router-dom";
+import { useNavigate, useRouteError } from "react-router-dom";
 import styled from "styled-components";
 
 const Error = styled.div`
@@ -18,12 +18,20 @@ const ErrorText = styled.h1`
 
 export default () => {
   const error: any = useRouteError();
+  const navigate = useNavigate();
   return (
     <Error>
       <ErrorText>오류가 발생했습니다.</ErrorText>
-      <p>
-        <i>{error.statusText || error.message}</i>
-      </p>
+      <div className="flex flex-col items-center justify-center">
+        <span>{error.errorCode}</span>
+        <span>{error.statusText || error.message}</span>
+      </div>
+      <button
+        className="px-4 py-2 my-4 bg-gray-500 text-white text-sm"
+        onClick={() => navigate(-1)}
+      >
+        돌아가기
+      </button>
     </Error>
   );
 };

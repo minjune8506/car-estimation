@@ -1,6 +1,7 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
 import { Response } from "../../types/Response";
 import { VITE_API_SERVER_URL } from "../constants/constants";
+import CustomError from "../CustomError";
 
 export async function customFetch(url: string, config?: AxiosRequestConfig) {
   const response: AxiosResponse<Response<any>> = await axios(
@@ -8,7 +9,7 @@ export async function customFetch(url: string, config?: AxiosRequestConfig) {
     config
   );
   if (response.data.code) {
-    throw new Error(response.data.message);
+    throw new CustomError(response.data.code, response.data.message);
   }
   return response.data.data;
 }

@@ -1,20 +1,15 @@
-import { ErrorBoundary } from "react-error-boundary";
+import Menu from "src/components/menu/Menu";
 import CarSlider from "../components/home/CarSlider";
 import Footer from "../components/home/Footer";
-import Header from "../components/home/Header";
-import { useResetHomeState } from "../hooks/reset/useResetHomeState";
-import ErrorFallBack from "../components/common/ErrorFallback";
-import { useQueryErrorResetBoundary } from "@tanstack/react-query";
+import MenuNavigation from "src/components/navigation/MenuNavigation";
 
 export default () => {
-  useResetHomeState();
-  const { reset } = useQueryErrorResetBoundary();
-
   return (
     <>
-      <ErrorBoundary FallbackComponent={ErrorFallBack} onReset={reset}>
-        <Header />
-      </ErrorBoundary>
+      <header className="w-full fixed top-0 z-10">
+        <Menu />
+        <MenuNavigation />
+      </header>
       <CarSlider />
       <Footer />
     </>
