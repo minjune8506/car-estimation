@@ -1,7 +1,9 @@
+export interface OptionCategory {
+	categoryId: number;
+	categoryName: string;
+}
 export interface Option {
-  id: number;
-  name: string;
-  price: number;
-  img: string;
-  choiceYn: "Y" | "N";
+	optionId: number;
+	optionName: string;
+	category: OptionCategory;
 }

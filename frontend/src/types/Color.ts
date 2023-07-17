@@ -1,7 +1,10 @@
 export interface Color {
   id: number;
   name: string;
-  img: string;
-  choiceYn: "Y" | "N";
-  price: number;
+  code: string;
+  choiceYn?: boolean;
 }
+
+export interface InteriorColor extends Color {}
+
+export interface ExteriorColor extends Color {}
