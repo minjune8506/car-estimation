@@ -1,6 +1,6 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
-import { VITE_API_SERVER_URL } from "../constants/env.constants";
 import { Response } from "../../types/Response";
+import { VITE_API_SERVER_URL } from "../constants/constants";
 
 export async function customFetch(url: string, config?: AxiosRequestConfig) {
   const response: AxiosResponse<Response<any>> = await axios(
