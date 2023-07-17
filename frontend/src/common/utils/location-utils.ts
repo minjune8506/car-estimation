@@ -7,3 +7,10 @@ export function getCarIdFrom(location: Location) {
   });
   return parseInt(carId as string);
 }
+
+export function getModelIdFrom(location: Location) {
+  const { modelId } = QueryString.parse(location.search, {
+    ignoreQueryPrefix: true,
+  });
+  return parseInt(modelId as string);
+}

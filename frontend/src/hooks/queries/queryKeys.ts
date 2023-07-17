@@ -82,13 +82,22 @@ export const SpecKeys = {
     ] as const,
   changeColor: (
     modelId: number,
+    beforeExteriorColorId: number,
     afterInteriorColorId: number,
+    beforeInteriorColorId: number,
     afterExteriorColorId: number,
     options: number[]
   ) => [
     ...SpecKeys.all,
     "color",
     "change",
-    { modelId, afterExteriorColorId, afterInteriorColorId, options },
+    {
+      modelId,
+      beforeExteriorColorId,
+      afterExteriorColorId,
+      beforeInteriorColorId,
+      afterInteriorColorId,
+      options,
+    },
   ],
 };

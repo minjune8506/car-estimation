@@ -1,9 +1,11 @@
 import { customFetch } from "common/utils/customFetch";
 import {
+  ChangeExteriorColor,
+  ChangeInteriorColor,
+  ChangeModel,
   CheckSpec,
   CheckSpecFail,
-  SpecColorChangeFail,
-  SpecColorChangeSuccess,
+  ConstraintCheck,
   SpecInfo,
   SpecOptionConstraint,
 } from "types/Spec";
@@ -41,17 +43,35 @@ export const specAPI = {
   },
   fetchColorChange: (
     modelId: number,
-    exteriorColorId: number,
-    interiorColorId: number,
+    beforeExteriorColorId: number,
+    afterExteriorColorId: number,
+    beforeInteriorColorId: number,
+    afterInteriorColorId: number,
     options: number[]
-  ): Promise<SpecColorChangeFail> | Promise<SpecColorChangeSuccess> => {
+  ): Promise<ChangeExteriorColor | ChangeInteriorColor | ChangeModel> => {
     return customFetch(`/specs/colors/change`, {
       method: "get",
       params: {
         modelId,
-        afterExteriorColorId: exteriorColorId,
-        afterInteriorColorId: interiorColorId,
+        beforeExteriorColorId,
+        afterExteriorColorId,
+        beforeInteriorColorId,
+        afterInteriorColorId,
         options: options.length ? options.toString() : "",
+      },
+    });
+  },
+  fetchOptionConstraintCheck: (
+    modelId: number,
+    selectedOptions: number[],
+    targetOptionId: number
+  ): Promise<ConstraintCheck> => {
+    return customFetch(`/specs/constraints/check`, {
+      method: "get",
+      params: {
+        modelId,
+        selectedOptions: selectedOptions.length ? selectedOptions.toString() : "",
+        targetOptionId,
       },
     });
   },

@@ -48,14 +48,23 @@ export enum Action {
   DISABLE = "DISABLE",
 }
 
-export interface SpecColorChangeFail {
-  changeExteriorColorYn: string;
+export interface ChangeExteriorColor {
+  changeExteriorYn: string;
 }
 
-export interface SpecColorChangeSuccess {
+export interface ChangeInteriorColor {
+  changeInteriorYn: string;
+}
+
+export interface ChangeModel {
   modelInfo: Model;
   exteriorColor: ExteriorColor;
   interiorColor: InteriorColor;
   delOptions: SpecOption[];
   addOptions: SpecOption[];
+}
+
+export interface ConstraintCheck {
+  addOptions: SpecOption[];
+  delOptions: SpecOption[];
 }

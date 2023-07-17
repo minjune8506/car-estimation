@@ -1,9 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
 import {
+  ChangeExteriorColor,
+  ChangeInteriorColor,
+  ChangeModel,
   CheckSpec,
   CheckSpecFail,
-  SpecColorChangeFail,
-  SpecColorChangeSuccess,
   SpecInfo,
   SpecOptionConstraint,
 } from "src/types/Spec";
@@ -80,21 +81,30 @@ export function useSpecOptionConstraints(
 
 export function useSpecColorChange(
   modelId: number,
+  beforeExteriorColorId: number,
   afterExteriorColorId: number,
+  beforeInteriorColorId: number,
   afterInteriorColorId: number,
   options: number[]
 ) {
-  return useQuery<SpecColorChangeFail | SpecColorChangeSuccess, Error>({
+  return useQuery<
+    ChangeExteriorColor | ChangeInteriorColor | ChangeModel,
+    Error
+  >({
     queryKey: SpecKeys.changeColor(
       modelId,
+      beforeExteriorColorId,
       afterExteriorColorId,
+      beforeInteriorColorId,
       afterInteriorColorId,
       options
     ),
     queryFn: async () => {
       const data = specAPI.fetchColorChange(
         modelId,
+        beforeExteriorColorId,
         afterExteriorColorId,
+        beforeInteriorColorId,
         afterInteriorColorId,
         options
       );
