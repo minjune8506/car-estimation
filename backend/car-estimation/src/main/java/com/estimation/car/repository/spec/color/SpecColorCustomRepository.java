@@ -17,4 +17,6 @@ public interface SpecColorCustomRepository {
     List<SpecColor> findSpecColorsBy(int modelId, int exteriorColorId, int interiorColorId);
 
     List<SpecColor> findSpecColorsBy(int modelId, char specCode);
+
+    List<SpecColor> findSpecColorsToChangeBy(int modelId);
 }

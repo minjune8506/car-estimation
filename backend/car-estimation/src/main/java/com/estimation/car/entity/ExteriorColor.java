@@ -21,4 +21,7 @@ public class ExteriorColor {
 
     @Column(length = 20, nullable = false)
     private String name;
+
+    @Column(length = 10)
+    private String code;
 }

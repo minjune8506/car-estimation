@@ -9,13 +9,15 @@ import lombok.Getter;
 public class ExteriorColorResponse {
     private final int id;
     private final String name;
+    private final String code;
     private final boolean choiceYn;
 
     public static ExteriorColorResponse from(ExteriorColor exteriorColor, boolean choiceYn) {
         return ExteriorColorResponse.builder()
-                                    .id(exteriorColor.getId())
-                                    .name(exteriorColor.getName())
-                                    .choiceYn(choiceYn)
-                                    .build();
+                .id(exteriorColor.getId())
+                .name(exteriorColor.getName())
+                .code(exteriorColor.getCode())
+                .choiceYn(choiceYn)
+                .build();
     }
 }

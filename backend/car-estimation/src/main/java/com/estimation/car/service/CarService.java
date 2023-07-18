@@ -16,6 +16,7 @@ import com.estimation.car.service.support.SpecColorExtractor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.function.Predicate;
 
@@ -43,40 +44,13 @@ public class CarService {
         List<InteriorColor> modelInteriorColors = extractor.extractFilteredBy(predicate, SpecColor::getInteriorColor);
 
         List<ExteriorColorResponse> exteriorColorResponses = exteriorColors.stream()
-                                                                           .map(exteriorColor -> ExteriorColorResponse.from(exteriorColor, modelExteriorColors.contains(exteriorColor)))
-                                                                           .toList();
+                .map(exteriorColor -> ExteriorColorResponse.from(exteriorColor, modelExteriorColors.contains(exteriorColor)))
+                .sorted(Comparator.comparing(ExteriorColorResponse::isChoiceYn).reversed())
+                .toList();
         List<InteriorColorResponse> interiorColorResponses = interiorColors.stream()
-                                                                           .map(interiorColor -> InteriorColorResponse.from(interiorColor, modelInteriorColors.contains(interiorColor)))
-                                                                           .toList();
+                .map(interiorColor -> InteriorColorResponse.from(interiorColor, modelInteriorColors.contains(interiorColor)))
+                .sorted(Comparator.comparing(InteriorColorResponse::isChoiceYn).reversed())
+                .toList();
         return CarColorResponse.from(exteriorColorResponses, interiorColorResponses);
     }
 }
-
-//        Set<ExteriorColor> carExteriorColorSet = new HashSet<>();
-//        Set<InteriorColor> carInteriorColorSet = new HashSet<>();
-//        Set<ExteriorColor> modelExteriorColorSet = new HashSet<>();
-//        Set<InteriorColor> modelInteriorColorSet = new HashSet<>();
-//
-//        for (SpecColor color : colors) {
-//            ExteriorColor exteriorColor = color.getExteriorColor();
-//            InteriorColor interiorColor = color.getInteriorColor();
-//
-//            carExteriorColorSet.add(exteriorColor);
-//            carInteriorColorSet.add(interiorColor);
-//
-//            if (color.getModelId() == modelId) {
-//                modelExteriorColorSet.add(exteriorColor);
-//                modelInteriorColorSet.add(interiorColor);
-//            }
-//        }
-
-//        List<ExteriorColorResponse> exteriorColorResponses = new ArrayList<>();
-//        List<InteriorColorResponse> interiorColorResponses = new ArrayList<>();
-//
-//        for (ExteriorColor exteriorColor : carExteriorColorSet) {
-//            exteriorColorResponses.add(ExteriorColorResponse.from(exteriorColor, modelExteriorColorSet.contains(exteriorColor)));
-//        }
-//        for (InteriorColor interiorColor : carInteriorColorSet) {
-//            interiorColorResponses.add(InteriorColorResponse.from(interiorColor, modelInteriorColorSet.contains(interiorColor)));
-//        }
-//

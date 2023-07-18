@@ -7,7 +7,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Optional;
 
 import static com.estimation.car.entity.QModel.model;
 
@@ -19,40 +18,37 @@ public class ModelCustomRepositoryImpl implements ModelCustomRepository {
     private final JPAQueryFactory jpaQueryFactory;
 
     @Override
-    public List<Model> filterModels(final int carId, final Optional<Integer> engineId, final Optional<Integer> missionId) {
+    public List<Model> filterModels(final int carId, final Integer engineId, final Integer missionId) {
         return jpaQueryFactory.selectFrom(model)
-                              .innerJoin(model.engine)
-                              .fetchJoin()
-                              .innerJoin(model.mission)
-                              .fetchJoin()
-                              .innerJoin(model.drivingType)
-                              .fetchJoin()
-                              .where(
-                                      model.car.id.eq(carId),
-                                      eqEngineId(engineId),
-                                      eqMissionId(missionId)
-                              )
-                              .orderBy(model.car.id.asc(), model.engine.id.asc(), model.mission.id.asc(), model.drivingType.id.asc())
-                              .fetch();
+                .innerJoin(model.engine).fetchJoin()
+                .innerJoin(model.mission).fetchJoin()
+                .innerJoin(model.drivingType).fetchJoin()
+                .where(
+                        model.car.id.eq(carId),
+                        eqEngineId(engineId),
+                        eqMissionId(missionId)
+                )
+                .orderBy(model.car.id.asc(), model.engine.id.asc(), model.mission.id.asc(), model.drivingType.id.asc())
+                .fetch();
     }
 
     @Override
     public List<Model> findTrims(final int carId, final int engineId, final int missionId, final int drivingTypeId) {
         return jpaQueryFactory.selectFrom(model)
-                              .where(model.car.id.eq(carId),
-                                      model.engine.id.eq(engineId),
-                                      model.mission.id.eq(missionId),
-                                      model.drivingType.id.eq(drivingTypeId))
-                              .orderBy(model.id.asc())
-                              .fetch();
+                .where(model.car.id.eq(carId),
+                        model.engine.id.eq(engineId),
+                        model.mission.id.eq(missionId),
+                        model.drivingType.id.eq(drivingTypeId))
+                .orderBy(model.id.asc())
+                .fetch();
     }
 
-    private BooleanExpression eqEngineId(final Optional<Integer> engineId) {
-        return engineId.map(model.engine.id::eq).orElse(null);
+    private BooleanExpression eqEngineId(final Integer engineId) {
+        return engineId != null ? model.engine.id.eq(engineId) : null;
     }
 
-    private BooleanExpression eqMissionId(final Optional<Integer> missionId) {
-        return missionId.map(model.mission.id::eq).orElse(null);
+    private BooleanExpression eqMissionId(final Integer missionId) {
+        return missionId != null ? model.mission.id.eq(missionId) : null;
     }
 
 }

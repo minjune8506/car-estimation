@@ -9,4 +9,6 @@ public interface CustomSpecOptionRepository {
 
     List<SpecOption> findSpecOptionsBy(int modelId, Optional<Character> specCode);
 
+    List<SpecOption> findSpecOptionsBy(int modelId, List<Integer> optionIds);
+
 }

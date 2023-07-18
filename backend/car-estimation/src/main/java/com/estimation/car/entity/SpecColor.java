@@ -49,4 +49,8 @@ public class SpecColor {
     public char getSpecCode() {
         return spec.getSpecCode();
     }
+
+    public Model getModel() {
+        return spec.getModel();
+    }
 }

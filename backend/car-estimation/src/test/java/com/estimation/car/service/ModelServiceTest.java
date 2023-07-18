@@ -2,7 +2,7 @@ package com.estimation.car.service;
 
 import com.estimation.car.common.exception.ModelNotFoundException;
 import com.estimation.car.dto.response.model.ModelFilterResponseDto;
-import com.estimation.car.dto.response.model.ModelTrimResponseDto;
+import com.estimation.car.dto.response.model.ModelResponse;
 import com.estimation.car.entity.Model;
 import com.estimation.car.repository.model.ModelRepository;
 import com.estimation.car.support.DrivingTypeFixture;
@@ -89,7 +89,7 @@ class ModelServiceTest {
         given(repository.findTrims(anyInt(), anyInt(), anyInt(), anyInt())).willReturn(List.of(model));
 
         // when
-        List<ModelTrimResponseDto> result = modelService.findTrims(1, 1, 1, 1);
+        List<ModelResponse> result = modelService.findTrims(1, 1, 1, 1);
 
         // then
         assertAll(
@@ -106,7 +106,7 @@ class ModelServiceTest {
 
         // when
         Throwable thrown = catchThrowable(() -> {
-            List<ModelTrimResponseDto> result = modelService.findTrims(1, 1, 1, 1);
+            List<ModelResponse> result = modelService.findTrims(1, 1, 1, 1);
         });
 
         // then

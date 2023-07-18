@@ -6,7 +6,7 @@ import com.estimation.car.dto.response.drivingtype.DrivingTypeFilterResponseDto;
 import com.estimation.car.dto.response.engine.EngineFilterResponseDto;
 import com.estimation.car.dto.response.mission.MissionFilterResponseDto;
 import com.estimation.car.dto.response.model.ModelFilterResponseDto;
-import com.estimation.car.dto.response.model.ModelTrimResponseDto;
+import com.estimation.car.dto.response.model.ModelResponse;
 import com.estimation.car.service.ModelService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -125,12 +125,12 @@ class ModelControllerTest {
 
     @Test
     void 선택가능한_트림들을_반환한다() throws Exception {
-        ModelTrimResponseDto trimResponseDto = ModelTrimResponseDto.builder()
+        ModelResponse trimResponseDto = ModelResponse.builder()
                                                                    .id(1)
                                                                    .trimName("Modern")
                                                                    .price(24000000)
                                                                    .basicInfo("자가용 가솔린 1.6 A/T")
-                                                                   .modelImg("avante.png")
+                                                                   .imgPath("avante.png")
                                                                    .detailImgs(List.of("detail-1.png"))
                                                                    .build();
         given(modelService.findTrims(anyInt(), anyInt(), anyInt(), anyInt())).willReturn(List.of(trimResponseDto));

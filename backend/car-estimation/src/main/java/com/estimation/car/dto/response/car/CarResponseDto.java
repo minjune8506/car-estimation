@@ -9,15 +9,17 @@ import lombok.Getter;
 public class CarResponseDto {
     private final int carId;
     private final String carName;
+    private final String carNameEn;
     private final Integer lowPrice;
     private final String carImg;
 
     public static CarResponseDto from(final Car car) {
         return CarResponseDto.builder()
-                             .carId(car.getId())
-                             .carName(car.getName())
-                             .lowPrice(car.getLowPrice())
-                             .carImg(car.getImgPath())
-                             .build();
+                .carId(car.getId())
+                .carName(car.getName())
+                .carNameEn(car.getNameEn())
+                .lowPrice(car.getLowPrice())
+                .carImg(car.getImgPath())
+                .build();
     }
 }

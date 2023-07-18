@@ -30,6 +30,8 @@ public class Car {
     @Column(length = 100, nullable = false)
     private String name;
 
+    private String nameEn;
+
     @Column(nullable = false)
     private int lowPrice;
 

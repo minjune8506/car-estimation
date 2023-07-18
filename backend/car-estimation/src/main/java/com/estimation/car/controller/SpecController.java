@@ -4,15 +4,12 @@ import com.estimation.car.common.code.Code;
 import com.estimation.car.common.response.Response;
 import com.estimation.car.dto.response.spec.CheckSpecResponse;
 import com.estimation.car.dto.response.spec.SpecInfoResponse;
+import com.estimation.car.dto.response.spec.option.constraints.ConstraintCheckResponse;
 import com.estimation.car.dto.response.spec.option.constraints.SpecOptionConstraintResponse;
 import com.estimation.car.service.SpecService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -45,11 +42,29 @@ public class SpecController {
         return ResponseEntity.ok(Response.of(Code.SUCCESS, result));
     }
 
+    @GetMapping("/constraints/check")
+    public ResponseEntity<Response<ConstraintCheckResponse>> checkConstraints(@RequestParam("modelId") int modelId,
+                                                                              @RequestParam("selectedOptions") List<Integer> selectedOptions,
+                                                                              @RequestParam("targetOptionId") int targetOptionId) {
+        ConstraintCheckResponse result = specService.checkSpecOptionConstraints(modelId, selectedOptions, targetOptionId);
+        return ResponseEntity.ok(Response.of(Code.SUCCESS, result));
+    }
+
     @GetMapping("/options/constraints")
     public ResponseEntity<Response<List<SpecOptionConstraintResponse>>> findOptionConstraints(@RequestParam("modelId") int modelId,
-                                                                                              @RequestParam("specCode") char specCode,
-                                                                                              @RequestParam("optionId") int optionId) {
-        List<SpecOptionConstraintResponse> result = specService.findSpecConstraints(modelId, specCode, optionId);
+                                                                                              @RequestParam("selectedOptions") List<Integer> selectedOptions) {
+        List<SpecOptionConstraintResponse> result = specService.findSpecConstraints(modelId, selectedOptions);
+        return ResponseEntity.ok(Response.of(Code.SUCCESS, result));
+    }
+
+    @GetMapping("/colors/change")
+    public ResponseEntity<Response<?>> changeColor(@RequestParam("modelId") int modelId,
+                                                   @RequestParam(value = "beforeExteriorColorId") int beforeExteriorColorId,
+                                                   @RequestParam(value = "beforeInteriorColorId") int beforeInteriorColorId,
+                                                   @RequestParam(value = "afterExteriorColorId") int afterExteriorColorId,
+                                                   @RequestParam(value = "afterInteriorColorId") int afterInteriorColorId,
+                                                   @RequestParam(value = "options") List<Integer> options) {
+        Object result = specService.changeColor(modelId, beforeExteriorColorId, beforeInteriorColorId, afterExteriorColorId, afterInteriorColorId, options);
         return ResponseEntity.ok(Response.of(Code.SUCCESS, result));
     }
 }

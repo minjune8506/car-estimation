@@ -7,7 +7,7 @@ import java.util.Optional;
 
 public interface ModelCustomRepository {
 
-    List<Model> filterModels(int carId, Optional<Integer> engineId, Optional<Integer> missionId);
+    List<Model> filterModels(int carId, Integer engineId, Integer missionId);
 
     List<Model> findTrims(int carId, int engineId, int missionId, int drivingTypeId);
 }

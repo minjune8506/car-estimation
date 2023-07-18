@@ -1,5 +1,7 @@
 package com.estimation.car.dto.response.spec.color;
 
+import com.estimation.car.dto.response.exteriorcolor.ExteriorColorResponse;
+import com.estimation.car.dto.response.interiorcolor.InteriorColorResponse;
 import com.estimation.car.entity.SpecColor;
 import lombok.Builder;
 import lombok.Getter;
@@ -7,17 +9,13 @@ import lombok.Getter;
 @Getter
 @Builder
 public class SpecColorResponse {
-    private final int interiorColorId;
-    private final String interiorColorName;
-    private final int exteriorColorId;
-    private final String exteriorColorName;
+    private InteriorColorResponse interior;
+    private ExteriorColorResponse exterior;
 
     public static SpecColorResponse from(SpecColor specColor) {
         return SpecColorResponse.builder()
-                                .exteriorColorId(specColor.getExteriorColor().getId())
-                                .exteriorColorName(specColor.getExteriorColor().getName())
-                                .interiorColorId(specColor.getInteriorColor().getId())
-                                .interiorColorName(specColor.getInteriorColor().getName())
-                                .build();
+                .interior(InteriorColorResponse.from(specColor.getInteriorColor(), true))
+                .exterior(ExteriorColorResponse.from(specColor.getExteriorColor(), true))
+                .build();
     }
 }
