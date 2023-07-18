@@ -11,7 +11,7 @@ import {
 import { SpecKeys } from "../queryKeys";
 import { specAPI } from "./api";
 
-export function useSpecs(modelId: number) {
+export function useSpecsInfo(modelId: number) {
   return useQuery<SpecInfo[], Error>({
     queryKey: SpecKeys.modelSpecs(modelId),
     queryFn: async () => {
@@ -29,7 +29,7 @@ export function useSpecs(modelId: number) {
   });
 }
 
-export function useSpec(specCode: string, modelId: number) {
+export function useSpecInfo(specCode: string, modelId: number) {
   return useQuery<SpecInfo, Error>({
     queryKey: SpecKeys.findByCode(specCode, modelId),
     queryFn: async () => {
@@ -67,15 +67,16 @@ export function useSpecCheck(
 
 export function useSpecOptionConstraints(
   modelId: number,
-  specCode: string,
-  optoinId: number
+  selectedOptions: number[],
+  checkConstraint: boolean
 ) {
   return useQuery<SpecOptionConstraint[], Error>({
-    queryKey: SpecKeys.optionConstraints(modelId, specCode, optoinId),
+    queryKey: SpecKeys.optionConstraints(modelId, selectedOptions),
     queryFn: async () => {
-      const data = specAPI.fetchOptionConstraints(modelId, specCode, optoinId);
+      const data = specAPI.fetchOptionConstraints(modelId, selectedOptions);
       return data;
     },
+    enabled: checkConstraint,
   });
 }
 
@@ -113,3 +114,5 @@ export function useSpecColorChange(
     enabled: false,
   });
 }
+
+export function useOptionConstraintCheck() {}

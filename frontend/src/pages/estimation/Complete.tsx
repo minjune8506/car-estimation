@@ -1,5 +1,5 @@
 import { useRef, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { convertPrice } from "src/common/utils/price-utils";
 import { Car } from "src/types/Car";
 import { ExteriorColor, InteriorColor } from "src/types/Color";
@@ -18,6 +18,7 @@ interface Props {
 
 function Complete() {
   const state: Props = useLocation().state;
+  const navigate = useNavigate();
 
   const [isInterior, setIsInterior] = useState<boolean>(false);
   const buttonRef = useRef<HTMLDivElement | null>(null);
@@ -161,9 +162,12 @@ function Complete() {
           </div>
         </div>
       </div>
-      <div className="w-full flex items-center justify-center py-8">
+      <div className="w-full flex items-center justify-center py-8 gap-3">
         <StyledButton active={true} onClick={download}>
           이미지 다운로드
+        </StyledButton>
+        <StyledButton active={true} onClick={() => navigate("/")}>
+          홈으로 이동하기
         </StyledButton>
       </div>
     </>

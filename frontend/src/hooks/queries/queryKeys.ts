@@ -73,12 +73,15 @@ export const SpecKeys = {
       "check",
       { modelId, specCode, interiorColorId, exteriorColorId },
     ] as const,
-  optionConstraints: (modelId: number, specCode: string, optionId: number) =>
+  optionConstraints: (
+    modelId: number,
+    selectedOptions: number[]
+  ) =>
     [
       ...SpecKeys.all,
       "option",
       "constraints",
-      { modelId, specCode, optionId },
+      { modelId, selectedOptions },
     ] as const,
   changeColor: (
     modelId: number,

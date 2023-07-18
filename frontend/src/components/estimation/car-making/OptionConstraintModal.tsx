@@ -5,13 +5,14 @@ import { convertPrice } from "src/common/utils/price-utils";
 import { ConstraintCheck, SpecOption } from "src/types/Spec";
 import BackDrop from "src/components/common/BackDrop";
 import styled from "styled-components";
+import { ModelOptions } from "src/types/Model";
 
 function deleteOptions(
   selectedOptions: SpecOption[],
   delOptions: SpecOption[]
 ) {
   return selectedOptions.filter((selected) =>
-    delOptions.find((option) => selected.optionId === option.optionId)
+    delOptions.find((option) => selected.optionId !== option.optionId)
   );
 }
 
@@ -24,9 +25,15 @@ interface Props {
   targetOption: SpecOption;
   setTargetOption: (option: SpecOption | undefined) => void;
   selectedOptions: SpecOption[];
-  setSelectedOptions: (options: SpecOption[]) => void;
   setConstraintCheck: (data: ConstraintCheck | undefined) => void;
+  modelOptions: ModelOptions[];
+  setModelOptions: (options: ModelOptions[]) => void;
   carNameEn: string;
+  applyConstraint: (
+    newSelectedOptions: SpecOption[],
+    modelOptions: ModelOptions[],
+    setModelOptions: (options: ModelOptions[]) => void
+  ) => Promise<void>;
 }
 
 function OptionConstraintsModal({
@@ -34,22 +41,27 @@ function OptionConstraintsModal({
   carNameEn,
   targetOption,
   selectedOptions,
-  setSelectedOptions,
+  modelOptions,
+  setModelOptions,
   setConstraintCheck,
   setTargetOption,
+  applyConstraint,
 }: Props) {
   const { delOptions, addOptions } = data;
+  console.log("delOptions", delOptions);
+  console.log("addOptions", addOptions);
   const deleted = deleteOptions(selectedOptions, delOptions);
   const remainOptions = addOption(deleted, addOptions);
+  console.log("remain Options", remainOptions);
 
   const priceDiff =
     addOptions.reduce((acc, cur) => acc + cur.price, 0) -
     delOptions.reduce((acc, cur) => acc + cur.price, 0);
-	
+
   const onAccept = () => {
-    setSelectedOptions(remainOptions);
-	setConstraintCheck(undefined);
-	setTargetOption(undefined);
+    applyConstraint(remainOptions, modelOptions, setModelOptions);
+    setConstraintCheck(undefined);
+    setTargetOption(undefined);
   };
 
   const onClose = () => {
@@ -63,7 +75,6 @@ function OptionConstraintsModal({
       delOptions.filter((option) => option.optionId !== targetOption.optionId)
     );
   const sourceOption = sourceOptions[0];
-
   const action = addOptions.length > 1 ? "추가" : "삭제";
 
   return (

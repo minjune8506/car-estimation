@@ -2,23 +2,9 @@ import LogoSrc from "/images/logo/logo_footer.png";
 import Logo42 from "/images/logo/logo_42.svg";
 import styled from "styled-components";
 
-const FooterDiv = styled.footer.attrs({
-  className: "text-white w-screen absolute bottom-0 left-0",
-})`
-  background-color: #1c1b1b;
-`;
-
-const HyundaiLogo = styled.img.attrs({
-  className: "mx-5 object-contain h-8",
-})``;
-
-const FourtyTwoLogo = styled.img.attrs({
-  className: "mx-5 object-contain h-12",
-})``;
-
 function Footer() {
   return (
-    <FooterDiv>
+    <footer className="text-white w-screen absolute bottom-0 left-0 bg-[#1c1b1b]">
       <ul className="flex flex-row items-center py-2">
         <li>
           <HyundaiLogo src={LogoSrc}></HyundaiLogo>
@@ -31,8 +17,16 @@ function Footer() {
           <FourtyTwoLogo src={Logo42}></FourtyTwoLogo>
         </li>
       </ul>
-    </FooterDiv>
+    </footer>
   );
 }
 
 export default Footer;
+
+const HyundaiLogo = styled.img.attrs({
+  className: "mx-5 object-contain h-8",
+})``;
+
+const FourtyTwoLogo = styled.img.attrs({
+  className: "mx-5 object-contain h-12",
+})``;

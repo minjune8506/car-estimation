@@ -13,6 +13,10 @@ export interface SpecOption {
   enable: "Y" | "N";
 }
 
+export interface SpecOptionWithSpec extends SpecOption {
+	specCode: string;
+}
+
 export interface SpecColor {
   interior: InteriorColor;
   exterior: ExteriorColor;

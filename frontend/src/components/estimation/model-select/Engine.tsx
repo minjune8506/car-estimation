@@ -1,45 +1,36 @@
-import { useRecoilState, useSetRecoilState } from "recoil";
-import { Filter, ModelType } from "../../../types/ModelFilter";
+import { useEffect } from "react";
 import { ModelSelectButton } from "../../common/button/Button";
 import ModelTypeInfo from "./ModelTypeInfo";
-import { useEffect } from "react";
-import SelectedEngine from "../../../states/model-select/SelectedEngine";
-import SelectedMission from "../../../states/model-select/SelectedMission";
-import EnableMisisons from "../../../states/model-select/EnableMisisons";
-import useModelFilter from "../../../hooks/queries/model/useModelFilter";
+import { Filter, ModelType } from "src/types/Model";
+import { useModelFilter } from "src/hooks/queries/model/Model";
+import { getCarIdFrom } from "src/common/utils/location-utils";
+import { useLocation } from "react-router-dom";
 
 interface EngineProps {
   engines: ModelType[];
-  carId: number;
+  selectedEngine: number;
+  setEngine: (id?: number) => void;
+  setMission: (id?: number) => void;
 }
 
-export default ({ engines, carId }: EngineProps) => {
-  const [selectedEngine, setSelectedEngine] = useRecoilState(SelectedEngine);
-  const setSelectedMission = useSetRecoilState(SelectedMission);
-  const setEnableMissions = useSetRecoilState(EnableMisisons);
+export default ({
+  engines,
+  selectedEngine,
+  setMission,
+  setEngine,
+}: EngineProps) => {
+  const carId = getCarIdFrom(useLocation());
 
-  const { isLoading, isError, error, data } = useModelFilter({
+  const { data } = useModelFilter("engine", {
     carId,
     engineId: selectedEngine,
   });
 
   useEffect(() => {
-    if (!selectedEngine) {
-      setSelectedEngine(engines[0].id);
+    if (data && data.missions.length) {
+      setMission(data.missions[0].id);
     }
-    if (data) {
-      data.missions.length && setSelectedMission(data.missions[0].id);
-      setEnableMissions(data.missions);
-    }
-  }, [data]);
-
-  if (isLoading) {
-    return <div>Loading</div>;
-  }
-
-  if (isError) {
-    return <div>{error.message}</div>;
-  }
+  }, [carId, data]);
 
   return (
     <ModelTypeInfo type={Filter.ENGINE}>
@@ -47,7 +38,12 @@ export default ({ engines, carId }: EngineProps) => {
         <ModelSelectButton
           key={engine.id}
           selected={engine.id === selectedEngine}
-          onClick={() => setSelectedEngine(engine.id)}
+          onClick={() => {
+            if (engine.id !== selectedEngine) {
+              setEngine(engine.id);
+              setMission(undefined);
+            }
+          }}
           className="py-2"
         >
           {engine.name}

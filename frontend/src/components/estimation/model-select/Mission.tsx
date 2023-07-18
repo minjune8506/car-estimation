@@ -1,60 +1,66 @@
-import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
-import { Filter, ModelType } from "../../../types/ModelFilter";
 import { ModelSelectButton } from "../../common/button/Button";
 import ModelTypeInfo from "./ModelTypeInfo";
-import { useEffect } from "react";
-import SelectedEngine from "../../../states/model-select/SelectedEngine";
-import EnableMisisons from "../../../states/model-select/EnableMisisons";
-import SelectedMission from "../../../states/model-select/SelectedMission";
-import SelectedDrivingType from "../../../states/model-select/SelectedDrivingType";
-import EnableDrivingTypes from "../../../states/model-select/EnableDrivingTypes";
-import useModelFilter from "../../../hooks/queries/model/useModelFilter";
+import { useEffect, useState } from "react";
+import { Filter, ModelType } from "src/types/Model";
+import { useModelFilter } from "src/hooks/queries/model/Model";
+import { getCarIdFrom } from "src/common/utils/location-utils";
+import { useLocation } from "react-router-dom";
 
 interface Missionprops {
   missions: ModelType[];
-  carId: number;
+  selectedEngine: number;
+  selectedMission: number;
+  setMission: (id: number) => void;
+  setDrivingType: (id?: number) => void;
 }
 
-export default ({ missions, carId }: Missionprops) => {
-  const selectedEngine = useRecoilValue(SelectedEngine);
-  const enabledMissions = useRecoilValue(EnableMisisons);
+export default function Misson({
+  missions,
+  selectedEngine,
+  selectedMission,
+  setDrivingType,
+  setMission,
+}: Missionprops) {
+  const carId = getCarIdFrom(useLocation());
 
-  const [selectedMission, setSelectedMission] = useRecoilState(SelectedMission);
+  const enableMissionQuery = useModelFilter("engine", {
+    carId,
+    engineId: selectedEngine,
+  });
 
-  const setSelectedDrivingType = useSetRecoilState(SelectedDrivingType);
-  const setEnableDrivingTypes = useSetRecoilState(EnableDrivingTypes);
-
-  const { isLoading, error, data } = useModelFilter({
+  const drivingTypeQuery = useModelFilter("mission", {
     carId,
     engineId: selectedEngine,
     missionId: selectedMission,
   });
+  console.log("mission useFilter");
 
   useEffect(() => {
-    if (data) {
-      data.drivingTypes.length &&
-        setSelectedDrivingType(data.drivingTypes[0].id);
-      setEnableDrivingTypes(data.drivingTypes);
+    if (drivingTypeQuery.data) {
+      drivingTypeQuery.data.drivingTypes.length &&
+        setDrivingType(drivingTypeQuery.data.drivingTypes[0].id);
     }
-  }, [data]);
+  }, [carId, drivingTypeQuery.data]);
 
-  if (isLoading) {
+  if (enableMissionQuery.isLoading || drivingTypeQuery.isLoading) {
     return <div>Loading...</div>;
   }
 
-  if (error) {
-    return <div>{error.message}</div>;
+  if (enableMissionQuery.error || drivingTypeQuery.error) {
+    return <div>Error</div>;
   }
 
   if (missions.length <= 1) {
     return;
   }
 
+  const enableMissions = enableMissionQuery.data.missions;
+
   return (
     <ModelTypeInfo type={Filter.MISSION}>
       {missions.map((mission) => {
         let isDisabled = true;
-        const found = enabledMissions.find(
+        const found = enableMissions.find(
           (enabledMission) => enabledMission.id === mission.id
         );
         if (found) {
@@ -64,7 +70,12 @@ export default ({ missions, carId }: Missionprops) => {
           <ModelSelectButton
             key={mission.id}
             selected={mission.id === selectedMission}
-            onClick={() => setSelectedMission(mission.id)}
+            onClick={() => {
+              if (selectedMission !== mission.id) {
+                setMission(mission.id);
+                setDrivingType(undefined);
+              }
+            }}
             disabled={isDisabled}
             className="py-2"
           >
@@ -74,4 +85,4 @@ export default ({ missions, carId }: Missionprops) => {
       })}
     </ModelTypeInfo>
   );
-};
+}

@@ -1,22 +1,25 @@
 import styled from "styled-components";
-import { useEffect, useRef } from "react";
-import { useRecoilState } from "recoil";
+import { useEffect, useRef, useState } from "react";
 import CategoryList from "./CategoryList";
 import CarList from "./CarList";
 import { CategoryCars } from "../../../types/CarCategory";
 import BackDrop from "../../common/BackDrop";
-import SelectedCategory from "../../../states/model-select/SelectedCategory";
-import IsSelectCarModalOpen from "../../../states/model-select/IsSelectCarModalOpen";
 interface CarSelectModalProps {
   data: CategoryCars[];
   currentCarId: number;
+  isOpen?: boolean;
+  closeModal: (state: boolean) => void;
 }
 
-export default ({ data, currentCarId }: CarSelectModalProps) => {
-  const [selectedCategory, setSelectedCategory] =
-    useRecoilState(SelectedCategory);
-  const [isSelectModalOpen, setIsSelectModalOpen] =
-    useRecoilState(IsSelectCarModalOpen);
+export default ({
+  data,
+  currentCarId,
+  isOpen,
+  closeModal,
+}: CarSelectModalProps) => {
+  const [selectedCategory, setSelectedCategory] = useState<number | undefined>(
+    undefined
+  );
 
   useEffect(() => {
     data.forEach((category) => {
@@ -25,7 +28,7 @@ export default ({ data, currentCarId }: CarSelectModalProps) => {
         setSelectedCategory(category.categoryId);
       }
     });
-  }, [data]);
+  }, []);
 
   const outside = useRef(null);
 
@@ -34,15 +37,19 @@ export default ({ data, currentCarId }: CarSelectModalProps) => {
       ref={outside}
       onClick={(e) => {
         if (e.target === outside.current) {
-          setIsSelectModalOpen(false);
+          closeModal(false);
         }
       }}
     >
       <CarSelectModal
-        isSelectModalOpen={isSelectModalOpen}
+        isSelectModalOpen={isOpen}
         className="flex flex-col w-full bg-white"
       >
-        <CategoryList categories={data} />
+        <CategoryList
+          categories={data}
+          selectedCategory={selectedCategory}
+          setSelectedCategory={setSelectedCategory}
+        />
         {selectedCategory && (
           <CarList
             cars={
@@ -56,6 +63,6 @@ export default ({ data, currentCarId }: CarSelectModalProps) => {
   );
 };
 
-const CarSelectModal = styled.div<{ isSelectModalOpen: boolean }>`
+const CarSelectModal = styled.div<{ isSelectModalOpen?: boolean }>`
   display: ${(props) => (props.isSelectModalOpen ? "block" : "none")};
 `;

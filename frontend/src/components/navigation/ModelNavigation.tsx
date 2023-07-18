@@ -1,8 +1,8 @@
 import styled from "styled-components";
-import useCarsPerCategory from "../../hooks/queries/menu/useCategoryCars";
 import Cars from "./Cars";
 import Categories from "./Categories";
 import { useEffect, useState } from "react";
+import { useCategoryCars } from "src/hooks/queries/car/CategoryCars";
 
 const Wrapper = styled.div`
   display: flex;
@@ -10,7 +10,7 @@ const Wrapper = styled.div`
 `;
 
 function ModelNavigation() {
-  const { isLoading, error, data } = useCarsPerCategory();
+  const { isLoading, error, data } = useCategoryCars();
   const [selectedCategory, setSelectedCategory] = useState<number | undefined>(
     undefined
   );

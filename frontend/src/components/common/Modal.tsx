@@ -2,12 +2,52 @@ import styled from "styled-components";
 import { AiOutlineClose } from "react-icons/ai";
 import BackDrop from "./BackDrop";
 import { SelectButton } from "./button/Button";
+import { ReactNode } from "react";
 
 interface ModalProps {
-  text: string;
-  onAccept: () => void;
-  closeModal: () => void;
+  children: ReactNode;
+  accept?: boolean;
+  acceptButtonText?: string;
+  onAccept?: () => void;
+  cancel?: boolean;
+  cancelButtonText?: string;
+  onCancel?: () => void;
 }
+
+function Modal({
+  children,
+  accept,
+  acceptButtonText,
+  onAccept,
+  cancel,
+  cancelButtonText,
+  onCancel,
+}: ModalProps) {
+  return (
+    <BackDrop>
+      <ModalContainer>
+        <IconClose onClick={onCancel}>
+          <AiOutlineClose />
+        </IconClose>
+        <ModalText>{children}</ModalText>
+        <div className="w-1/2 flex flex-row text-sm">
+          {cancel && (
+            <SelectButton onClick={onCancel} className="mr-4">
+              {cancelButtonText || "취소"}
+            </SelectButton>
+          )}
+          {accept && (
+            <SelectButton primary={true} onClick={onAccept}>
+              {acceptButtonText || "확인"}
+            </SelectButton>
+          )}
+        </div>
+      </ModalContainer>
+    </BackDrop>
+  );
+}
+
+export default Modal;
 
 const ModalContainer = styled.div`
   display: flex;
@@ -32,26 +72,3 @@ const IconClose = styled.button`
 const ModalText = styled.div`
   margin-bottom: 4rem;
 `;
-
-function Modal({ text, onAccept, closeModal }: ModalProps) {
-  return (
-    <BackDrop>
-      <ModalContainer>
-        <IconClose onClick={closeModal}>
-          <AiOutlineClose />
-        </IconClose>
-        <ModalText>{text}</ModalText>
-        <div className="w-1/2 flex flex-row text-sm">
-          <SelectButton onClick={closeModal} className="mr-4">
-            취소
-          </SelectButton>
-          <SelectButton primary={true} onClick={onAccept}>
-            확인
-          </SelectButton>
-        </div>
-      </ModalContainer>
-    </BackDrop>
-  );
-}
-
-export default Modal;

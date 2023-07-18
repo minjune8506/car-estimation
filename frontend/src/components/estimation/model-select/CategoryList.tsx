@@ -1,16 +1,17 @@
 import styled from "styled-components";
-import { useRecoilState } from "recoil";
-import SelectedCategoryState from "../../../states/model-select/SelectedCategory";
 import { CategoryCars } from "../../../types/CarCategory";
 
 interface CategoryProps {
   category: CategoryCars;
+  selectedCategory: number | undefined;
+  setSelectedCategory: (categoryId: number) => void;
 }
 
-function Category({ category }: CategoryProps) {
-  const [selectedCategory, setSelectedCategory] = useRecoilState(
-    SelectedCategoryState
-  );
+function Category({
+  category,
+  selectedCategory,
+  setSelectedCategory,
+}: CategoryProps) {
   return (
     <CategoryButton
       isClicked={category.categoryId === selectedCategory}
@@ -24,13 +25,24 @@ function Category({ category }: CategoryProps) {
 
 interface CategoryListProps {
   categories: CategoryCars[];
+  selectedCategory: number | undefined;
+  setSelectedCategory: (categoryId: number) => void;
 }
 
-export default ({ categories }: CategoryListProps) => {
+export default ({
+  categories,
+  selectedCategory,
+  setSelectedCategory,
+}: CategoryListProps) => {
   return (
     <ol className="flex flex-row py-2 px-2">
       {categories.map((category) => (
-        <Category category={category} key={category.categoryId} />
+        <Category
+          category={category}
+          key={category.categoryId}
+          selectedCategory={selectedCategory}
+          setSelectedCategory={setSelectedCategory}
+        />
       ))}
     </ol>
   );

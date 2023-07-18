@@ -1,11 +1,11 @@
 import styled from "styled-components";
 import { SelectButton } from "../../common/button/Button";
-import { ModelTrim } from "../../../types/ModelTrim";
-import { useLocation, useNavigate } from "react-router-dom";
 import { getCarIdFrom } from "src/common/utils/location-utils";
+import { useLocation, useNavigate } from "react-router-dom";
+import { Model } from "src/types/Model";
 
 interface ModelCardProps {
-  trimInfo: ModelTrim;
+  trimInfo: Model;
 }
 
 export default ({ trimInfo }: ModelCardProps) => {
@@ -26,7 +26,7 @@ export default ({ trimInfo }: ModelCardProps) => {
         className="flex items-center justify-center w-full cursor-pointer my-4"
         onClick={() => navigateToCarMaking(carId, trimInfo.id)}
       >
-        <img src={`/images/${trimInfo.modelImg}`} alt="차량 이미지"></img>
+        <img src={`/images/${trimInfo.imgPath}`} alt="차량 이미지"></img>
       </div>
       <div className="flex flex-row justify-between my-4">
         <span className="text-sm">{trimInfo.basicInfo}</span>

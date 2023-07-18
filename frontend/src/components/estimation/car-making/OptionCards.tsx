@@ -39,7 +39,7 @@ function OptionCards({
   return (
     <section>
       <Title backgroundImg={backgroundImg}>{title}</Title>
-      <ul className="flex flex-row flex-wrap">
+      <ul className="flex flex-row flex-wrap gap-4">
         {options.map((spec) =>
           spec.options.map((option) => {
             return (
@@ -146,7 +146,6 @@ const StyledOptionCard = styled.li<{
 
   border-width: ${(props) => (props.selected ? "2px" : "1px")};
   border-color: ${(props) => (props.selected ? "#00cbfe" : "gray")};
-  margin: 1rem 1rem;
 
   @media (max-width: 1024px) {
     width: 180px;

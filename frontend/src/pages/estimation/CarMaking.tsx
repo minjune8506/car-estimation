@@ -3,37 +3,33 @@ import { convertPrice } from "common/utils/price-utils";
 import Header from "src/components/estimation/Header";
 import Colors from "components/estimation/car-making/Colors";
 import { useLocation, useNavigate } from "react-router-dom";
-import {
-  useModelExteriorColors,
-  useModelInfo,
-  useModelInteriorColors,
-} from "src/hooks/queries/model/Model";
-import { useCarColors, useCarInfo } from "src/hooks/queries/car/Cars";
+import { useModelInfo } from "src/hooks/queries/model/Model";
+import { useCarInfo } from "src/hooks/queries/car/Cars";
 import { useEffect, useState } from "react";
-import { useSpec, useSpecCheck, useSpecs } from "src/hooks/queries/spec/Spec";
+import { useSpecsInfo } from "src/hooks/queries/spec/Spec";
 import {
-  Action,
   ChangeExteriorColor,
   ChangeInteriorColor,
   ChangeModel,
-  CheckSpecFail,
   ConstraintCheck,
   SpecOption,
-  SpecOptionConstraint,
 } from "src/types/Spec";
-import { Color, ExteriorColor, InteriorColor } from "src/types/Color";
+import { ExteriorColor, InteriorColor } from "src/types/Color";
 import OptionCards from "src/components/estimation/car-making/OptionCards";
-import { ModelOptions } from "src/types/Model";
 import ModelChangeModal from "src/components/estimation/car-making/ModelChangeModal";
 import { getCarIdFrom, getModelIdFrom } from "src/common/utils/location-utils";
 import { specAPI } from "src/hooks/queries/spec/api";
 import {
   BASE_SPEC,
   OPTION_CATEGORY_TUIX,
-  OPTION_CATEGORY_PACKAGE,
 } from "src/common/constants/constants";
 import Modal from "src/components/common/Modal";
 import OptionConstraintsModal from "src/components/estimation/car-making/OptionConstraintModal";
+import useSelectedOptions from "src/hooks/estimation/useSelectedOptions";
+import { useColors } from "src/hooks/estimation/useColors";
+import usePrice from "src/hooks/estimation/usePrice";
+import useModelOptions from "src/hooks/estimation/useModelOptions";
+import useSpec from "src/hooks/estimation/useSpec";
 
 interface Props {
   exteriorColor: ExteriorColor;
@@ -42,254 +38,78 @@ interface Props {
 }
 
 export default function CarMaking() {
-  const state: Props = useLocation().state;
+  // location data
+  const location = useLocation();
+  const state: Props = location.state;
+  const carId = getCarIdFrom(location);
+  const modelId = getModelIdFrom(location);
+
   const navigate = useNavigate();
 
   // state
-  const [price, setPrice] = useState(0);
-  const [spec, setSpec] = useState<string>(BASE_SPEC);
-  const [interiorColor, setInteriorColor] = useState<InteriorColor | undefined>(
-    undefined
-  );
-  const [exteriorColor, setExteriorColor] = useState<ExteriorColor | undefined>(
-    undefined
-  );
-  const [interiorColors, setInteriorColors] = useState<InteriorColor[]>([]);
-  const [exteriorColors, setExteriorColors] = useState<ExteriorColor[]>([]);
-  const [options, setOptions] = useState<ModelOptions[]>([]);
+  const [
+    modelOptions,
+    setModelOptions,
+    findSpecInfo,
+    findSpecDefaultOptions,
+    getBasicOptions,
+    getTuixOptions,
+    getNPerformanceOptions,
+  ] = useModelOptions();
+  const [
+    selectedOptions,
+    initSelectedOptions,
+    addOptions,
+    deleteOptions,
+    setSelectedOptions,
+    applyConstraint,
+  ] = useSelectedOptions();
+  const [spec, setSpec] = useSpec({
+    findSpecInfo,
+    addOptions,
+    deleteOptions,
+    findSpecDefaultOptions,
+    selectedOptions,
+  });
+  const [
+    exteriorColor,
+    interiorColor,
+    exteriorColors,
+    interiorColors,
+    colorChangeData,
+    isCarImgExterior,
+    changeExteriorColor,
+    changeInteriorColor,
+    onColorChange,
+    setIsCarImgExterior,
+    setColorChangeData,
+  ] = useColors({ spec, setSpec, selectedOptions });
+
+  const price = usePrice({ selectedOptions });
   const [selectedOption, setSelectedOption] = useState<SpecOption | undefined>(
     undefined
   );
-  const [selectedOptions, setSelectedOptions] = useState<SpecOption[]>([]);
-  const [isCarImgExterior, setIsCarImgExterior] = useState<boolean>(true);
-  const [colorChangeData, setColorChangeData] = useState<
-    ChangeModel | ChangeExteriorColor | ChangeInteriorColor | undefined
-  >(undefined);
   const [constraintCheck, setConstraintCheck] = useState<
     ConstraintCheck | undefined
   >(undefined);
 
-  // query string parse
-  const location = useLocation();
-  const carId = getCarIdFrom(location);
-  const modelId = getModelIdFrom(location);
-
   // data fetch
   const carInfoQuery = useCarInfo(carId);
   const modelInfoQuery = useModelInfo(modelId);
-  const carColorsQuery = useCarColors(carId, modelId);
-  const modelExteriorsQuery = useModelExteriorColors(
-    modelId,
-    interiorColor?.id
-  );
-  const modelInteriorsQuery = useModelInteriorColors(
-    modelId,
-    exteriorColor?.id
-  );
-  const specsQuery = useSpecs(modelId);
-  const specQuery = useSpec(spec, modelId);
-  const specCheckQuery = useSpecCheck(
-    modelId,
-    spec,
-    interiorColor?.id,
-    exteriorColor?.id
-  );
+  const specsQuery = useSpecsInfo(modelId);
 
   // navigation props 초기값 설정
   useEffect(() => {
     if (state) {
-      setExteriorColor(state.exteriorColor);
-      setInteriorColor(state.interiorColor);
-      setSelectedOptions(state.selectedOptions);
+      changeExteriorColor(state.exteriorColor);
+      changeInteriorColor(state.interiorColor);
+      initSelectedOptions(state.selectedOptions);
     }
   }, [modelId, state]);
 
-  // 선택한 외장 / 내장 초기값 설정, 옵션 초기값 설정
-  useEffect(() => {
-    if (specsQuery.data) {
-      const initialColor = specsQuery.data[0].colors[0];
-      exteriorColor || setExteriorColor(initialColor.exterior);
-      interiorColor || setInteriorColor(initialColor.interior);
-      console.log("specsQuery useEffect", exteriorColor, interiorColor);
-      setOptions(specsQuery.data);
-    }
-  }, [specsQuery.data]);
-
-  // 선택된 옵션 변경시 가격 정보 설정
-  useEffect(() => {
-    if (modelInfoQuery.data) {
-      setPrice(
-        selectedOptions.reduce(
-          (acc, cur) => acc + cur.price,
-          modelInfoQuery.data.price
-        )
-      );
-    }
-  }, [selectedOptions, modelInfoQuery.data]);
-
-  // price 초기값 설정
-  useEffect(() => {
-    if (modelInfoQuery.data && !price) {
-      setPrice(modelInfoQuery.data.price);
-    }
-  }, [modelInfoQuery.data]);
-
-  // 내장 / 외장 색상 초기값 설정
-  useEffect(() => {
-    if (carColorsQuery.data) {
-      setExteriorColors(carColorsQuery.data.exteriorColors);
-      setInteriorColors(carColorsQuery.data.interiorColors);
-    }
-  }, [carColorsQuery.data]);
-
-  // 내장 색상 변경시 외장 색상 설정
-  useEffect(() => {
-    if (modelExteriorsQuery.data) {
-      setExteriorColors(modelExteriorsQuery.data);
-    }
-  }, [modelExteriorsQuery.data]);
-
-  // 외장 색상 변경시 내장 색상 설정
-  useEffect(() => {
-    if (modelInteriorsQuery.data) {
-      setInteriorColors(modelInteriorsQuery.data);
-    }
-  }, [modelInteriorsQuery.data]);
-
-  // 내장 / 외장 색상 변경시 spec check
-  // 현재 스펙에서 선택 불가능한 색상이면 spec 변경
-  useEffect(() => {
-    if (specCheckQuery.data) {
-      if (specCheckQuery.data.available === "N") {
-        const data = specCheckQuery.data as CheckSpecFail;
-        setSpec(data.specCode);
-      }
-    }
-  }, [interiorColor, exteriorColor, specCheckQuery.data]);
-
-  // spec 변경시
-  useEffect(() => {
-    if (spec && modelInfoQuery.data && options) {
-      const specInfo = options.find((specInfo) => specInfo.specCode === spec)!;
-      console.log("spec info", specInfo);
-
-      if (spec === BASE_SPEC) {
-        const filtered = selectedOptions.filter((selectedOption) =>
-          specInfo.options.find(
-            (option) => option.optionId === selectedOption.optionId
-          )
-        );
-        console.log("spec useeffect filtered", filtered);
-        setSelectedOptions([...filtered]);
-        return;
-      }
-
-      const defaultOptions = specInfo.options
-        .filter((specOption) => specOption.defaultYn === "Y")
-        .filter(
-          (defaultOption) =>
-            !selectedOptions.find(
-              (selected) => selected.optionId === defaultOption.optionId
-            )
-        );
-      setSelectedOptions([...selectedOptions, ...defaultOptions]);
-    }
-  }, [spec, modelInfoQuery.data]);
-
-  // option 변경시 (ADD, DELETE, ENABLE, DISABLE)
-  // selected option에서 변경된 데이터 제거
-  useEffect(() => {
-    const filtered = selectedOptions.filter((selectedOption) => {
-      const specOptions = options.flatMap((spec) => spec.options);
-      const found = specOptions.find(
-        (specOption) => specOption.optionId === selectedOption.optionId
-      );
-      if (!found) return false;
-      if (found && found.enable === "N") return false;
-      return true;
-    });
-    console.log("filtered", filtered);
-    setSelectedOptions([...filtered]);
-  }, [options]);
-
-  if (
-    carInfoQuery.isLoading ||
-    modelInfoQuery.isLoading ||
-    specsQuery.isLoading
-  ) {
+  if (carInfoQuery.isLoading || modelInfoQuery.isLoading) {
     return <div>loading...</div>;
   }
-
-  const onColorChange = async (color: Color, isInterior?: boolean) => {
-    if (!color.choiceYn) {
-      const colorChangeData = await specAPI.fetchColorChange(
-        modelId,
-        exteriorColor!.id,
-        isInterior ? exteriorColor!.id : color.id,
-        interiorColor!.id,
-        isInterior ? color.id : interiorColor!.id,
-        selectedOptions.map((selected) => selected.optionId)
-      );
-      setColorChangeData(colorChangeData);
-      return;
-    }
-    isInterior ? setInteriorColor(color) : setExteriorColor(color);
-    isInterior ? setIsCarImgExterior(false) : setIsCarImgExterior(true);
-  };
-
-  const applyConstraint = (
-    constraints: SpecOptionConstraint[],
-    add?: boolean
-  ) => {
-    const optionsClone: ModelOptions[] = JSON.parse(JSON.stringify(options));
-    console.log("apply constraints", optionsClone);
-
-    constraints.forEach((constraint) => {
-      const constraintSpec = optionsClone.find(
-        (spec) => spec.specCode === BASE_SPEC
-      )!;
-
-      if (
-        (constraint.action === Action.ADD && add) ||
-        (constraint.action === Action.DELETE && !add)
-      ) {
-        constraintSpec.options = [
-          ...constraintSpec.options,
-          { ...constraint.option, enable: "Y" },
-        ];
-      } else if (
-        (constraint.action === Action.DELETE && add) ||
-        (constraint.action === Action.ADD && !add)
-      ) {
-        constraintSpec.options = constraintSpec.options.filter(
-          (option) => option.optionId !== constraint.option.optionId
-        );
-      } else if (
-        (constraint.action === Action.ENABLE && add) ||
-        (constraint.action === Action.DISABLE && !add)
-      ) {
-        constraintSpec.options = constraintSpec.options.map((option) => {
-          if (option.optionId === constraint.option.optionId) {
-            option.enable = "Y";
-          }
-          return option;
-        });
-      } else if (
-        (constraint.action === Action.DISABLE && add) ||
-        (constraint.action === Action.ENABLE && !add)
-      ) {
-        constraintSpec.options = constraintSpec.options.map((option) => {
-          if (option.optionId === constraint.option.optionId) {
-            option.enable = "N";
-          }
-          return option;
-        });
-      }
-    });
-    console.log("apply constraints", optionsClone);
-
-    setOptions(optionsClone);
-  };
 
   const onOptionClick = async (
     option: SpecOption,
@@ -298,6 +118,9 @@ export default function CarMaking() {
     enable?: boolean
   ) => {
     if (!enable) {
+      if (option.optionCategoryId === OPTION_CATEGORY_TUIX) {
+        return;
+      }
       const checkConstraint = await specAPI.fetchOptionConstraintCheck(
         modelId,
         selectedOptions.map((selected) => selected.optionId),
@@ -323,25 +146,16 @@ export default function CarMaking() {
           color.interior.id === interiorColor!.id
       );
       if (!found) {
-        setExteriorColor(data.colors[0].exterior);
-        setInteriorColor(data.colors[0].interior);
+        changeExteriorColor(data.colors[0].exterior);
+        changeInteriorColor(data.colors[0].interior);
       }
     }
-    add
-      ? setSelectedOptions([...selectedOptions, option])
-      : setSelectedOptions(
-          selectedOptions.filter(
-            (selectedOption) => selectedOption.optionId !== option.optionId
-          )
+    const newSelectedOptions = add
+      ? [...selectedOptions, option]
+      : selectedOptions.filter(
+          (selected) => selected.optionId !== option.optionId
         );
-
-    const constraints = await specAPI.fetchOptionConstraints(
-      modelId,
-      optionSpec,
-      option.optionId
-    );
-    console.log("constraints", constraints);
-    applyConstraint(constraints, add);
+    applyConstraint(newSelectedOptions, specsQuery.data!, setModelOptions);
   };
 
   function onComplete() {
@@ -358,42 +172,23 @@ export default function CarMaking() {
 
   const carInfo = carInfoQuery.data!;
   const modelInfo = modelInfoQuery.data!;
-  const basicOptions = options.map((spec) => ({
-    ...spec,
-    options: spec.options.filter(
-      (specOption) => specOption.optionCategoryId === OPTION_CATEGORY_PACKAGE
-    ),
-  }));
-  const tuixOptions = options.map((spec) => ({
-    ...spec,
-    options: spec.options.filter(
-      (specOption) =>
-        specOption.optionCategoryId === OPTION_CATEGORY_TUIX &&
-        !specOption.optionName.includes("[N퍼포먼스]")
-    ),
-  }));
-  const nPerformanceOptions = options.map((spec) => ({
-    ...spec,
-    options: spec.options.filter(
-      (specOption) =>
-        specOption.optionCategoryId === OPTION_CATEGORY_TUIX &&
-        specOption.optionName.includes("[N퍼포먼스]")
-    ),
-  }));
+  const basicOptions = getBasicOptions();
+  const tuixOptions = getTuixOptions();
+  const nPerformanceOptions = getNPerformanceOptions();
 
-  console.log("carInfo", carInfo);
-  console.log("modelInfo", modelInfo);
-  console.log("spec", spec);
-  console.log("current exterior color", exteriorColor);
-  console.log("exterior colors", exteriorColors);
-  console.log("current interior color", interiorColor);
-  console.log("interior colors", interiorColors);
-  console.log("options", options);
-  console.log("selected options", selectedOptions);
-  console.log("total price", price);
-  console.log("basic options", basicOptions);
-  console.log("tuix options", tuixOptions);
-  console.log("n performance options", nPerformanceOptions);
+  //   console.log("carInfo", carInfo);
+  //   console.log("modelInfo", modelInfo);
+  //   console.log("spec", spec);
+  //   console.log("current exterior color", exteriorColor);
+  //   console.log("exterior colors", exteriorColors);
+  //   console.log("current interior color", interiorColor);
+  //   console.log("interior colors", interiorColors);
+  //   console.log("options", modelOptions);
+  //   console.log("selected options", selectedOptions);
+  //   console.log("total price", price);
+  //   console.log("basic options", basicOptions);
+  //   console.log("tuix options", tuixOptions);
+  //   console.log("n performance options", nPerformanceOptions);
 
   return (
     <>
@@ -524,15 +319,17 @@ export default function CarMaking() {
             cancel={() => setColorChangeData(undefined)}
           ></ModelChangeModal>
         )}
-        {constraintCheck && prevSelectOption && (
+        {constraintCheck && selectedOption && (
           <OptionConstraintsModal
             carNameEn={carInfo.carNameEn}
             data={constraintCheck}
+            targetOption={selectedOption}
             selectedOptions={selectedOptions}
-            setSelectedOptions={setSelectedOptions}
+            modelOptions={specsQuery.data!}
+            setModelOptions={setModelOptions}
             setConstraintCheck={setConstraintCheck}
-            targetOption={prevSelectOption}
-            setTargetOption={setPrevSelectOption}
+            setTargetOption={setSelectedOption}
+            applyConstraint={applyConstraint}
           ></OptionConstraintsModal>
         )}
       </Main>

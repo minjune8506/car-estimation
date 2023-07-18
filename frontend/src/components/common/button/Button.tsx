@@ -12,7 +12,7 @@ export const Button = styled.button`
 
 export const SelectButton = styled(Button)<{ primary?: boolean }>`
   background-color: ${(props) => (props.primary ? "#002C5F" : "#767676")};
-  padding: 12px 0px;
+  padding: 0.5rem 1rem;
 `;
 
 export const ModelSelectButton = styled(Button)<{ selected?: boolean }>`

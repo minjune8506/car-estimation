@@ -8,6 +8,7 @@ interface CarListProps {
 
 export default ({ cars }: CarListProps) => {
   const navigate = useNavigate();
+
   const navigateToModelSelect = (carId: number) => {
     navigate(`/estimation/model?carId=${carId}`);
   };

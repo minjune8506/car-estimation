@@ -33,12 +33,16 @@ export const specAPI = {
   },
   fetchOptionConstraints: (
     modelId: number,
-    specCode: string,
-    optionId: number
+    selectedOptions: number[]
   ): Promise<SpecOptionConstraint[]> => {
     return customFetch(`/specs/options/constraints`, {
       method: "get",
-      params: { modelId, specCode, optionId },
+      params: {
+        modelId,
+        selectedOptions: selectedOptions.length
+          ? selectedOptions.toString()
+          : "",
+      },
     });
   },
   fetchColorChange: (
@@ -70,7 +74,9 @@ export const specAPI = {
       method: "get",
       params: {
         modelId,
-        selectedOptions: selectedOptions.length ? selectedOptions.toString() : "",
+        selectedOptions: selectedOptions.length
+          ? selectedOptions.toString()
+          : "",
         targetOptionId,
       },
     });

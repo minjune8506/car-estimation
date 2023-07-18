@@ -2,11 +2,11 @@ import styled from "styled-components";
 import { AiOutlineClose } from "react-icons/ai";
 import { IconContext } from "react-icons";
 import { useSetRecoilState } from "recoil";
-import IsMainMenuOpenState from "../../states/home/IsMainMenuOpen";
 import { CategoryCars } from "../../types/CarCategory";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import CarItem from "./Car";
+import { IsMainMenuOpen } from "src/states/HomeState";
 
 const Cars = styled.ul`
   display: flex;
@@ -47,7 +47,7 @@ interface CarsProps {
 }
 
 export default ({ carsPerCategory, selectedCategory }: CarsProps) => {
-  const setIsMenuOpen = useSetRecoilState(IsMainMenuOpenState);
+  const setIsMenuOpen = useSetRecoilState(IsMainMenuOpen);
   const [currentCar, setCurrentCar] = useState<number | undefined>(undefined);
   const navigate = useNavigate();
 
@@ -81,6 +81,7 @@ export default ({ carsPerCategory, selectedCategory }: CarsProps) => {
             ?.cars.map((car) => (
               <CarItem
                 car={car}
+                key={car.carId}
                 hoverBackground="white"
                 onMouseOver={onCarItemMouseOver}
                 onMouseLeave={onCarItemMouseLeave}

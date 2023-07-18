@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { ReactNode } from "react";
 import { useRecoilState } from "recoil";
-import IsMainMenuOpen from "src/states/home/IsMainMenuOpen";
+import { IsMainMenuOpen } from "src/states/HomeState";
 
 export default function MenuItems() {
   return (
