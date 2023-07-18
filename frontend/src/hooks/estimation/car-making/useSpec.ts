@@ -2,9 +2,9 @@ import { useEffect, useState } from "react";
 import { BASE_SPEC } from "src/common/constants/constants";
 import { useLocation } from "react-router-dom";
 import { getModelIdFrom } from "src/common/utils/location-utils";
-import { useModelInfo } from "../queries/model/Model";
 import { ModelOptions } from "src/types/Model";
 import { SpecOption } from "src/types/Spec";
+import { useModelInfo } from "src/hooks/queries/model/Model";
 
 interface Props {
   selectedOptions: SpecOption[];

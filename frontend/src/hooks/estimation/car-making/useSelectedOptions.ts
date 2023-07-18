@@ -4,7 +4,7 @@ import { Action, SpecOption } from "src/types/Spec";
 import { getModelIdFrom } from "src/common/utils/location-utils";
 import { useLocation } from "react-router-dom";
 import { BASE_SPEC } from "src/common/constants/constants";
-import { specAPI } from "../queries/spec/api";
+import { specAPI } from "src/hooks/queries/spec/api";
 
 function useSelectedOptions() {
   const [selectedOptions, setSelectedOptions] = useState<SpecOption[]>([]);

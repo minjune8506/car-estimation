@@ -6,7 +6,7 @@ import {
   OPTION_CATEGORY_PACKAGE,
   OPTION_CATEGORY_TUIX,
 } from "src/common/constants/constants";
-import { useSpecsInfo } from "../queries/spec/Spec";
+import { useSpecsInfo } from "src/hooks/queries/spec/Spec";
 
 function useModelOptions() {
   const [modelOptions, setModelOptions] = useState<ModelOptions[]>([]);

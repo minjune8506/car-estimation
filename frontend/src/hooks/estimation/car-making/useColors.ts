@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
 import { Color, ExteriorColor, InteriorColor } from "src/types/Color";
-import { useCarColors } from "../queries/car/Cars";
+import { useCarColors } from "../../queries/car/Cars";
 import { useLocation } from "react-router-dom";
 import { getCarIdFrom, getModelIdFrom } from "src/common/utils/location-utils";
 import {
   useModelExteriorColors,
   useModelInteriorColors,
-} from "../queries/model/Model";
-import { useSpecCheck, useSpecsInfo } from "../queries/spec/Spec";
+} from "../../queries/model/Model";
+import { useSpecCheck, useSpecsInfo } from "../../queries/spec/Spec";
 import {
   ChangeExteriorColor,
   ChangeInteriorColor,
@@ -15,7 +15,7 @@ import {
   CheckSpecFail,
   SpecOption,
 } from "src/types/Spec";
-import { specAPI } from "../queries/spec/api";
+import { specAPI } from "../../queries/spec/api";
 
 interface Props {
   spec: string;
