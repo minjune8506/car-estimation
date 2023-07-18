@@ -7,7 +7,7 @@ interface ModelTypeProps {
   children: ReactNode;
 }
 
-export default ({ type, children }: ModelTypeProps) => {
+export default function ModelTypeInfo({ type, children }: ModelTypeProps) {
   return (
     <div className="[&:not(:last-child)]:mr-16">
       <div className="flex flex-row my-2">
@@ -19,4 +19,4 @@ export default ({ type, children }: ModelTypeProps) => {
       <div className="flex flex-row border-collapse w-44">{children}</div>
     </div>
   );
-};
+}

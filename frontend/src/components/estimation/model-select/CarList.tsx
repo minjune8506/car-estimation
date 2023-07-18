@@ -6,7 +6,7 @@ interface CarListProps {
   onNavigate: (carId: number) => void;
 }
 
-export default ({ cars, onNavigate }: CarListProps) => {
+export default function CarList({ cars, onNavigate }: CarListProps) {
   return (
     <div className="flex flex-row">
       {cars.map((car) => (
@@ -21,4 +21,4 @@ export default ({ cars, onNavigate }: CarListProps) => {
       ))}
     </div>
   );
-};
+}

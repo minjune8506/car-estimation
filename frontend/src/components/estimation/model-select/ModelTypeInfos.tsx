@@ -15,14 +15,14 @@ interface ModelTypeInfosProps {
   setDrivingType: (id?: number) => void;
 }
 
-export default ({
+export default function ModelTypeInfos({
   selectedEngine,
   selectedMission,
   selectedDrivingType,
   setEngine,
   setMission,
   setDrivingType,
-}: ModelTypeInfosProps) => {
+}: ModelTypeInfosProps) {
   const carId = getCarIdFrom(useLocation());
 
   const { status, data } = useModelFilter("all", { carId });
@@ -72,4 +72,4 @@ export default ({
   ) : (
     <div>error</div>
   );
-};
+}

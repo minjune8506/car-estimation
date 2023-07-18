@@ -1,7 +1,7 @@
 import { useNavigate, useRouteError } from "react-router-dom";
 import styled from "styled-components";
 
-export default () => {
+export default function ErrorPage() {
   const error: any = useRouteError();
   const navigate = useNavigate();
   return (
@@ -19,7 +19,7 @@ export default () => {
       </button>
     </Error>
   );
-};
+}
 
 const Error = styled.div`
   display: flex;

@@ -8,7 +8,7 @@ import { useState } from "react";
 import CarItem from "./Car";
 import { IsMainMenuOpen } from "src/states/HomeState";
 
-const Cars = styled.ul`
+const StyledCars = styled.ul`
   display: flex;
   padding: 0 2rem;
 `;
@@ -46,7 +46,7 @@ interface CarsProps {
   selectedCategory?: number;
 }
 
-export default ({ carsPerCategory, selectedCategory }: CarsProps) => {
+export default function Cars({ carsPerCategory, selectedCategory }: CarsProps) {
   const setIsMenuOpen = useSetRecoilState(IsMainMenuOpen);
   const [currentCar, setCurrentCar] = useState<number | undefined>(undefined);
   const navigate = useNavigate();
@@ -75,7 +75,7 @@ export default ({ carsPerCategory, selectedCategory }: CarsProps) => {
           </IconContext.Provider>
         </CloseButtonImg>
       </CloseButton>
-      <Cars>
+      <StyledCars>
         {selectedCategory &&
           carsPerCategory
             .find((category) => category.categoryId === selectedCategory)
@@ -94,7 +94,7 @@ export default ({ carsPerCategory, selectedCategory }: CarsProps) => {
                 <StyledText>내 차 만들기</StyledText>
               </CarItem>
             ))}
-      </Cars>
+      </StyledCars>
     </ItemsWrap>
   );
-};
+}

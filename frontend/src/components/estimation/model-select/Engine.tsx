@@ -13,12 +13,12 @@ interface EngineProps {
   setMission: (id?: number) => void;
 }
 
-export default ({
+export default function Engine({
   engines,
   selectedEngine,
   setMission,
   setEngine,
-}: EngineProps) => {
+}: EngineProps) {
   const carId = getCarIdFrom(useLocation());
 
   const { data } = useModelFilter("engine", {
@@ -51,4 +51,4 @@ export default ({
       ))}
     </ModelTypeInfo>
   );
-};
+}

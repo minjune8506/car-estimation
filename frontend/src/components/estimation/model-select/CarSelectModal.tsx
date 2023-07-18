@@ -12,13 +12,13 @@ interface CarSelectModalProps {
   onNavigateModelSelect: (carId: number) => void;
 }
 
-export default ({
+export default function CarSelectModal({
   data,
   currentCarId,
   isOpen,
   closeModal,
   onNavigateModelSelect,
-}: CarSelectModalProps) => {
+}: CarSelectModalProps) {
   const [selectedCategory, setSelectedCategory] = useState<number | undefined>(
     undefined
   );
@@ -43,7 +43,7 @@ export default ({
         }
       }}
     >
-      <CarSelectModal
+      <StyledCarSelectModal
         isSelectModalOpen={isOpen}
         className="flex flex-col w-full bg-white"
       >
@@ -61,11 +61,11 @@ export default ({
             }
           />
         )}
-      </CarSelectModal>
+      </StyledCarSelectModal>
     </BackDrop>
   );
-};
+}
 
-const CarSelectModal = styled.div<{ isSelectModalOpen?: boolean }>`
+const StyledCarSelectModal = styled.div<{ isSelectModalOpen?: boolean }>`
   display: ${(props) => (props.isSelectModalOpen ? "block" : "none")};
 `;

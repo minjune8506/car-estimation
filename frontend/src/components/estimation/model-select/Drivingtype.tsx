@@ -13,13 +13,13 @@ interface DrivingTypeProps {
   setDrivingType: (id: number) => void;
 }
 
-export default ({
+export default function DrivingType({
   drivingTypes,
   selectedMission,
   selectedEngine,
   selectedDrivingType,
   setDrivingType,
-}: DrivingTypeProps) => {
+}: DrivingTypeProps) {
   const carId = getCarIdFrom(useLocation());
 
   const { data, error, isLoading } = useModelFilter("mission", {
@@ -64,4 +64,4 @@ export default ({
       })}
     </ModelTypeInfo>
   );
-};
+}

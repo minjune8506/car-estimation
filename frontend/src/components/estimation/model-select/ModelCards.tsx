@@ -9,15 +9,15 @@ interface ModelCardsProps {
   models: Model[];
 }
 
-export default ({ models }: ModelCardsProps) => {
+export default function ModelCards({ models }: ModelCardsProps) {
   return (
-    <ModelCards>
+    <StyledModelCards>
       {models.map((model) => (
         <MemoizedModelCard modelInfo={model} key={model.id} />
       ))}
-    </ModelCards>
+    </StyledModelCards>
   );
-};
+}
 
 const MemoizedModelCard = memo(ModelCard);
 
@@ -74,7 +74,7 @@ function ModelCard({ modelInfo }: ModelCardProps) {
   );
 }
 
-const ModelCards = styled.ol`
+const StyledModelCards = styled.ol`
   width: 100%;
   display: flex;
   flex-direction: row;

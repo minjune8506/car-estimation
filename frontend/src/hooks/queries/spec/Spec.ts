@@ -29,16 +29,6 @@ export function useSpecsInfo(modelId: number) {
   });
 }
 
-export function useSpecInfo(specCode: string, modelId: number) {
-  return useQuery<SpecInfo, Error>({
-    queryKey: SpecKeys.findByCode(specCode, modelId),
-    queryFn: async () => {
-      const data = specAPI.fetchSpec(specCode!, modelId);
-      return data;
-    },
-  });
-}
-
 export function useSpecCheck(
   modelId: number,
   specCode: string,
@@ -114,5 +104,3 @@ export function useSpecColorChange(
     enabled: false,
   });
 }
-
-export function useOptionConstraintCheck() {}

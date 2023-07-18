@@ -69,7 +69,7 @@ const CarName = styled.div.attrs({
   className: "text-5xl font-bold absolute top-5 left-5",
 })``;
 
-export default () => {
+export default function CarSlider() {
   const [current, setCurrent] = useState(0);
 
   const showNext = () => {
@@ -100,4 +100,4 @@ export default () => {
       </NextButton>
     </SliderContainer>
   );
-};
+}

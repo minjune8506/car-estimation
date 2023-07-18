@@ -341,7 +341,6 @@ const Main = styled.main`
   flex-direction: row;
   width: 100%;
   height: calc(100% - 100px);
-  overflow-y: scroll;
 
   @media (max-width: 1024px) {
     flex-direction: column;
@@ -362,6 +361,7 @@ const CarSection = styled.section`
 const OptionSection = styled.section`
   padding: 0 3rem;
   width: 1200px;
+  overflow-y: scroll;
 
   @media (max-width: 1024px) {
     overflow-y: visible;

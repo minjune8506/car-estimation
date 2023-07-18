@@ -29,11 +29,11 @@ interface CategoryListProps {
   setSelectedCategory: (categoryId: number) => void;
 }
 
-export default ({
+export default function CategoryList({
   categories,
   selectedCategory,
   setSelectedCategory,
-}: CategoryListProps) => {
+}: CategoryListProps) {
   return (
     <ol className="flex flex-row py-2 px-2">
       {categories.map((category) => (
@@ -46,7 +46,7 @@ export default ({
       ))}
     </ol>
   );
-};
+}
 
 const CategoryButton = styled.button<{ isClicked: boolean }>`
   background-color: ${(props) => (props.isClicked ? "white" : "#444")};
