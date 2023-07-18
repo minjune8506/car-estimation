@@ -94,7 +94,6 @@ function useSelectedOptions() {
     initSelectedOptions,
     addOptions,
     deleteOptions,
-    setSelectedOptions,
     applyConstraint,
   ] as const;
 }

@@ -1,6 +1,6 @@
 import { ModelSelectButton } from "../../common/button/Button";
 import ModelTypeInfo from "./ModelTypeInfo";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Filter, ModelType } from "src/types/Model";
 import { useModelFilter } from "src/hooks/queries/model/Model";
 import { getCarIdFrom } from "src/common/utils/location-utils";

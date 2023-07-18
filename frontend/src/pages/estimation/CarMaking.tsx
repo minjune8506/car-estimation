@@ -48,7 +48,6 @@ export default function CarMaking() {
 
   // state
   const [
-    modelOptions,
     setModelOptions,
     findSpecInfo,
     findSpecDefaultOptions,
@@ -61,7 +60,6 @@ export default function CarMaking() {
     initSelectedOptions,
     addOptions,
     deleteOptions,
-    setSelectedOptions,
     applyConstraint,
   ] = useSelectedOptions();
   const [spec, setSpec] = useSpec({

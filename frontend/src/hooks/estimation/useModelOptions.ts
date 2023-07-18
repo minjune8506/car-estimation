@@ -68,7 +68,6 @@ function useModelOptions() {
   }, [modelOptions]);
 
   return [
-    modelOptions,
     setModelOptions,
     findSpecInfo,
     findSpecDefaultOptions,

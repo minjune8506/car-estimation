@@ -45,7 +45,7 @@ const queryClient = new QueryClient({
         console.error(error);
       },
       onSuccess: (data) => {
-        // console.log(data);
+        console.log(data);
       },
     },
   },
