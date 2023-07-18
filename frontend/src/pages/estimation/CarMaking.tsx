@@ -190,7 +190,7 @@ export default function CarMaking() {
 
   return (
     <>
-      <Header carId={carId} current="Car-Making" />
+      <Header current="Car-Making" />
       <Main className="flex flex-row w-full">
         <CarSection>
           <div className="mb-8">
@@ -277,60 +277,59 @@ export default function CarMaking() {
           ></OptionCards>
           <div className="flex items-center justify-center my-8">
             <button
-              className="bg-[#002C5F] text-white text-sm py-3 px-6"
+              className="bg-[#002C5F] text-white text-sm py-3 px-6 mb-20"
               onClick={onComplete}
             >
               내 차 만들기 완료
             </button>
           </div>
-          &nbsp;
         </OptionSection>
-        {colorChangeData &&
-          (colorChangeData as ChangeExteriorColor).changeExteriorYn && (
-            <Modal
-              accept={true}
-              onAccept={() => setColorChangeData(undefined)}
-              acceptButtonText="확인"
-            >
-              <div>선택하신 내장색상과 함께 제공되지 않는 색상입니다.</div>
-              <div>외장색상을 변경해주세요.</div>
-            </Modal>
-          )}
-        {colorChangeData &&
-          (colorChangeData as ChangeInteriorColor).changeInteriorYn && (
-            <Modal
-              accept={true}
-              onAccept={() => setColorChangeData(undefined)}
-              acceptButtonText="확인"
-            >
-              <div>선택하신 외장색상과 함께 제공되지 않는 색상입니다.</div>
-              <div>내장색상을 변경해주세요.</div>
-            </Modal>
-          )}
-        {colorChangeData && (colorChangeData as ChangeModel).modelInfo && (
-          <ModelChangeModal
-            carNameEn={carInfo.carNameEn}
-            beforeModel={modelInfo}
-            data={colorChangeData as ChangeModel}
-            currentPrice={price}
-            selectedOption={selectedOptions}
-            cancel={() => setColorChangeData(undefined)}
-          ></ModelChangeModal>
-        )}
-        {constraintCheck && selectedOption && (
-          <OptionConstraintsModal
-            carNameEn={carInfo.carNameEn}
-            data={constraintCheck}
-            targetOption={selectedOption}
-            selectedOptions={selectedOptions}
-            modelOptions={specsQuery.data!}
-            setModelOptions={setModelOptions}
-            setConstraintCheck={setConstraintCheck}
-            setTargetOption={setSelectedOption}
-            applyConstraint={applyConstraint}
-          ></OptionConstraintsModal>
-        )}
       </Main>
+      {colorChangeData &&
+        (colorChangeData as ChangeExteriorColor).changeExteriorYn && (
+          <Modal
+            accept={true}
+            onAccept={() => setColorChangeData(undefined)}
+            acceptButtonText="확인"
+          >
+            <div>선택하신 내장색상과 함께 제공되지 않는 색상입니다.</div>
+            <div>외장색상을 변경해주세요.</div>
+          </Modal>
+        )}
+      {colorChangeData &&
+        (colorChangeData as ChangeInteriorColor).changeInteriorYn && (
+          <Modal
+            accept={true}
+            onAccept={() => setColorChangeData(undefined)}
+            acceptButtonText="확인"
+          >
+            <div>선택하신 외장색상과 함께 제공되지 않는 색상입니다.</div>
+            <div>내장색상을 변경해주세요.</div>
+          </Modal>
+        )}
+      {colorChangeData && (colorChangeData as ChangeModel).modelInfo && (
+        <ModelChangeModal
+          carNameEn={carInfo.carNameEn}
+          beforeModel={modelInfo}
+          data={colorChangeData as ChangeModel}
+          currentPrice={price}
+          selectedOption={selectedOptions}
+          cancel={() => setColorChangeData(undefined)}
+        ></ModelChangeModal>
+      )}
+      {constraintCheck && selectedOption && (
+        <OptionConstraintsModal
+          carNameEn={carInfo.carNameEn}
+          data={constraintCheck}
+          targetOption={selectedOption}
+          selectedOptions={selectedOptions}
+          modelOptions={specsQuery.data!}
+          setModelOptions={setModelOptions}
+          setConstraintCheck={setConstraintCheck}
+          setTargetOption={setSelectedOption}
+          applyConstraint={applyConstraint}
+        ></OptionConstraintsModal>
+      )}
     </>
   );
 }
@@ -341,7 +340,7 @@ const Main = styled.main`
   display: flex;
   flex-direction: row;
   width: 100%;
-  height: 100%;
+  height: calc(100% - 100px);
   overflow-y: scroll;
 
   @media (max-width: 1024px) {

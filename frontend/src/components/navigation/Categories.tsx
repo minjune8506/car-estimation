@@ -1,6 +1,7 @@
 import { CarCategory, CategoryCars } from "src/types/CarCategory";
 import { AiOutlineRight } from "react-icons/ai";
 import styled from "styled-components";
+import { memo } from "react";
 
 interface CategoriesProps {
   carsPerCategory: CategoryCars[];
@@ -50,6 +51,7 @@ function Category({ category, focused, onMouseOver }: CategoryProps) {
     </>
   );
 }
+memo(Category);
 
 const StyledCategories = styled.div`
   display: flex;

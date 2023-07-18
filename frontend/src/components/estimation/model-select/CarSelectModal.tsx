@@ -9,6 +9,7 @@ interface CarSelectModalProps {
   currentCarId: number;
   isOpen?: boolean;
   closeModal: (state: boolean) => void;
+  onNavigateModelSelect: (carId: number) => void;
 }
 
 export default ({
@@ -16,6 +17,7 @@ export default ({
   currentCarId,
   isOpen,
   closeModal,
+  onNavigateModelSelect,
 }: CarSelectModalProps) => {
   const [selectedCategory, setSelectedCategory] = useState<number | undefined>(
     undefined
@@ -28,7 +30,7 @@ export default ({
         setSelectedCategory(category.categoryId);
       }
     });
-  }, []);
+  }, [data]);
 
   const outside = useRef(null);
 
@@ -52,6 +54,7 @@ export default ({
         />
         {selectedCategory && (
           <CarList
+            onNavigate={onNavigateModelSelect}
             cars={
               data.find((category) => category.categoryId === selectedCategory)
                 ?.cars ?? []

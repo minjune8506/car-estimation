@@ -58,7 +58,7 @@ function ModelChangeModal({
   };
 
   return (
-    <BackDrop>
+    <BackDrop width={window.screen.width} height={window.screen.availHeight}>
       <ModalBody>
         <div className="flex flex-col text-sm font-bold bg-white justify-center items-center p-6 ">
           <div className="text-lg py-4">

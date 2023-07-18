@@ -61,6 +61,7 @@ export default ({ carsPerCategory, selectedCategory }: CarsProps) => {
 
   const navigateToModelSelect = (carId: number) => {
     navigate(`/estimation/model?carId=${carId}`);
+    setIsMenuOpen(false);
   };
 
   return (

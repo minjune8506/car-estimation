@@ -28,7 +28,7 @@ export default function ModelSelect() {
 
   return (
     <>
-      <Header carId={carId} current="Model-Select" />
+      <Header current="Model-Select" />
       <main className="flex flex-col px-6">
         <div className="w-full flex flex-row py-6">
           <ModelTypeInfos

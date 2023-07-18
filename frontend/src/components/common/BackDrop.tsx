@@ -1,11 +1,11 @@
 import styled from "styled-components";
 
-export default styled.div`
+export default styled.div<{ width?: number; height?: number }>`
   width: 100vw;
   height: 100vh;
   position: absolute;
   top: 0;
   left: 0;
-  z-index: 50;
+  z-index: 500;
   backdrop-filter: brightness(60%);
 `;

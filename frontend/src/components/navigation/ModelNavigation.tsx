@@ -10,7 +10,7 @@ const Wrapper = styled.div`
 `;
 
 function ModelNavigation() {
-  const { isLoading, error, data } = useCategoryCars();
+  const { data } = useCategoryCars();
   const [selectedCategory, setSelectedCategory] = useState<number | undefined>(
     undefined
   );
@@ -21,12 +21,11 @@ function ModelNavigation() {
     }
   }, [data]);
 
-  if (isLoading) return <div>로딩중...</div>;
-  if (error) return <div>{`오류가 발생했습니다. : ${error.message}`}</div>;
-
   const onCategoryMouseOver = (id: number) => {
     setSelectedCategory(id);
   };
+
+  if (!data) return;
 
   return (
     <Wrapper>

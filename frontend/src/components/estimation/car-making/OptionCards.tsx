@@ -43,7 +43,7 @@ function OptionCards({
         {options.map((spec) =>
           spec.options.map((option) => {
             return (
-              <OptionCard
+              <MemoizedOptionCard
                 specCode={spec.specCode}
                 option={option}
                 onOptionClick={onOptionClick}
@@ -56,7 +56,7 @@ function OptionCards({
                     : false
                 }
                 key={option.optionId}
-              ></OptionCard>
+              ></MemoizedOptionCard>
             );
           })
         )}
@@ -66,6 +66,7 @@ function OptionCards({
 }
 
 export default memo(OptionCards);
+const MemoizedOptionCard = memo(OptionCard);
 
 interface OptionProps {
   option: SpecOption;

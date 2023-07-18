@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import { ReactNode, memo } from "react";
 import { convertPrice } from "src/common/utils/price-utils";
 import { Car } from "src/types/Car";
 import styled from "styled-components";
@@ -16,8 +16,11 @@ interface Props {
   height?: string;
   width?: string;
 }
+const MemoizedCarItem = memo(CarItem);
 
-export default function CarItem({
+export default MemoizedCarItem;
+
+export function CarItem({
   car,
   hoverBackground,
   onMouseOver,

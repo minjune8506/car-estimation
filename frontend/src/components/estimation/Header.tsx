@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import HyundaiLogo from "/images/logo/logo_main.svg";
 import { RxTriangleDown, RxTriangleUp } from "react-icons/rx";
@@ -8,29 +8,30 @@ import CarSelectModal from "./model-select/CarSelectModal";
 import { memo, useState } from "react";
 import { getCarName } from "../../common/utils/car-utils";
 import { useCategoryCars } from "src/hooks/queries/car/CategoryCars";
+import { getCarIdFrom } from "src/common/utils/location-utils";
 
 interface ModelSelectHeaderProps {
-  carId: number;
   current?: "Model-Select" | "Car-Making";
 }
 
-function Header({ carId, current }: ModelSelectHeaderProps) {
+function Header({ current }: ModelSelectHeaderProps) {
   const [isSelectModalOpen, setSelectModalOpen] = useState(false);
   const [isCloseModalOpen, setIsCloseModalOpen] = useState(false);
+  const carId = getCarIdFrom(useLocation());
 
-  const { isLoading, error, data } = useCategoryCars();
+  const { data } = useCategoryCars();
   const navigate = useNavigate();
 
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
+  if (!data) return;
 
-  if (error) {
-    return <div>{error.message}</div>;
-  }
+  const onNavigateModelSelect = (carId: number) => {
+    setIsCloseModalOpen(false);
+    setSelectModalOpen(false);
+    navigate(`?carId=${carId}`);
+  };
 
   return (
-    <header className="bg-[#e4dcd3] flex flex-col py-4 relative">
+    <header className="bg-[#e4dcd3] flex flex-col py-4 relative h-[100px]">
       <div className="flex flex-row items-center mb-6 mx-6">
         <button onClick={() => setIsCloseModalOpen(true)}>
           <img src={HyundaiLogo}></img>
@@ -48,6 +49,7 @@ function Header({ carId, current }: ModelSelectHeaderProps) {
         <div className="relative">
           {isSelectModalOpen && (
             <CarSelectModal
+              onNavigateModelSelect={onNavigateModelSelect}
               data={data}
               currentCarId={carId}
               isOpen={isSelectModalOpen}
@@ -76,6 +78,8 @@ function Header({ carId, current }: ModelSelectHeaderProps) {
       {isCloseModalOpen && (
         <Modal
           onAccept={() => {
+            setSelectModalOpen(false);
+            setIsCloseModalOpen(false);
             navigate("/");
           }}
           onCancel={() => setIsCloseModalOpen(false)}

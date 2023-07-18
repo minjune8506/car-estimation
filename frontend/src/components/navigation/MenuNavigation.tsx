@@ -3,13 +3,6 @@ import { useRecoilState } from "recoil";
 import ModelNavigation from "./ModelNavigation";
 import { IsMainMenuOpen } from "src/states/HomeState";
 
-const NavBarDiv = styled.div<{ isMenuOpen: boolean }>`
-  display: ${(props) => (props.isMenuOpen ? "block" : "none")};
-  background-color: #f6f3f2;
-  position: relative;
-  z-index: 5;
-`;
-
 export default () => {
   const [isMenuOpen, setMenuState] = useRecoilState(IsMainMenuOpen);
 
@@ -19,3 +12,10 @@ export default () => {
     </NavBarDiv>
   );
 };
+
+const NavBarDiv = styled.div<{ isMenuOpen: boolean }>`
+  display: ${(props) => (props.isMenuOpen ? "block" : "none")};
+  background-color: #f6f3f2;
+  position: relative;
+  z-index: 5;
+`;
