@@ -27,7 +27,7 @@ function Header({ current }: ModelSelectHeaderProps) {
   const onNavigateModelSelect = (carId: number) => {
     setIsCloseModalOpen(false);
     setSelectModalOpen(false);
-    navigate(`?carId=${carId}`);
+    navigate(`/estimation/model?carId=${carId}`);
   };
 
   return (
