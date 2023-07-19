@@ -59,7 +59,7 @@ public class ModelService {
         for (Spec spec : groupedOptions.keySet()) {
             response.add(ModelOptionResponse.from(spec, groupedOptions.get(spec)));
         }
-        return response;
+        return response.stream().sorted(Comparator.comparing(ModelOptionResponse::getSpecCode)).toList();
     }
 
     public List<ExteriorColorResponse> findExteriorColors(int modelId, int interiorColorId) {
