@@ -15,24 +15,19 @@ public class GlobalControllerAdvice {
 
     @ExceptionHandler
     public ResponseEntity<ErrorResponse> handleGlobalError(Exception e) {
-        log.error(e.getMessage());
         return ResponseEntity.status(ErrorCode.SYSTEM_ERROR.getStatus())
                        .body(ErrorResponse.of(ErrorCode.SYSTEM_ERROR));
     }
 
     @ExceptionHandler({MissingServletRequestParameterException.class, MethodArgumentTypeMismatchException.class})
     public ResponseEntity<ErrorResponse> handleMissionParams(Exception ex) {
-        log.error(ex.getMessage());
         return ResponseEntity.status(ErrorCode.BAD_REQUEST.getStatus())
                        .body(ErrorResponse.of(ErrorCode.BAD_REQUEST));
     }
 
     @ExceptionHandler(CustomException.class)
     public ResponseEntity<ErrorResponse> handleCustomException(CustomException ex) {
-        log.error(ex.getMessage());
         return ResponseEntity.status(ex.getErrorCode().getStatus())
                        .body(ErrorResponse.of(ex.getErrorCode()));
     }
-
-    //TODO: Log AOP
 }
