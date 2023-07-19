@@ -6,6 +6,7 @@ import com.estimation.car.dto.response.spec.ChangeModelResponse;
 import com.estimation.car.dto.response.spec.CheckSpecFailResponse;
 import com.estimation.car.dto.response.spec.CheckSpecResponse;
 import com.estimation.car.dto.response.spec.SpecInfoResponse;
+import com.estimation.car.dto.response.spec.color.ChangeColorResponse;
 import com.estimation.car.dto.response.spec.color.ChangeExteriorResponse;
 import com.estimation.car.dto.response.spec.color.ChangeInteriorResponse;
 import com.estimation.car.dto.response.spec.option.constraints.ConstraintCheckResponse;
@@ -48,6 +49,10 @@ public class SpecService {
         List<SpecOption> specOptions = specOptionRepository.findSpecOptionsBy(modelId, Optional.empty());
         List<SpecColor> specColors = specColorRepository.findModelSpecColorsBy(modelId);
 
+        if (specOptions.isEmpty() || specColors.isEmpty()) {
+            throw new SpecNotFoundException();
+        }
+
         Map<Spec, List<SpecOption>> groupedSpecOptions = specOptions.stream()
                                                                  .collect(groupingBy(SpecOption::getSpec));
         Map<Spec, List<SpecColor>> groupedSpecColors = specColors.stream()
@@ -58,9 +63,6 @@ public class SpecService {
             result.add(SpecInfoResponse.from(spec, groupedSpecColors.get(spec), groupedSpecOptions.get(spec)));
         }
         result = result.stream().sorted(Comparator.comparing(SpecInfoResponse::getSpecCode)).toList();
-        if (result.isEmpty()) {
-            throw new SpecNotFoundException();
-        }
         return result;
     }
 
@@ -96,12 +98,12 @@ public class SpecService {
                        .toList();
     }
 
-    public Object changeColor(final int modelId,
-                              final int beforeExteriorColorId,
-                              final int beforeInteriorColorId,
-                              final int afterExteriorColorId,
-                              final int afterInteriorColorId,
-                              final List<Integer> options) {
+    public ChangeColorResponse changeColor(final int modelId,
+                                           final int beforeExteriorColorId,
+                                           final int beforeInteriorColorId,
+                                           final int afterExteriorColorId,
+                                           final int afterInteriorColorId,
+                                           final List<Integer> options) {
         List<SpecColor> specColors = specColorRepository.findSpecColorsToChangeBy(modelId);
 
         List<SpecColor> modelColors = specColors.stream()
@@ -112,7 +114,7 @@ public class SpecService {
                                                 .filter(specColor -> specColor.isSameColor(afterExteriorColorId, afterInteriorColorId))
                                                 .findAny();
         if (canChoice.isPresent()) {
-            throw new IllegalArgumentException("모델에서 선택할수 없는 색상인 경우에 호출 가능합니다.");
+            throw new IllegalArgumentException("모델에서 선택할수 있는 색상인데 호출한 경우");
         }
 
         // 내장 색상만 변경한 경우 + 모델에서 선택할 수 있는 내장 색상인 경우

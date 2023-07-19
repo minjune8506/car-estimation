@@ -7,7 +7,7 @@ public class MissionFixture {
     public static Mission AUTO = createMission("A/T");
     public static Mission DCT = createMission("DCT");
 
-    public static Mission createMission(String name) {
+    private static Mission createMission(String name) {
         return Mission.builder()
                       .name(name)
                       .build();

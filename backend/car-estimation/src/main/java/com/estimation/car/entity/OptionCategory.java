@@ -6,6 +6,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
@@ -21,4 +22,9 @@ public class OptionCategory {
 
     @Column(length = 100, nullable = false)
     private String name;
+
+    @Builder
+    public OptionCategory(String name) {
+        this.name = name;
+    }
 }

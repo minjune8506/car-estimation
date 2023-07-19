@@ -10,6 +10,7 @@ import jakarta.persistence.IdClass;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -33,6 +34,13 @@ public class SpecOptionConstraint {
 
     @Enumerated(EnumType.STRING)
     private Action action; // ADD, DELETE, ENABLE, DISABLE
+
+    @Builder
+    public SpecOptionConstraint(SpecOption source, SpecOption target, Action action) {
+        this.source = source;
+        this.target = target;
+        this.action = action;
+    }
 
     public boolean isSameAction(Action action) {
         return Objects.equals(this.action, action);

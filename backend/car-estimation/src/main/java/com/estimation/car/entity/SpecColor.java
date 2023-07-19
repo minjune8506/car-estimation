@@ -8,6 +8,7 @@ import jakarta.persistence.IdClass;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
@@ -33,6 +34,13 @@ public class SpecColor {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "INTERIOR_COLOR_ID")
     private InteriorColor interiorColor;
+
+    @Builder
+    public SpecColor(Spec spec, ExteriorColor exteriorColor, InteriorColor interiorColor) {
+        this.spec = spec;
+        this.exteriorColor = exteriorColor;
+        this.interiorColor = interiorColor;
+    }
 
     public int getModelId() {
         return spec.getModel().getId();

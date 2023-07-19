@@ -8,7 +8,9 @@
 
 = Model-Trims API
 
-== API 정보
+트림 정보 조회 API
+
+== Success
 
 operation::model-trims[snippets='http-request,query-parameters,http-response,response-fields']
 

@@ -9,6 +9,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -27,6 +28,12 @@ public class Spec {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "MODEL_ID", nullable = false)
     private Model model;
+
+    @Builder
+    public Spec(char specCode, Model model) {
+        this.specCode = specCode;
+        this.model = model;
+    }
 
     public boolean isSameSpec(int modelId, char specCode) {
         return this.getModel().getId() == modelId && this.specCode == specCode;

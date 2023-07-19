@@ -6,9 +6,13 @@
 :sectlinks:
 :hide-uri-scheme:
 
-= Model-Filter API
+= 모델 필터링 API
 
-== API 정보
+모델에 해당하는 Engine, Mission, Driving Type의 종류를 반환.
+
+query parameter로 들어온 인자에 따라 다른 값을 반환
+
+== Success
 
 operation::model-filter[snippets='http-request,query-parameters,http-response,response-fields']
 

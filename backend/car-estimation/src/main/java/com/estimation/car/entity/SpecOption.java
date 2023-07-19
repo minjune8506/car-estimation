@@ -8,6 +8,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
@@ -37,6 +38,16 @@ public class SpecOption {
     private char showYn;
 
     private char defaultYn;
+
+    @Builder
+    public SpecOption(Spec spec, Option option, int price, char unityChoiceYn, char showYn, char defaultYn) {
+        this.spec = spec;
+        this.option = option;
+        this.price = price;
+        this.unityChoiceYn = unityChoiceYn;
+        this.showYn = showYn;
+        this.defaultYn = defaultYn;
+    }
 
     public int getOptionCategoryId() {
         return option.getOptionCategory().getId();

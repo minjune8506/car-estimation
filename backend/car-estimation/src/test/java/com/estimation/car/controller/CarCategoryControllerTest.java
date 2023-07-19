@@ -43,38 +43,40 @@ class CarCategoryControllerTest {
         // given
         given(carCategoryService.findAllCategoryWithCars())
                 .willReturn(List.of(CategoryCarsResponse.builder()
-                                                           .categoryId(1)
-                                                           .categoryName("SUV")
-                                                           .cars(List.of(CarResponse.builder()
-                                                                                       .carId(1)
-                                                                                       .carName("투싼")
-                                                                                       .lowPrice(12_000_000)
-                                                                                       .carImg("tucson.png")
-                                                                                       .build()))
-                                                           .build()));
+                                            .categoryId(1)
+                                            .categoryName("SUV")
+                                            .cars(List.of(CarResponse.builder()
+                                                                  .carId(1)
+                                                                  .carName("투싼")
+                                                                  .carNameEn("tucson")
+                                                                  .lowPrice(12_000_000)
+                                                                  .carImg("tucson.png")
+                                                                  .build()))
+                                            .build()));
         // when & then
         mockMvc.perform(
-                       get("/api/v1/car/categories/cars")
-                               .accept(MediaType.APPLICATION_JSON))
-               .andDo(print())
-               .andExpect(status().isOk())
-               .andExpect(jsonPath("$.code").value(0))
-               .andExpect(jsonPath("$.message").value("성공"))
-               .andExpect(jsonPath("$.data[0].categoryName").value("SUV"))
-               .andExpect(jsonPath("$.data[0].cars[0].carName").value("투싼"))
-               .andDo(document("categoryCars",
-                       getDocumentRequest(),
-                       getDocumentResponse(),
-                       commonResponseBody().and(
-                               fieldWithPath("data").type(JsonFieldType.ARRAY).description("결과 데이터"),
-                               fieldWithPath("data[].categoryId").type(JsonFieldType.NUMBER).description("카테고리 아이디"),
-                               fieldWithPath("data[].categoryName").type(JsonFieldType.STRING).description("카테고리 이름"),
-                               fieldWithPath("data[].cars[].carId").type(JsonFieldType.NUMBER).description("차량 아이디"),
-                               fieldWithPath("data[].cars[].carName").type(JsonFieldType.STRING).description("차량 이름"),
-                               fieldWithPath("data[].cars[].lowPrice").type(JsonFieldType.NUMBER).description("최저 가격"),
-                               fieldWithPath("data[].cars[].carImg").type(JsonFieldType.STRING)
-                                                                    .description("차량 이미지")
-                                                                    .attributes(key("Nullable").value("true")))
-               ));
+                        get("/api/v1/car/categories/cars")
+                                .accept(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.code").value(0))
+                .andExpect(jsonPath("$.message").value("성공"))
+                .andExpect(jsonPath("$.data[0].categoryName").value("SUV"))
+                .andExpect(jsonPath("$.data[0].cars[0].carName").value("투싼"))
+                .andDo(document("category-cars",
+                        getDocumentRequest(),
+                        getDocumentResponse(),
+                        commonResponseBody().and(
+                                fieldWithPath("data").type(JsonFieldType.ARRAY).description("결과 데이터"),
+                                fieldWithPath("data[].categoryId").type(JsonFieldType.NUMBER).description("카테고리 아이디"),
+                                fieldWithPath("data[].categoryName").type(JsonFieldType.STRING).description("카테고리 이름"),
+                                fieldWithPath("data[].cars[].carId").type(JsonFieldType.NUMBER).description("차량 아이디"),
+                                fieldWithPath("data[].cars[].carName").type(JsonFieldType.STRING).description("차량 이름"),
+                                fieldWithPath("data[].cars[].carNameEn").type(JsonFieldType.STRING).description("차량 영어 이름"),
+                                fieldWithPath("data[].cars[].lowPrice").type(JsonFieldType.NUMBER).description("최저 가격"),
+                                fieldWithPath("data[].cars[].carImg").type(JsonFieldType.STRING)
+                                        .description("차량 이미지")
+                                        .attributes(key("Nullable").value("true")))
+                ));
     }
 }

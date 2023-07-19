@@ -6,12 +6,10 @@
 :sectlinks:
 :hide-uri-scheme:
 
-= Car Category API
+= 카테고리별 차량 조회 API
 
-== API 정보
+카테고리별 차량 조회
 
-operation::model-trims[snippets='http-request,query-parameters,http-response,response-fields']
+== SUCCESS
 
-== Error
-
-operation::model-trims-error[snippets='http-response']
+operation::category-cars[snippets='http-request,http-response,response-fields']

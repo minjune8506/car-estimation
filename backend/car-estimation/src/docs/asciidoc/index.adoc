@@ -6,14 +6,14 @@
 :sectlinks:
 :hide-uri-scheme:
 
-= 차량 견적 시스템 API
+= 내 차 만들기 프로젝트 API 문서
 
 [[Error-Code]]
 == Error Code
 
 에러 코드 정의
 
-link:http://localhost:8080/docs/common/error-code.html[Error-Codes]
+link:http://localhost:8080/docs/common/error-code.html[Error Codes]
 
 [[Car-Category-API]]
 == Car Category API
@@ -23,7 +23,20 @@ link:http://localhost:8080/docs/common/error-code.html[Error-Codes]
 
 카테고리별 차량들을 조회하는 API
 
-link:http://localhost:8080/docs/car-category/car-category.html[/api/v1/category/car/cars/]
+link:http://localhost:8080/docs/car-category/car-category.html[/api/v1/car/categories/cars]
+
+[[Car-API]]
+== Car API
+
+[[차량-조회]]
+=== 차량 조회
+
+link:http://localhost:8080/docs/car/find-car.html[/api/v1/cars/{carId}]
+
+[[차량-색상-조회]]
+=== 차량 색상 조회
+
+link:http://localhost:8080/docs/car/find-car-colors.html[/api/v1/cars/{carId}/colors]
 
 [[Model-API]]
 == Model API

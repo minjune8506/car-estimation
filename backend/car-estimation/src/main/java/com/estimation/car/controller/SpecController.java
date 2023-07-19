@@ -4,6 +4,7 @@ import com.estimation.car.common.code.Code;
 import com.estimation.car.common.response.Response;
 import com.estimation.car.dto.response.spec.CheckSpecResponse;
 import com.estimation.car.dto.response.spec.SpecInfoResponse;
+import com.estimation.car.dto.response.spec.color.ChangeColorResponse;
 import com.estimation.car.dto.response.spec.option.constraints.ConstraintCheckResponse;
 import com.estimation.car.dto.response.spec.option.constraints.SpecOptionConstraintResponse;
 import com.estimation.car.service.SpecService;
@@ -63,13 +64,13 @@ public class SpecController {
 
 
     @GetMapping("/colors/change")
-    public ResponseEntity<Response<?>> changeColor(@RequestParam final int modelId,
-                                                   @RequestParam final int beforeExteriorColorId,
-                                                   @RequestParam final int beforeInteriorColorId,
-                                                   @RequestParam final int afterExteriorColorId,
-                                                   @RequestParam final int afterInteriorColorId,
-                                                   @RequestParam final List<Integer> options) {
-        Object result = specService.changeColor(modelId, beforeExteriorColorId, beforeInteriorColorId, afterExteriorColorId, afterInteriorColorId, options);
+    public ResponseEntity<Response<ChangeColorResponse>> changeColor(@RequestParam final int modelId,
+                                                                     @RequestParam final int beforeExteriorColorId,
+                                                                     @RequestParam final int beforeInteriorColorId,
+                                                                     @RequestParam final int afterExteriorColorId,
+                                                                     @RequestParam final int afterInteriorColorId,
+                                                                     @RequestParam final List<Integer> options) {
+        ChangeColorResponse result = specService.changeColor(modelId, beforeExteriorColorId, beforeInteriorColorId, afterExteriorColorId, afterInteriorColorId, options);
         return ResponseEntity.ok(Response.of(Code.SUCCESS, result));
     }
 }

@@ -3,6 +3,7 @@ package com.estimation.car.dto.response.spec;
 import com.estimation.car.dto.response.exteriorcolor.ExteriorColorResponse;
 import com.estimation.car.dto.response.interiorcolor.InteriorColorResponse;
 import com.estimation.car.dto.response.model.ModelResponse;
+import com.estimation.car.dto.response.spec.color.ChangeColorResponse;
 import com.estimation.car.dto.response.spec.option.SpecOptionResponse;
 import com.estimation.car.entity.ExteriorColor;
 import com.estimation.car.entity.InteriorColor;
@@ -15,7 +16,7 @@ import java.util.List;
 
 @Getter
 @Builder
-public class ChangeModelResponse {
+public class ChangeModelResponse extends ChangeColorResponse {
     private ModelResponse modelInfo;
     private ExteriorColorResponse exteriorColor;
     private InteriorColorResponse interiorColor;

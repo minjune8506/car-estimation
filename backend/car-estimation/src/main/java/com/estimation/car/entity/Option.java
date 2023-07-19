@@ -10,6 +10,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
@@ -32,4 +33,11 @@ public class Option {
     private String name;
 
     private String img;
+
+    @Builder
+    public Option(OptionCategory optionCategory, String name, String img) {
+        this.optionCategory = optionCategory;
+        this.name = name;
+        this.img = img;
+    }
 }

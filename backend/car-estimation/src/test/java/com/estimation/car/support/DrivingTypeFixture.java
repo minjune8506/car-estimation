@@ -6,7 +6,7 @@ public class DrivingTypeFixture {
     public static DrivingType _2WD = createDrivingType("2WD");
     public static DrivingType _4WD = createDrivingType("4WD");
 
-    public static DrivingType createDrivingType(String name) {
+    private static DrivingType createDrivingType(String name) {
         return DrivingType.builder()
                           .name(name)
                           .build();
