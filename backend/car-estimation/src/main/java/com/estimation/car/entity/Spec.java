@@ -27,4 +27,8 @@ public class Spec {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "MODEL_ID", nullable = false)
     private Model model;
+
+    public boolean isSameSpec(int modelId, char specCode) {
+        return this.getModel().getId() == modelId && this.specCode == specCode;
+    }
 }

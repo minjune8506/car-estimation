@@ -6,7 +6,7 @@ public class SpecNotFoundException extends CustomException {
 
     private static final String message = "해당하는 스펙을 찾을 수 없는 경우";
 
-    public SpecNotFoundException(final ErrorCode errorCode) {
-        super(errorCode, message);
+    public SpecNotFoundException() {
+        super(ErrorCode.SPEC_NOT_FOUND, message);
     }
 }

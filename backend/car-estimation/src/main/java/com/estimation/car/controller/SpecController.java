@@ -24,7 +24,7 @@ public class SpecController {
 
     private final SpecService specService;
 
-    @GetMapping()
+    @GetMapping
     public ResponseEntity<Response<List<SpecInfoResponse>>> findModelSpecs(@RequestParam final int modelId) {
         List<SpecInfoResponse> result = specService.findModelSpecs(modelId);
         return ResponseEntity.ok(Response.of(Code.SUCCESS, result));

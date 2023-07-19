@@ -53,4 +53,16 @@ public class SpecColor {
     public Model getModel() {
         return spec.getModel();
     }
+
+    public boolean isSameInteriorColor(final int interiorColorId) {
+        return this.getInteriorColorId() == interiorColorId;
+    }
+
+    public boolean isSameExteriorColor(final int exteriorColorId) {
+        return this.getExteriorColorId() == exteriorColorId;
+    }
+
+    public boolean isSameColor(final int exteriorColorId, final int interiorColorId) {
+        return this.getExteriorColorId() == exteriorColorId && this.getInteriorColorId() == interiorColorId;
+    }
 }

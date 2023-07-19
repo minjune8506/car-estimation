@@ -1,6 +1,5 @@
 package com.estimation.car.service;
 
-import com.estimation.car.common.code.ErrorCode;
 import com.estimation.car.common.exception.OptionNotFoundException;
 import com.estimation.car.common.exception.SpecNotFoundException;
 import com.estimation.car.dto.response.spec.ChangeModelResponse;
@@ -23,7 +22,7 @@ import com.estimation.car.repository.spec.option.SpecOptionRepository;
 import com.estimation.car.repository.spec.option.constraints.SpecOptionConstraintRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -34,6 +33,7 @@ import java.util.Optional;
 import static java.util.stream.Collectors.groupingBy;
 
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 @Service
 public class SpecService {
     private static final int FIRST = 0;
@@ -47,8 +47,10 @@ public class SpecService {
         List<SpecOption> specOptions = specOptionRepository.findSpecOptionsBy(modelId, Optional.empty());
         List<SpecColor> specColors = specColorRepository.findModelSpecColorsBy(modelId);
 
-        Map<Spec, List<SpecOption>> groupedSpecOptions = specOptions.stream().collect(groupingBy(SpecOption::getSpec));
-        Map<Spec, List<SpecColor>> groupedSpecColors = specColors.stream().collect(groupingBy(SpecColor::getSpec));
+        Map<Spec, List<SpecOption>> groupedSpecOptions = specOptions.stream()
+                                                                 .collect(groupingBy(SpecOption::getSpec));
+        Map<Spec, List<SpecColor>> groupedSpecColors = specColors.stream()
+                                                               .collect(groupingBy(SpecColor::getSpec));
 
         List<SpecInfoResponse> result = new ArrayList<>();
         for (Spec spec : groupedSpecOptions.keySet()) {
@@ -56,7 +58,7 @@ public class SpecService {
         }
         result = result.stream().sorted(Comparator.comparing(SpecInfoResponse::getSpecCode)).toList();
         if (result.isEmpty()) {
-            throw new SpecNotFoundException(ErrorCode.SPEC_NOT_FOUND);
+            throw new SpecNotFoundException();
         }
         return result;
     }
@@ -66,7 +68,7 @@ public class SpecService {
         List<SpecColor> specColors = specColorRepository.findSpecColorsBy(modelId, specCode);
 
         if (specOptions.isEmpty() || specColors.isEmpty()) {
-            throw new SpecNotFoundException(ErrorCode.SPEC_NOT_FOUND);
+            throw new SpecNotFoundException();
         }
 
         Spec spec = specOptions.get(FIRST).getSpec();
@@ -105,7 +107,8 @@ public class SpecService {
                                               .filter(specColor -> specColor.getModelId() == modelId)
                                               .toList();
 
-        Optional<SpecColor> canChoice = modelColors.stream().filter(specColor -> specColor.getExteriorColorId() == afterExteriorColorId && specColor.getInteriorColorId() == afterInteriorColorId)
+        Optional<SpecColor> canChoice = modelColors.stream()
+                                                .filter(specColor -> specColor.isSameColor(afterExteriorColorId, afterInteriorColorId))
                                                 .findAny();
         if (canChoice.isPresent()) {
             throw new IllegalArgumentException("모델에서 선택할수 없는 색상인 경우에 호출 가능합니다.");
@@ -114,7 +117,7 @@ public class SpecService {
         // 내장 색상만 변경한 경우 + 모델에서 선택할 수 있는 내장 색상인 경우
         if (beforeExteriorColorId == afterExteriorColorId) {
             Optional<SpecColor> possibleInterior = modelColors.stream()
-                                                           .filter(specColor -> specColor.getInteriorColorId() == afterInteriorColorId)
+                                                           .filter(specColor -> specColor.isSameInteriorColor(afterInteriorColorId))
                                                            .findAny();
             if (possibleInterior.isPresent()) {
                 return new ChangeExteriorResponse();
@@ -124,7 +127,7 @@ public class SpecService {
         // 외장 색상만 변경한 경우 + 모델에서 선택할 수 있는 외장 색상인 경우
         if (beforeInteriorColorId == afterInteriorColorId) {
             Optional<SpecColor> possibleExterior = modelColors.stream()
-                                                           .filter(specColor -> specColor.getExteriorColorId() == afterExteriorColorId)
+                                                           .filter(specColor -> specColor.isSameExteriorColor(afterExteriorColorId))
                                                            .findAny();
             if (possibleExterior.isPresent()) {
                 return new ChangeInteriorResponse();
@@ -141,7 +144,7 @@ public class SpecService {
                                             final List<Integer> options,
                                             final List<SpecColor> specColors) {
         List<SpecColor> possibleOtherModelsColor = specColors.stream()
-                                                           .filter(specColor -> specColor.getInteriorColorId() == afterInteriorColorId)
+                                                           .filter(specColor -> specColor.isSameInteriorColor(afterInteriorColorId))
                                                            .toList();
         if (possibleOtherModelsColor.isEmpty()) {
             throw new IllegalArgumentException("잘못된 색상 조합입니다.");
@@ -153,12 +156,11 @@ public class SpecService {
         char targetSpecCode = targetSpec.getSpecCode();
 
         List<SpecColor> availableColors = possibleOtherModelsColor.stream()
-                                                  .filter(specColor -> specColor.getModelId() == targetModelId && specColor.getSpecCode() == targetSpecCode)
+                                                  .filter(specColor -> specColor.getSpec().isSameSpec(targetModelId, targetSpecCode))
                                                   .toList();
 
         Optional<SpecColor> canKeepExterior = availableColors.stream()
-                                                      .filter(specColor -> specColor.getExteriorColorId() == afterExteriorColorId
-                                                                                   && specColor.getInteriorColorId() == afterInteriorColorId)
+                                                      .filter(specColor -> specColor.isSameColor(afterExteriorColorId, afterInteriorColorId))
                                                       .findFirst();
         ExteriorColor exteriorColor = canKeepExterior.map(SpecColor::getExteriorColor)
                                               .orElseGet(() -> availableColors.get(FIRST).getExteriorColor());
@@ -191,21 +193,25 @@ public class SpecService {
     public ConstraintCheckResponse checkOptionConstraints(final int modelId, final List<Integer> selectedOptions, final int targetOptionId) {
         List<SpecOption> targetOption = specOptionRepository.findSpecOptionsBy(modelId, List.of(targetOptionId));
         if (targetOption.size() != 1) {
-            throw new OptionNotFoundException(ErrorCode.OPTION_NOT_FOUND);
+            throw new OptionNotFoundException();
         }
 
         List<SpecOptionConstraint> constraints = specOptionConstraintRepository.findConstraintsBy(modelId, targetOptionId);
 
-        List<SpecOption> delOptions = constraints.stream().filter(specOptionConstraint -> specOptionConstraint.getAction().equals("DISABLE"))
+        List<SpecOption> delOptions = constraints.stream()
+                                              .filter(specOptionConstraint -> specOptionConstraint.isSameAction("DISABLE"))
                                               .map(SpecOptionConstraint::getSource)
                                               .filter(specOption -> selectedOptions.contains(specOption.getOptionId()))
                                               .toList();
+
         List<SpecOption> addOptions = new ArrayList<>();
         addOptions.addAll(targetOption);
-        addOptions.addAll(constraints.stream().filter(specOptionConstraint -> specOptionConstraint.getAction().equals("ENABLE"))
+        addOptions.addAll(constraints.stream()
+                                  .filter(specOptionConstraint -> specOptionConstraint.isSameAction("ENABLE"))
                                   .map(SpecOptionConstraint::getSource)
                                   .filter(option -> !selectedOptions.contains(option.getId()))
                                   .toList());
+
         return ConstraintCheckResponse.from(delOptions, addOptions);
     }
 }

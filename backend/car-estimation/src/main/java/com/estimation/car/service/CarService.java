@@ -15,12 +15,14 @@ import com.estimation.car.repository.spec.color.SpecColorRepository;
 import com.estimation.car.service.support.SpecColorExtractor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Comparator;
 import java.util.List;
 import java.util.function.Predicate;
 
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 @Service
 public class CarService {
 
@@ -30,7 +32,7 @@ public class CarService {
 
     public CarResponse findCar(final int carId) {
         Car car = carRepository.findById(carId)
-                          .orElseThrow(() -> new CarNotFoundException(ErrorCode.CAR_NOT_FOUND));
+                          .orElseThrow(CarNotFoundException::new);
         return CarResponse.from(car);
     }
 

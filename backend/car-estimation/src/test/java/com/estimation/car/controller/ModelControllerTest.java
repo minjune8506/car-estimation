@@ -1,6 +1,5 @@
 package com.estimation.car.controller;
 
-import com.estimation.car.common.code.ErrorCode;
 import com.estimation.car.common.exception.ModelNotFoundException;
 import com.estimation.car.dto.response.drivingtype.DrivingTypeFilterResponse;
 import com.estimation.car.dto.response.engine.EngineFilterResponse;
@@ -109,7 +108,7 @@ class ModelControllerTest {
 
     @Test
     void 해당하는_필터링된_모델이_없는_경우_예외를_발생시킨다() throws Exception {
-        given(modelService.filterModel(anyInt(), any(), any())).willThrow(new ModelNotFoundException(ErrorCode.MODEL_NOT_FOUND));
+        given(modelService.filterModel(anyInt(), any(), any())).willThrow(new ModelNotFoundException());
 
         mockMvc.perform(get("/api/v1/models/filter?carId=42")
                                 .accept(MediaType.APPLICATION_JSON))
@@ -165,7 +164,7 @@ class ModelControllerTest {
 
     @Test
     void 트림을_찾지_못한_경우_예외를_발생시킨다() throws Exception {
-        given(modelService.findTrims(anyInt(), anyInt(), anyInt(), anyInt())).willThrow(new ModelNotFoundException(ErrorCode.MODEL_NOT_FOUND));
+        given(modelService.findTrims(anyInt(), anyInt(), anyInt(), anyInt())).willThrow(new ModelNotFoundException());
 
         mockMvc.perform(get("/api/v1/models/trims?carId=42&engineId=1&missionId=1&drivingTypeId=1")
                                 .accept(MediaType.APPLICATION_JSON))

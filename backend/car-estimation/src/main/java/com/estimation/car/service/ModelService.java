@@ -1,6 +1,5 @@
 package com.estimation.car.service;
 
-import com.estimation.car.common.code.ErrorCode;
 import com.estimation.car.common.exception.ModelNotFoundException;
 import com.estimation.car.dto.response.exteriorcolor.ExteriorColorResponse;
 import com.estimation.car.dto.response.interiorcolor.InteriorColorResponse;
@@ -19,6 +18,7 @@ import com.estimation.car.repository.spec.option.SpecOptionRepository;
 import com.estimation.car.service.support.SpecColorExtractor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -30,6 +30,7 @@ import java.util.function.Predicate;
 import static java.util.stream.Collectors.groupingBy;
 
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 @Service
 public class ModelService {
 
@@ -41,7 +42,7 @@ public class ModelService {
     public ModelFilterResponse filterModel(final int carId, final Integer engineId, final Integer missionId) {
         List<Model> models = modelRepository.filterModels(carId, engineId, missionId);
         if (models.isEmpty()) {
-            throw new ModelNotFoundException(ErrorCode.MODEL_NOT_FOUND);
+            throw new ModelNotFoundException();
         }
         return ModelFilterResponse.from(models);
     }
@@ -49,31 +50,35 @@ public class ModelService {
     public List<ModelResponse> findTrims(final int carId, final int engineId, final int missionId, final int drivingTypeId) {
         List<Model> models = modelRepository.findTrims(carId, engineId, missionId, drivingTypeId);
         if (models.isEmpty()) {
-            throw new ModelNotFoundException(ErrorCode.MODEL_NOT_FOUND);
+            throw new ModelNotFoundException();
         }
         return models.stream().map(ModelResponse::from).toList();
     }
 
     public ModelResponse findModel(final int modelId) {
         Model model = modelRepository.findById(modelId)
-                              .orElseThrow(() -> new ModelNotFoundException(ErrorCode.MODEL_NOT_FOUND));
+                              .orElseThrow(ModelNotFoundException::new);
         return ModelResponse.from(model);
     }
 
     public List<ModelOptionResponse> findOptions(final int modelId) {
         List<SpecOption> options = specOptionRepository.findSpecOptionsBy(modelId, Optional.empty());
 
-        Map<Spec, List<SpecOption>> groupedOptions = options.stream().collect(groupingBy(SpecOption::getSpec));
+        Map<Spec, List<SpecOption>> groupedOptions = options.stream()
+                                                             .collect(groupingBy(SpecOption::getSpec));
+
         List<ModelOptionResponse> response = new ArrayList<>();
-        for (Spec spec : groupedOptions.keySet()) {
-            response.add(ModelOptionResponse.from(spec, groupedOptions.get(spec)));
-        }
-        return response.stream().sorted(Comparator.comparing(ModelOptionResponse::getSpecCode)).toList();
+        groupedOptions.keySet()
+                .forEach(spec -> response.add(ModelOptionResponse.from(spec, groupedOptions.get(spec))));
+
+        return response.stream()
+                       .sorted(Comparator.comparing(ModelOptionResponse::getSpecCode))
+                       .toList();
     }
 
     public List<ExteriorColorResponse> findExteriorColors(final int modelId, final int interiorColorId) {
         Model model = modelRepository.findById(modelId)
-                              .orElseThrow(() -> new ModelNotFoundException(ErrorCode.MODEL_NOT_FOUND));
+                              .orElseThrow(ModelNotFoundException::new);
         int carId = model.getCarId();
 
         List<SpecColor> exteriorSpecColors = specColorRepository.findExteriorColorsBy(carId);
@@ -91,7 +96,7 @@ public class ModelService {
 
     public List<InteriorColorResponse> findInteriorColors(final int modelId, final int exteriorColorId) {
         Model model = modelRepository.findById(modelId)
-                              .orElseThrow(() -> new ModelNotFoundException(ErrorCode.MODEL_NOT_FOUND));
+                              .orElseThrow(ModelNotFoundException::new);
         int carId = model.getCarId();
 
         List<SpecColor> interiorSpecColors = specColorRepository.findInteriorColorsBy(carId);

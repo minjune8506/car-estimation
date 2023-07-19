@@ -6,7 +6,7 @@ public class OptionNotFoundException extends CustomException {
 
     private static final String message = "해당하는 옵션을 찾을 수 없는 경우";
 
-    public OptionNotFoundException(final ErrorCode errorCode) {
-        super(errorCode, message);
+    public OptionNotFoundException() {
+        super(ErrorCode.OPTION_NOT_FOUND, message);
     }
 }

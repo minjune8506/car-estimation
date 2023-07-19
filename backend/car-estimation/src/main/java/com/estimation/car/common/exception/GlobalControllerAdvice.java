@@ -9,11 +9,11 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
-@RestControllerAdvice()
+@RestControllerAdvice
 @Slf4j
 public class GlobalControllerAdvice {
 
-    @ExceptionHandler()
+    @ExceptionHandler
     public ResponseEntity<ErrorResponse> handleGlobalError(Exception e) {
         log.error(e.getMessage());
         return ResponseEntity.status(ErrorCode.SYSTEM_ERROR.getStatus())
@@ -33,4 +33,6 @@ public class GlobalControllerAdvice {
         return ResponseEntity.status(ex.getErrorCode().getStatus())
                        .body(ErrorResponse.of(ex.getErrorCode()));
     }
+
+    //TODO: Log AOP
 }

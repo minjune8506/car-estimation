@@ -11,3 +11,7 @@ spring:
     properties:
       hibernate:
         format_sql: true
+
+env:
+  cors:
+    frontend: http://localhost:5173

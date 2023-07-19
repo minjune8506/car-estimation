@@ -12,6 +12,8 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.Objects;
+
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
@@ -30,4 +32,8 @@ public class SpecOptionConstraint {
 
     @Column(length = 10, nullable = false)
     private String action; // ADD, DELETE, ENABLE, DISABLE
+
+    public boolean isSameAction(String action) {
+        return Objects.equals(this.action, action);
+    }
 }
