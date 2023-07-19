@@ -27,20 +27,18 @@ public class ModelService {
     private final ModelRepository modelRepository;
     private final SpecOptionRepository specOptionRepository;
     private final SpecColorRepository specColorRepository;
+    private final SpecColorExtractor colorExtractor;
 
     public ModelFilterResponse filterModel(final int carId, final Integer engineId, final Integer missionId) {
         List<Model> models = modelRepository.filterModels(carId, engineId, missionId);
-
         if (models.isEmpty()) {
             throw new ModelNotFoundException(ErrorCode.MODEL_NOT_FOUND);
         }
-
         return ModelFilterResponse.from(models);
     }
 
     public List<ModelResponse> findTrims(final int carId, final int engineId, final int missionId, final int drivingTypeId) {
         List<Model> models = modelRepository.findTrims(carId, engineId, missionId, drivingTypeId);
-
         if (models.isEmpty()) {
             throw new ModelNotFoundException(ErrorCode.MODEL_NOT_FOUND);
         }
@@ -49,7 +47,7 @@ public class ModelService {
 
     public ModelResponse findModel(int modelId) {
         Model model = modelRepository.findById(modelId)
-                .orElseThrow(() -> new ModelNotFoundException(ErrorCode.MODEL_NOT_FOUND));
+                              .orElseThrow(() -> new ModelNotFoundException(ErrorCode.MODEL_NOT_FOUND));
         return ModelResponse.from(model);
     }
 
@@ -66,40 +64,37 @@ public class ModelService {
 
     public List<ExteriorColorResponse> findExteriorColors(int modelId, int interiorColorId) {
         Model model = modelRepository.findById(modelId)
-                .orElseThrow(() -> new ModelNotFoundException(ErrorCode.MODEL_NOT_FOUND));
+                              .orElseThrow(() -> new ModelNotFoundException(ErrorCode.MODEL_NOT_FOUND));
         int carId = model.getCarId();
 
         List<SpecColor> exteriorSpecColors = specColorRepository.findExteriorColorsBy(carId);
 
-        SpecColorExtractor extractor = new SpecColorExtractor(exteriorSpecColors);
-
-        List<ExteriorColor> exteriorColors = extractor.extract(SpecColor::getExteriorColor);
+        List<ExteriorColor> exteriorColors = colorExtractor.extract(exteriorSpecColors, SpecColor::getExteriorColor);
 
         Predicate<SpecColor> predicate = specColor -> specColor.getModelId() == modelId && specColor.getInteriorColorId() == interiorColorId;
-        List<ExteriorColor> modelExteriorColors = extractor.extractFilteredBy(predicate, SpecColor::getExteriorColor);
+        List<ExteriorColor> modelExteriorColors = colorExtractor.extractFilteredBy(exteriorSpecColors, predicate, SpecColor::getExteriorColor);
 
         return exteriorColors.stream()
-                .map(exteriorColor -> ExteriorColorResponse.from(exteriorColor, modelExteriorColors.contains(exteriorColor)))
-                .sorted(Comparator.comparing(ExteriorColorResponse::isChoiceYn).reversed())
-                .toList();
+                       .map(exteriorColor -> ExteriorColorResponse.from(exteriorColor, modelExteriorColors.contains(exteriorColor)))
+                       .sorted(Comparator.comparing(ExteriorColorResponse::isChoiceYn).reversed())
+                       .toList();
     }
 
     public List<InteriorColorResponse> findInteriorColors(int modelId, int exteriorColorId) {
         Model model = modelRepository.findById(modelId)
-                .orElseThrow(() -> new ModelNotFoundException(ErrorCode.MODEL_NOT_FOUND));
+                              .orElseThrow(() -> new ModelNotFoundException(ErrorCode.MODEL_NOT_FOUND));
         int carId = model.getCarId();
 
         List<SpecColor> interiorSpecColors = specColorRepository.findInteriorColorsBy(carId);
-        SpecColorExtractor extractor = new SpecColorExtractor(interiorSpecColors);
 
-        List<InteriorColor> interiorColors = extractor.extract(SpecColor::getInteriorColor);
+        List<InteriorColor> interiorColors = colorExtractor.extract(interiorSpecColors, SpecColor::getInteriorColor);
 
         Predicate<SpecColor> predicate = specColor -> specColor.getModelId() == modelId && specColor.getExteriorColorId() == exteriorColorId;
-        List<InteriorColor> modelInteriorColors = extractor.extractFilteredBy(predicate, SpecColor::getInteriorColor);
+        List<InteriorColor> modelInteriorColors = colorExtractor.extractFilteredBy(interiorSpecColors, predicate, SpecColor::getInteriorColor);
 
         return interiorColors.stream()
-                .map(interiorColor -> InteriorColorResponse.from(interiorColor, modelInteriorColors.contains(interiorColor)))
-                .sorted(Comparator.comparing(InteriorColorResponse::isChoiceYn).reversed())
-                .toList();
+                       .map(interiorColor -> InteriorColorResponse.from(interiorColor, modelInteriorColors.contains(interiorColor)))
+                       .sorted(Comparator.comparing(InteriorColorResponse::isChoiceYn).reversed())
+                       .toList();
     }
 }

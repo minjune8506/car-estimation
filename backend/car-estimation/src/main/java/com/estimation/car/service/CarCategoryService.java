@@ -18,7 +18,7 @@ public class CarCategoryService {
     public List<CategoryCarsResponse> findAllCategoryWithCars() {
         List<CarCategory> categories = carCategoryRepository.findAllCategoryWithCar();
         return categories.stream()
-                         .map(CategoryCarsResponse::from)
-                         .toList();
+                       .map(CategoryCarsResponse::from)
+                       .toList();
     }
 }

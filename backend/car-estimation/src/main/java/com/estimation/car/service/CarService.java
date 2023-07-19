@@ -26,31 +26,32 @@ public class CarService {
 
     private final CarRepository carRepository;
     private final SpecColorRepository specColorRepository;
+    private final SpecColorExtractor colorExtractor;
 
     public CarResponse findCar(int carId) {
-        Car car = carRepository.findById(carId).orElseThrow(() -> new CarNotFoundException(ErrorCode.CAR_NOT_FOUND));
+        Car car = carRepository.findById(carId)
+                          .orElseThrow(() -> new CarNotFoundException(ErrorCode.CAR_NOT_FOUND));
         return CarResponse.from(car);
     }
 
     public CarColorsResponse filterColor(int carId, int modelId) {
         List<SpecColor> colors = specColorRepository.findCarSpecColorsBy(carId);
 
-        SpecColorExtractor extractor = new SpecColorExtractor(colors);
-        List<ExteriorColor> exteriorColors = extractor.extract(SpecColor::getExteriorColor);
-        List<InteriorColor> interiorColors = extractor.extract(SpecColor::getInteriorColor);
+        List<ExteriorColor> exteriorColors = colorExtractor.extract(colors, SpecColor::getExteriorColor);
+        List<InteriorColor> interiorColors = colorExtractor.extract(colors, SpecColor::getInteriorColor);
 
         Predicate<SpecColor> predicate = specColor -> specColor.getModelId() == modelId;
-        List<ExteriorColor> modelExteriorColors = extractor.extractFilteredBy(predicate, SpecColor::getExteriorColor);
-        List<InteriorColor> modelInteriorColors = extractor.extractFilteredBy(predicate, SpecColor::getInteriorColor);
+        List<ExteriorColor> modelExteriorColors = colorExtractor.extractFilteredBy(colors, predicate, SpecColor::getExteriorColor);
+        List<InteriorColor> modelInteriorColors = colorExtractor.extractFilteredBy(colors, predicate, SpecColor::getInteriorColor);
 
         List<ExteriorColorResponse> exteriorColorResponses = exteriorColors.stream()
-                .map(exteriorColor -> ExteriorColorResponse.from(exteriorColor, modelExteriorColors.contains(exteriorColor)))
-                .sorted(Comparator.comparing(ExteriorColorResponse::isChoiceYn).reversed())
-                .toList();
+                                                                     .map(exteriorColor -> ExteriorColorResponse.from(exteriorColor, modelExteriorColors.contains(exteriorColor)))
+                                                                     .sorted(Comparator.comparing(ExteriorColorResponse::isChoiceYn).reversed())
+                                                                     .toList();
         List<InteriorColorResponse> interiorColorResponses = interiorColors.stream()
-                .map(interiorColor -> InteriorColorResponse.from(interiorColor, modelInteriorColors.contains(interiorColor)))
-                .sorted(Comparator.comparing(InteriorColorResponse::isChoiceYn).reversed())
-                .toList();
+                                                                     .map(interiorColor -> InteriorColorResponse.from(interiorColor, modelInteriorColors.contains(interiorColor)))
+                                                                     .sorted(Comparator.comparing(InteriorColorResponse::isChoiceYn).reversed())
+                                                                     .toList();
         return CarColorsResponse.from(exteriorColorResponses, interiorColorResponses);
     }
 }

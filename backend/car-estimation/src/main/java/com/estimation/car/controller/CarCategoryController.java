@@ -12,16 +12,16 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("api/v1/car/categories")
-@RequiredArgsConstructor
 public class CarCategoryController {
 
-    private final CarCategoryService menuService;
+    private final CarCategoryService carCategoryService;
 
     @GetMapping("/cars")
     public ResponseEntity<Response<List<CategoryCarsResponse>>> categoryCars() {
-        List<CategoryCarsResponse> responses = menuService.findAllCategoryWithCars();
+        List<CategoryCarsResponse> responses = carCategoryService.findAllCategoryWithCars();
         return ResponseEntity.ok(Response.of(Code.SUCCESS, responses));
     }
 }

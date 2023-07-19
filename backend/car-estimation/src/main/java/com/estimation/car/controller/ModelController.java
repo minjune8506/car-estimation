@@ -44,7 +44,7 @@ public class ModelController {
     }
 
     @GetMapping("/{modelId}/options")
-    public ResponseEntity<Response<List<ModelOptionResponse>>> findAllOptions(@PathVariable final int modelId) {
+    public ResponseEntity<Response<List<ModelOptionResponse>>> findAllOptions(@PathVariable int modelId) {
         List<ModelOptionResponse> result = modelService.findOptions(modelId);
         return ResponseEntity.ok().body(Response.of(Code.SUCCESS, result));
     }

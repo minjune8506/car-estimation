@@ -14,10 +14,10 @@ public class ExteriorColorResponse {
 
     public static ExteriorColorResponse from(ExteriorColor exteriorColor, boolean choiceYn) {
         return ExteriorColorResponse.builder()
-                .id(exteriorColor.getId())
-                .name(exteriorColor.getName())
-                .code(exteriorColor.getCode())
-                .choiceYn(choiceYn)
-                .build();
+                       .id(exteriorColor.getId())
+                       .name(exteriorColor.getName())
+                       .code(exteriorColor.getCode())
+                       .choiceYn(choiceYn)
+                       .build();
     }
 }
