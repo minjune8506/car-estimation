@@ -1,5 +1,6 @@
 package com.estimation.car.repository.spec.option.constraints;
 
+import com.estimation.car.entity.Action;
 import com.estimation.car.entity.QSpecOption;
 import com.estimation.car.entity.SpecOptionConstraint;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -51,8 +52,8 @@ public class CustomSpecOptionConstraintRepositoryImpl implements CustomSpecOptio
                                                .where(t.option.id.eq(optionId),
                                                        t.spec.model.id.eq(modelId))
                                ),
-                               specOptionConstraint.action.eq("ENABLE")
-                                       .or(specOptionConstraint.action.eq("DISABLE"))
+                               specOptionConstraint.action.eq(Action.ENABLE)
+                                       .or(specOptionConstraint.action.eq(Action.DISABLE))
                        ).fetch();
     }
 }

@@ -1,8 +1,9 @@
 package com.estimation.car.entity;
 
 import com.estimation.car.entity.id.SpecOptionConstraintId;
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
 import jakarta.persistence.IdClass;
@@ -30,10 +31,10 @@ public class SpecOptionConstraint {
     @JoinColumn(name = "TARGET_ID")
     private SpecOption target;
 
-    @Column(length = 10, nullable = false)
-    private String action; // ADD, DELETE, ENABLE, DISABLE
+    @Enumerated(EnumType.STRING)
+    private Action action; // ADD, DELETE, ENABLE, DISABLE
 
-    public boolean isSameAction(String action) {
+    public boolean isSameAction(Action action) {
         return Objects.equals(this.action, action);
     }
 }

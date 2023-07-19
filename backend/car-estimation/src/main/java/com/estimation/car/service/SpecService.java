@@ -10,6 +10,7 @@ import com.estimation.car.dto.response.spec.color.ChangeExteriorResponse;
 import com.estimation.car.dto.response.spec.color.ChangeInteriorResponse;
 import com.estimation.car.dto.response.spec.option.constraints.ConstraintCheckResponse;
 import com.estimation.car.dto.response.spec.option.constraints.SpecOptionConstraintResponse;
+import com.estimation.car.entity.Action;
 import com.estimation.car.entity.ExteriorColor;
 import com.estimation.car.entity.InteriorColor;
 import com.estimation.car.entity.Model;
@@ -199,7 +200,7 @@ public class SpecService {
         List<SpecOptionConstraint> constraints = specOptionConstraintRepository.findConstraintsBy(modelId, targetOptionId);
 
         List<SpecOption> delOptions = constraints.stream()
-                                              .filter(specOptionConstraint -> specOptionConstraint.isSameAction("DISABLE"))
+                                              .filter(specOptionConstraint -> specOptionConstraint.isSameAction(Action.DISABLE))
                                               .map(SpecOptionConstraint::getSource)
                                               .filter(specOption -> selectedOptions.contains(specOption.getOptionId()))
                                               .toList();
@@ -207,7 +208,7 @@ public class SpecService {
         List<SpecOption> addOptions = new ArrayList<>();
         addOptions.addAll(targetOption);
         addOptions.addAll(constraints.stream()
-                                  .filter(specOptionConstraint -> specOptionConstraint.isSameAction("ENABLE"))
+                                  .filter(specOptionConstraint -> specOptionConstraint.isSameAction(Action.ENABLE))
                                   .map(SpecOptionConstraint::getSource)
                                   .filter(option -> !selectedOptions.contains(option.getId()))
                                   .toList());
