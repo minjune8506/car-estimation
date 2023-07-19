@@ -1,0 +1,19 @@
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 2
+:sectlinks:
+:hide-uri-scheme:
+
+= 모델 외장 색상 조회 API
+
+모델에 적용할 수 있는 외장 색상 중에서 내장색상에 따라 선택할 수 있는 외장 색상 정보를 반환한다.
+
+== SUCCESS
+
+operation::model-colors-exteriors[snippets='http-request,path-parameters,query-parameters,http-response,response-fields']
+
+== Error
+
+operation::model-colors-exteriors-error[snippets='http-response']

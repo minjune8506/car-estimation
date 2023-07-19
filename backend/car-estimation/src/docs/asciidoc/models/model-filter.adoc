@@ -18,4 +18,4 @@ operation::model-filter[snippets='http-request,query-parameters,http-response,re
 
 == Error
 
-operation::model-trims-error[snippets='http-response']
+operation::model-filter-error[snippets='http-response']

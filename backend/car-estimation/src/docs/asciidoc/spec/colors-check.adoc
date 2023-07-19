@@ -1,0 +1,33 @@
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 2
+:sectlinks:
+:hide-uri-scheme:
+
+= 색상 검사 API
+
+현재 스펙에서 선택할 수 있는 색상 조합인지 검사.
+
+operation::colors-check-success[snippets='http-request,query-parameters']
+
+== Success
+
+=== 색상 변경 가능
+
+현재 스펙에서 선택 가능한 색상 조합
+
+operation::colors-check-success[snippets='http-response,response-fields']
+
+=== 색상 변경 불가능
+
+현재 스펙에서 선택 불가능한 색상 조합.
+
+변경할 스펙의 코드와 외장, 내장 색상 아이디를 반환.
+
+operation::colors-check-fail[snippets='http-response,response-fields']
+
+== Error
+
+operation::colors-check-fail[snippets='http-response']

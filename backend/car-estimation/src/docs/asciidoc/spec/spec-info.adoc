@@ -1,0 +1,19 @@
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 2
+:sectlinks:
+:hide-uri-scheme:
+
+= 단일 스펙 조회 API
+
+단일 스펙 정보 조회
+
+== Success
+
+operation::spec-info[snippets="http-request,path-parameters,query-parameters,http-response,response-fields"]
+
+== Error
+
+operation::spec-info-error[snippets='http-response']

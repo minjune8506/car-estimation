@@ -1,0 +1,33 @@
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 2
+:sectlinks:
+:hide-uri-scheme:
+
+= 색상 변경 API
+
+현재 선택할 수 없는 색상 조합을 선택하기 위해서 필요한 정보를 조회.
+
+== Success
+
+operation::colors-change-exterior[snippets='http-request,query-parameters']
+
+=== 외장 색상 변경
+
+외장 색상을 변경하면 선택할 수 있는 색상인 경우
+
+operation::colors-change-exterior[snippets='http-response,response-fields']
+
+=== 내장 색상 변경
+
+내장 색상을 변경하면 선택할 수 있는 색상인 경우
+
+operation::colors-change-interior[snippets='http-response,response-fields']
+
+=== 모델 변경
+
+선택할 수 없는 색상 조합이여서, 모델을 변경해야 하는 경우
+
+operation::colors-change-model[snippets='http-response,response-fields']

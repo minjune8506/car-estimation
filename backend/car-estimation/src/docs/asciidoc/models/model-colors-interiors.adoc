@@ -1,0 +1,19 @@
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 2
+:sectlinks:
+:hide-uri-scheme:
+
+= 모델 내장 색상 조회 API
+
+모델에 적용할 수 있는 내장 색상 중에서 외장색상에 따라 선택할 수 있는 내장 색상 정보를 반환한다.
+
+== SUCCESS
+
+operation::model-colors-interiors[snippets='http-request,path-parameters,query-parameters,http-response,response-fields']
+
+== Error
+
+operation::model-colors-interiors-error[snippets='http-response']

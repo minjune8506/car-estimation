@@ -13,7 +13,7 @@
 
 에러 코드 정의
 
-link:http://localhost:8080/docs/common/error-code.html[Error Codes]
+link:common/error-code.html[Error Codes]
 
 [[Car-Category-API]]
 == Car Category API
@@ -23,7 +23,7 @@ link:http://localhost:8080/docs/common/error-code.html[Error Codes]
 
 카테고리별 차량들을 조회하는 API
 
-link:http://localhost:8080/docs/car-category/car-category.html[/api/v1/car/categories/cars]
+link:car-category/car-category.html[/api/v1/car/categories/cars]
 
 [[Car-API]]
 == Car API
@@ -31,12 +31,12 @@ link:http://localhost:8080/docs/car-category/car-category.html[/api/v1/car/categ
 [[차량-조회]]
 === 차량 조회
 
-link:http://localhost:8080/docs/car/find-car.html[/api/v1/cars/{carId}]
+link:car/car-info.html[/api/v1/cars/{carId}]
 
 [[차량-색상-조회]]
 === 차량 색상 조회
 
-link:http://localhost:8080/docs/car/find-car-colors.html[/api/v1/cars/{carId}/colors]
+link:car/car-colors.html[/api/v1/cars/{carId}/colors]
 
 [[Model-API]]
 == Model API
@@ -44,13 +44,87 @@ link:http://localhost:8080/docs/car/find-car-colors.html[/api/v1/cars/{carId}/co
 [[모델-필터링]]
 === 모델 필터링
 
-차량에서 선택 가능한 엔진, 변속기, 구동방식들을 필터링하는 API
+차량에서 선택 가능한 엔진, 변속기, 구동방식들을 필터링한 정보를 조회하는 API
 
-link:http://localhost:8080/docs/models/filter.html[/api/v1/models/filter]
+link:models/model-filter.html[/api/v1/models/filter]
 
 [[트림-정보]]
-=== 트림 정보
+=== 트림 정보 조회
 
-차량, 엔진, 변속기, 구동 방식 정보를 이용하여 트림들을 조회하는 API
+트림 정보들을 조회하는 API
 
-link:http://localhost:8080/docs/models/trims.html[/api/v1/models/trims]
+link:models/model-trims.html[/api/v1/models/trims]
+
+[[모델-정보-조회]]
+=== 모델 정보 조회
+
+모델 정보를 조회하는 API
+
+link:models/model-info.html[/api/v1/models/{modelId}]
+
+[[모델-옵션-조회]]
+=== 모델 옵션 조회
+
+모델 옵션을 조회하는 API
+
+link:models/model-options.html[/api/v1/models/{modelId}/options]
+
+[[모델-외장-색상-조회]]
+=== 모델 외장 색상 조회
+
+외장 색상 정보를 조회하는 API
+
+link:models/model-colors-exteriors.html[/api/v1/models/{modelId}/colors/exteriors]
+
+[[모델-내장-색상-조회]]
+=== 모델 내장 색상 조회
+
+내장 색상 정보를 조회하는 API
+
+link:models/model-colors-interiors.html[ /api/v1/models/{modelId}/colors/interiors]
+
+[[Spec-API]]
+== SPEC API
+
+[[모델-스펙-조회]]
+=== 모델 스펙 조회
+
+모델의 전체 스펙 정보를 조회하는 API
+
+link:spec/specs-info.html[/api/v1/specs]
+
+[[단일-스펙-조회]]
+=== 단일 스펙 조회
+
+단일 스펙 정보를 조회하는 API
+
+link:spec/spec-info.html[/api/v1/specs/{specCode}]
+
+[[옵션-제약조건-조회]]
+=== 옵션 제약조건 조회
+
+선택된 옵션들의 제약조건을 조회하는 API
+
+link:spec/options-constraints.html[/api/v1/specs/options/constraints]
+
+[[옵션-제약조건-검사]]
+=== 옵션 제약조건 검사
+
+옵션을 선택하기 위해서 어떤 옵션들을 삭제하고, 추가해야 하는지 조회하는 API
+
+link:spec/options-constraints-check.html[/api/v1/specs/options/constraints/check]
+
+[[색상-검사]]
+=== 색상 검사
+
+현재 모델에서 선택할 수 있는 색상인지 조회하는 API
+
+link:spec/colors-check.html[/api/v1/specs/colors/check]
+
+
+[[색상-변경]]
+=== 색상 변경
+
+현재 선택할 수 없는 색상을 선택하기 위해 필요한 정보를 조회하는 API
+
+link:spec/colors-change.html[/api/v1/specs/colors/change]

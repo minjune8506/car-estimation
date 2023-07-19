@@ -1,0 +1,17 @@
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 2
+:sectlinks:
+:hide-uri-scheme:
+
+= 옵션 제약 조건 조회 API
+
+선택한 옵션 리스트들의 옵션 제약조건을 조회
+
+Action : ENABLE, DISABLE, ADD, DELETE
+
+== Success
+
+operation::options-constraints[snippets="http-request,query-parameters,http-response,response-fields"]

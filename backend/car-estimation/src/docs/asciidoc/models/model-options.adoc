@@ -1,0 +1,15 @@
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 2
+:sectlinks:
+:hide-uri-scheme:
+
+= 모델 옵션 정보 조회 API
+
+모델에 해당하는 옵션들을 조회
+
+== Success
+
+operation::model-options[snippets='http-request,path-parameters,http-response,response-fields']

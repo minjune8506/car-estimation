@@ -1,0 +1,19 @@
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 2
+:sectlinks:
+:hide-uri-scheme:
+
+= 옵션 제약 조건 검사 API
+
+target option이 선택 불가능한 상황에서 target option을 선택하기 위해 어떤 옵션들을 추가 / 삭제 해야하는지 조회하는 API
+
+== Success
+
+operation::options-constraints-check[snippets="http-request,query-parameters,http-response,response-fields"]
+
+== Error
+
+operation::options-constraints-check-error[snippets="http-response"]
