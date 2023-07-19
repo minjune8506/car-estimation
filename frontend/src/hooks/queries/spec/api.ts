@@ -26,7 +26,7 @@ export const specAPI = {
     interiorColorId?: number,
     exteriorColorId?: number
   ): Promise<CheckSpec | CheckSpecFail> => {
-    return customFetch(`/specs/check`, {
+    return customFetch(`/specs/colors/check`, {
       method: "get",
       params: { modelId, specCode, interiorColorId, exteriorColorId },
     });
@@ -70,7 +70,7 @@ export const specAPI = {
     selectedOptions: number[],
     targetOptionId: number
   ): Promise<ConstraintCheck> => {
-    return customFetch(`/specs/constraints/check`, {
+    return customFetch(`/specs/options/constraints/check`, {
       method: "get",
       params: {
         modelId,
