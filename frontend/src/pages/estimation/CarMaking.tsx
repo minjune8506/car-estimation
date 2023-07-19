@@ -31,7 +31,7 @@ import useSpec from "src/hooks/estimation/car-making/useSpec";
 import usePrice from "src/hooks/estimation/car-making/usePrice";
 import useModelOptions from "src/hooks/estimation/car-making/useModelOptions";
 
-interface Props {
+export interface CarMakingProps {
   exteriorColor: ExteriorColor;
   interiorColor: InteriorColor;
   selectedOptions: SpecOption[];
@@ -40,7 +40,7 @@ interface Props {
 export default function CarMaking() {
   // location data
   const location = useLocation();
-  const state: Props = location.state;
+  const state: CarMakingProps = location.state;
   const carId = getCarIdFrom(location);
   const modelId = getModelIdFrom(location);
 
@@ -81,7 +81,7 @@ export default function CarMaking() {
     onColorChange,
     setIsCarImgExterior,
     setColorChangeData,
-  ] = useColors({ spec, setSpec, selectedOptions });
+  ] = useColors({ spec, setSpec, selectedOptions, state });
 
   const price = usePrice({ selectedOptions });
   const [selectedOption, setSelectedOption] = useState<SpecOption | undefined>(
@@ -174,19 +174,18 @@ export default function CarMaking() {
   const tuixOptions = getTuixOptions();
   const nPerformanceOptions = getNPerformanceOptions();
 
-  //   console.log("carInfo", carInfo);
-  //   console.log("modelInfo", modelInfo);
-  //   console.log("spec", spec);
-  //   console.log("current exterior color", exteriorColor);
-  //   console.log("exterior colors", exteriorColors);
-  //   console.log("current interior color", interiorColor);
-  //   console.log("interior colors", interiorColors);
-  //   console.log("options", modelOptions);
-  //   console.log("selected options", selectedOptions);
-  //   console.log("total price", price);
-  //   console.log("basic options", basicOptions);
-  //   console.log("tuix options", tuixOptions);
-  //   console.log("n performance options", nPerformanceOptions);
+  console.log("carInfo", carInfo);
+  console.log("modelInfo", modelInfo);
+  console.log("spec", spec);
+  console.log("current exterior color", exteriorColor);
+  console.log("exterior colors", exteriorColors);
+  console.log("current interior color", interiorColor);
+  console.log("interior colors", interiorColors);
+  console.log("selected options", selectedOptions);
+  console.log("total price", price);
+  console.log("basic options", basicOptions);
+  console.log("tuix options", tuixOptions);
+  console.log("n performance options", nPerformanceOptions);
 
   return (
     <>

@@ -16,14 +16,16 @@ import {
   SpecOption,
 } from "src/types/Spec";
 import { specAPI } from "../../queries/spec/api";
+import { CarMakingProps } from "src/pages/estimation/CarMaking";
 
 interface Props {
   spec: string;
   setSpec: (spec: string) => void;
   selectedOptions: SpecOption[];
+  state: CarMakingProps;
 }
 
-export function useColors({ spec, setSpec, selectedOptions }: Props) {
+export function useColors({ spec, setSpec, selectedOptions, state }: Props) {
   const [interiorColor, setInteriorColor] = useState<InteriorColor | undefined>(
     undefined
   );
@@ -59,10 +61,10 @@ export function useColors({ spec, setSpec, selectedOptions }: Props) {
   );
 
   useEffect(() => {
-    if (specsQuery.data) {
+    if (specsQuery.data && !state) {
       const initialColor = specsQuery.data[0].colors[0];
-      exteriorColor || setExteriorColor(initialColor.exterior);
-      interiorColor || setInteriorColor(initialColor.interior);
+      setExteriorColor(initialColor.exterior);
+      setInteriorColor(initialColor.interior);
     }
   }, [specsQuery.data]);
 
