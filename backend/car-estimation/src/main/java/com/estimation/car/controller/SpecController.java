@@ -21,49 +21,49 @@ public class SpecController {
     private final SpecService specService;
 
     @GetMapping()
-    public ResponseEntity<Response<List<SpecInfoResponse>>> findAllSpec(@RequestParam("modelId") int modelId) {
+    public ResponseEntity<Response<List<SpecInfoResponse>>> findAllSpec(@RequestParam int modelId) {
         List<SpecInfoResponse> result = specService.findAllSpecInfo(modelId);
         return ResponseEntity.ok(Response.of(Code.SUCCESS, result));
     }
 
     @GetMapping("/{specCode}")
-    public ResponseEntity<Response<SpecInfoResponse>> findSpecInfo(@PathVariable("specCode") char specCode,
-                                                                   @RequestParam("modelId") int modelId) {
+    public ResponseEntity<Response<SpecInfoResponse>> findSpecInfo(@PathVariable char specCode,
+                                                                   @RequestParam int modelId) {
         SpecInfoResponse result = specService.findSpecInfo(modelId, specCode);
         return ResponseEntity.ok(Response.of(Code.SUCCESS, result));
     }
 
     @GetMapping("/check")
-    public ResponseEntity<Response<CheckSpecResponse>> checkSpec(@RequestParam("modelId") int modelId,
-                                                                 @RequestParam("specCode") char specCode,
-                                                                 @RequestParam("interiorColorId") int interiorColorId,
-                                                                 @RequestParam("exteriorColorId") int exteriorColorId) {
+    public ResponseEntity<Response<CheckSpecResponse>> checkSpec(@RequestParam int modelId,
+                                                                 @RequestParam char specCode,
+                                                                 @RequestParam int interiorColorId,
+                                                                 @RequestParam int exteriorColorId) {
         CheckSpecResponse result = specService.checkSpec(modelId, specCode, exteriorColorId, interiorColorId);
         return ResponseEntity.ok(Response.of(Code.SUCCESS, result));
     }
 
     @GetMapping("/constraints/check")
-    public ResponseEntity<Response<ConstraintCheckResponse>> checkConstraints(@RequestParam("modelId") int modelId,
-                                                                              @RequestParam("selectedOptions") List<Integer> selectedOptions,
-                                                                              @RequestParam("targetOptionId") int targetOptionId) {
+    public ResponseEntity<Response<ConstraintCheckResponse>> checkConstraints(@RequestParam int modelId,
+                                                                              @RequestParam List<Integer> selectedOptions,
+                                                                              @RequestParam int targetOptionId) {
         ConstraintCheckResponse result = specService.checkSpecOptionConstraints(modelId, selectedOptions, targetOptionId);
         return ResponseEntity.ok(Response.of(Code.SUCCESS, result));
     }
 
     @GetMapping("/options/constraints")
-    public ResponseEntity<Response<List<SpecOptionConstraintResponse>>> findOptionConstraints(@RequestParam("modelId") int modelId,
-                                                                                              @RequestParam("selectedOptions") List<Integer> selectedOptions) {
+    public ResponseEntity<Response<List<SpecOptionConstraintResponse>>> findOptionConstraints(@RequestParam int modelId,
+                                                                                              @RequestParam List<Integer> selectedOptions) {
         List<SpecOptionConstraintResponse> result = specService.findSpecConstraints(modelId, selectedOptions);
         return ResponseEntity.ok(Response.of(Code.SUCCESS, result));
     }
 
     @GetMapping("/colors/change")
-    public ResponseEntity<Response<?>> changeColor(@RequestParam("modelId") int modelId,
-                                                   @RequestParam(value = "beforeExteriorColorId") int beforeExteriorColorId,
-                                                   @RequestParam(value = "beforeInteriorColorId") int beforeInteriorColorId,
-                                                   @RequestParam(value = "afterExteriorColorId") int afterExteriorColorId,
-                                                   @RequestParam(value = "afterInteriorColorId") int afterInteriorColorId,
-                                                   @RequestParam(value = "options") List<Integer> options) {
+    public ResponseEntity<Response<?>> changeColor(@RequestParam int modelId,
+                                                   @RequestParam int beforeExteriorColorId,
+                                                   @RequestParam int beforeInteriorColorId,
+                                                   @RequestParam int afterExteriorColorId,
+                                                   @RequestParam int afterInteriorColorId,
+                                                   @RequestParam List<Integer> options) {
         Object result = specService.changeColor(modelId, beforeExteriorColorId, beforeInteriorColorId, afterExteriorColorId, afterInteriorColorId, options);
         return ResponseEntity.ok(Response.of(Code.SUCCESS, result));
     }

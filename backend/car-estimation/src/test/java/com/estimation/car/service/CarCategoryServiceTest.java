@@ -1,6 +1,6 @@
 package com.estimation.car.service;
 
-import com.estimation.car.dto.response.car.category.CategoryCarsResponseDto;
+import com.estimation.car.dto.response.car.category.CategoryCarsResponse;
 import com.estimation.car.entity.Car;
 import com.estimation.car.entity.CarCategory;
 import com.estimation.car.repository.car.category.CarCategoryRepository;
@@ -42,11 +42,11 @@ class CarCategoryServiceTest {
         given(carCategoryRepository.findAllCategoryWithCar()).willReturn(categories);
 
         // when
-        List<CategoryCarsResponseDto> results = carCategoryService.findAllCategoryWithCars();
+        List<CategoryCarsResponse> results = carCategoryService.findAllCategoryWithCars();
 
         // then
         assertThat(results).hasSize(1);
-        CategoryCarsResponseDto result = results.get(0);
+        CategoryCarsResponse result = results.get(0);
         assertThat(result.getCategoryName()).isEqualTo(category.getName());
         assertThat(result.getCars()).hasSize(1);
         assertThat(result.getCars().get(0).getCarName()).isEqualTo("투싼");

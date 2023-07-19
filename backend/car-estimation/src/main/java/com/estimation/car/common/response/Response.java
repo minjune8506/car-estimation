@@ -3,13 +3,11 @@ package com.estimation.car.common.response;
 import com.estimation.car.common.code.Code;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 
 @Getter
 @Builder
-@RequiredArgsConstructor
 public class Response<T> {
-    private final Integer code;
+    private final int code;
     private final String message;
     private final T data;
 

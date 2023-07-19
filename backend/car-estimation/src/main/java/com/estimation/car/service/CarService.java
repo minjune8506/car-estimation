@@ -2,8 +2,8 @@ package com.estimation.car.service;
 
 import com.estimation.car.common.code.ErrorCode;
 import com.estimation.car.common.exception.CarNotFoundException;
-import com.estimation.car.dto.response.car.CarColorResponse;
-import com.estimation.car.dto.response.car.CarResponseDto;
+import com.estimation.car.dto.response.car.CarColorsResponse;
+import com.estimation.car.dto.response.car.CarResponse;
 import com.estimation.car.dto.response.exteriorcolor.ExteriorColorResponse;
 import com.estimation.car.dto.response.interiorcolor.InteriorColorResponse;
 import com.estimation.car.entity.Car;
@@ -27,12 +27,12 @@ public class CarService {
     private final CarRepository carRepository;
     private final SpecColorRepository specColorRepository;
 
-    public CarResponseDto findCar(int carId) {
+    public CarResponse findCar(int carId) {
         Car car = carRepository.findById(carId).orElseThrow(() -> new CarNotFoundException(ErrorCode.CAR_NOT_FOUND));
-        return CarResponseDto.from(car);
+        return CarResponse.from(car);
     }
 
-    public CarColorResponse filterColor(int carId, int modelId) {
+    public CarColorsResponse filterColor(int carId, int modelId) {
         List<SpecColor> colors = specColorRepository.findCarSpecColorsBy(carId);
 
         SpecColorExtractor extractor = new SpecColorExtractor(colors);
@@ -51,6 +51,6 @@ public class CarService {
                 .map(interiorColor -> InteriorColorResponse.from(interiorColor, modelInteriorColors.contains(interiorColor)))
                 .sorted(Comparator.comparing(InteriorColorResponse::isChoiceYn).reversed())
                 .toList();
-        return CarColorResponse.from(exteriorColorResponses, interiorColorResponses);
+        return CarColorsResponse.from(exteriorColorResponses, interiorColorResponses);
     }
 }

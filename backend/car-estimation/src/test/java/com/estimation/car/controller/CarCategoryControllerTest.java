@@ -1,7 +1,7 @@
 package com.estimation.car.controller;
 
-import com.estimation.car.dto.response.car.CarResponseDto;
-import com.estimation.car.dto.response.car.category.CategoryCarsResponseDto;
+import com.estimation.car.dto.response.car.CarResponse;
+import com.estimation.car.dto.response.car.category.CategoryCarsResponse;
 import com.estimation.car.service.CarCategoryService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,10 +42,10 @@ class CarCategoryControllerTest {
     void 자동차_카테고리별_자동차_리스트를_반환해야한다() throws Exception {
         // given
         given(carCategoryService.findAllCategoryWithCars())
-                .willReturn(List.of(CategoryCarsResponseDto.builder()
+                .willReturn(List.of(CategoryCarsResponse.builder()
                                                            .categoryId(1)
                                                            .categoryName("SUV")
-                                                           .cars(List.of(CarResponseDto.builder()
+                                                           .cars(List.of(CarResponse.builder()
                                                                                        .carId(1)
                                                                                        .carName("투싼")
                                                                                        .lowPrice(12_000_000)

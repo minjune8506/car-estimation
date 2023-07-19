@@ -2,10 +2,10 @@ package com.estimation.car.controller;
 
 import com.estimation.car.common.code.ErrorCode;
 import com.estimation.car.common.exception.ModelNotFoundException;
-import com.estimation.car.dto.response.drivingtype.DrivingTypeFilterResponseDto;
-import com.estimation.car.dto.response.engine.EngineFilterResponseDto;
-import com.estimation.car.dto.response.mission.MissionFilterResponseDto;
-import com.estimation.car.dto.response.model.ModelFilterResponseDto;
+import com.estimation.car.dto.response.drivingtype.DrivingTypeFilterResponse;
+import com.estimation.car.dto.response.engine.EngineFilterResponse;
+import com.estimation.car.dto.response.mission.MissionFilterResponse;
+import com.estimation.car.dto.response.model.ModelFilterResponse;
 import com.estimation.car.dto.response.model.ModelResponse;
 import com.estimation.car.service.ModelService;
 import org.junit.jupiter.api.Test;
@@ -50,20 +50,20 @@ class ModelControllerTest {
     @Test
     void 모델에_선택가능한_엔진_미션_구동방식을_반환한다() throws Exception {
 
-        EngineFilterResponseDto engines = EngineFilterResponseDto.builder()
+        EngineFilterResponse engines = EngineFilterResponse.builder()
                                                                  .id(1)
                                                                  .name("가솔린")
                                                                  .build();
-        MissionFilterResponseDto missions = MissionFilterResponseDto.builder()
+        MissionFilterResponse missions = MissionFilterResponse.builder()
                                                                     .id(1)
                                                                     .name("A/T")
                                                                     .build();
-        DrivingTypeFilterResponseDto drivingTypes = DrivingTypeFilterResponseDto.builder()
+        DrivingTypeFilterResponse drivingTypes = DrivingTypeFilterResponse.builder()
                                                                                 .id(1)
                                                                                 .name("2WD")
                                                                                 .build();
 
-        ModelFilterResponseDto result = ModelFilterResponseDto.builder()
+        ModelFilterResponse result = ModelFilterResponse.builder()
                                                               .engines(List.of(engines))
                                                               .missions(List.of(missions))
                                                               .drivingTypes(List.of(drivingTypes))
@@ -109,7 +109,7 @@ class ModelControllerTest {
 
     @Test
     void 해당하는_필터링된_모델이_없는_경우_예외를_발생시킨다() throws Exception {
-        given(modelService.filterModel(anyInt(), any(), any())).willThrow(new ModelNotFoundException(ErrorCode.NO_MODEL));
+        given(modelService.filterModel(anyInt(), any(), any())).willThrow(new ModelNotFoundException(ErrorCode.MODEL_NOT_FOUND));
 
         mockMvc.perform(get("/api/v1/models/filter?carId=42")
                        .accept(MediaType.APPLICATION_JSON))
@@ -163,7 +163,7 @@ class ModelControllerTest {
 
     @Test
     void 트림을_찾지_못한_경우_예외를_발생시킨다() throws Exception {
-        given(modelService.findTrims(anyInt(), anyInt(), anyInt(), anyInt())).willThrow(new ModelNotFoundException(ErrorCode.NO_MODEL));
+        given(modelService.findTrims(anyInt(), anyInt(), anyInt(), anyInt())).willThrow(new ModelNotFoundException(ErrorCode.MODEL_NOT_FOUND));
 
         mockMvc.perform(get("/api/v1/models/trims?carId=42&engineId=1&missionId=1&drivingTypeId=1")
                        .accept(MediaType.APPLICATION_JSON))

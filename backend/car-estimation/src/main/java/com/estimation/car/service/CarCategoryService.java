@@ -1,6 +1,6 @@
 package com.estimation.car.service;
 
-import com.estimation.car.dto.response.car.category.CategoryCarsResponseDto;
+import com.estimation.car.dto.response.car.category.CategoryCarsResponse;
 import com.estimation.car.entity.CarCategory;
 import com.estimation.car.repository.car.category.CarCategoryRepository;
 import lombok.RequiredArgsConstructor;
@@ -15,10 +15,10 @@ public class CarCategoryService {
 
     private final CarCategoryRepository carCategoryRepository;
 
-    public List<CategoryCarsResponseDto> findAllCategoryWithCars() {
+    public List<CategoryCarsResponse> findAllCategoryWithCars() {
         List<CarCategory> categories = carCategoryRepository.findAllCategoryWithCar();
         return categories.stream()
-                         .map(CategoryCarsResponseDto::from)
+                         .map(CategoryCarsResponse::from)
                          .toList();
     }
 }

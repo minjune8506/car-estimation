@@ -6,13 +6,13 @@ import lombok.Getter;
 
 @Getter
 @Builder
-public class MissionResponseDto {
+public class MissionResponse {
     private final int id;
     private final String name;
     private final String description;
 
-    public static MissionResponseDto from(final Mission mission) {
-        return MissionResponseDto.builder()
+    public static MissionResponse from(final Mission mission) {
+        return MissionResponse.builder()
                                  .id(mission.getId())
                                  .name(mission.getName())
                                  .description(mission.getDescription())

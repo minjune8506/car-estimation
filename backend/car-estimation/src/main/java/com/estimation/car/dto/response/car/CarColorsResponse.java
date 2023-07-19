@@ -9,13 +9,13 @@ import java.util.List;
 
 @Getter
 @Builder
-public class CarColorResponse {
+public class CarColorsResponse {
     private final List<ExteriorColorResponse> exteriorColors;
     private final List<InteriorColorResponse> interiorColors;
 
-    public static CarColorResponse from(List<ExteriorColorResponse> exteriorColors,
-                                        List<InteriorColorResponse> interiorColors) {
-        return CarColorResponse.builder()
+    public static CarColorsResponse from(List<ExteriorColorResponse> exteriorColors,
+                                         List<InteriorColorResponse> interiorColors) {
+        return CarColorsResponse.builder()
                                .exteriorColors(exteriorColors)
                                .interiorColors(interiorColors)
                                .build();

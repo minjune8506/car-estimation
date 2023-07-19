@@ -6,15 +6,15 @@ import lombok.Getter;
 
 @Getter
 @Builder
-public class CarResponseDto {
+public class CarResponse {
     private final int carId;
     private final String carName;
     private final String carNameEn;
     private final Integer lowPrice;
     private final String carImg;
 
-    public static CarResponseDto from(final Car car) {
-        return CarResponseDto.builder()
+    public static CarResponse from(final Car car) {
+        return CarResponse.builder()
                 .carId(car.getId())
                 .carName(car.getName())
                 .carNameEn(car.getNameEn())

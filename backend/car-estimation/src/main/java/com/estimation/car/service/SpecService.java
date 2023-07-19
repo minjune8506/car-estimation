@@ -11,7 +11,7 @@ import com.estimation.car.dto.response.spec.color.ChangeInteriorResponse;
 import com.estimation.car.dto.response.spec.option.constraints.ConstraintCheckResponse;
 import com.estimation.car.dto.response.spec.option.constraints.SpecOptionConstraintResponse;
 import com.estimation.car.entity.*;
-import com.estimation.car.repository.OptionRepository;
+import com.estimation.car.repository.option.OptionRepository;
 import com.estimation.car.repository.spec.color.SpecColorRepository;
 import com.estimation.car.repository.spec.option.SpecOptionRepository;
 import com.estimation.car.repository.spec.option.constraints.SpecOptionConstraintRepository;
@@ -40,7 +40,7 @@ public class SpecService {
         Map<Spec, List<SpecColor>> groupedSpecColors = specColors.stream().collect(groupingBy(SpecColor::getSpec));
 
         List<SpecInfoResponse> result = new ArrayList<>();
-        for (Spec spec : groupedSpecColors.keySet()) {
+        for (Spec spec : groupedSpecOptions.keySet()) {
             result.add(SpecInfoResponse.from(spec, groupedSpecColors.get(spec), groupedSpecOptions.get(spec)));
         }
         result = result.stream().sorted(Comparator.comparing(SpecInfoResponse::getSpecCode)).toList();

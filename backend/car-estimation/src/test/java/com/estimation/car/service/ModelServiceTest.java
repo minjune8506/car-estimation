@@ -1,7 +1,7 @@
 package com.estimation.car.service;
 
 import com.estimation.car.common.exception.ModelNotFoundException;
-import com.estimation.car.dto.response.model.ModelFilterResponseDto;
+import com.estimation.car.dto.response.model.ModelFilterResponse;
 import com.estimation.car.dto.response.model.ModelResponse;
 import com.estimation.car.entity.Model;
 import com.estimation.car.repository.model.ModelRepository;
@@ -45,7 +45,7 @@ class ModelServiceTest {
         given(repository.filterModels(anyInt(), Optional.ofNullable(any()), Optional.ofNullable(any()))).willReturn(List.of(model));
 
         // when
-        ModelFilterResponseDto result = modelService.filterModel(1, null, null);
+        ModelFilterResponse result = modelService.filterModel(1, null, null);
 
         // then
         assertAll(
@@ -65,7 +65,7 @@ class ModelServiceTest {
 
         // when
         Throwable thrown = catchThrowable(() -> {
-            ModelFilterResponseDto result = modelService.filterModel(1, null, null);
+            ModelFilterResponse result = modelService.filterModel(1, null, null);
         });
 
         // then

@@ -2,7 +2,7 @@ package com.estimation.car.controller;
 
 import com.estimation.car.common.code.Code;
 import com.estimation.car.common.response.Response;
-import com.estimation.car.dto.response.car.category.CategoryCarsResponseDto;
+import com.estimation.car.dto.response.car.category.CategoryCarsResponse;
 import com.estimation.car.service.CarCategoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -20,9 +20,8 @@ public class CarCategoryController {
     private final CarCategoryService menuService;
 
     @GetMapping("/cars")
-    public ResponseEntity<Response<List<CategoryCarsResponseDto>>> categoryCars() {
-        List<CategoryCarsResponseDto> responses = menuService.findAllCategoryWithCars();
-        return ResponseEntity.ok()
-                             .body(Response.of(Code.SUCCESS, responses));
+    public ResponseEntity<Response<List<CategoryCarsResponse>>> categoryCars() {
+        List<CategoryCarsResponse> responses = menuService.findAllCategoryWithCars();
+        return ResponseEntity.ok(Response.of(Code.SUCCESS, responses));
     }
 }

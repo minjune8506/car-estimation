@@ -6,13 +6,13 @@ import lombok.Getter;
 
 @Getter
 @Builder
-public class DrivingTypeResponseDto {
+public class DrivingTypeResponse {
     private final int id;
     private final String name;
     private final String description;
 
-    public static DrivingTypeResponseDto from(DrivingType drivingType) {
-        return DrivingTypeResponseDto.builder()
+    public static DrivingTypeResponse from(DrivingType drivingType) {
+        return DrivingTypeResponse.builder()
                                      .id(drivingType.getId())
                                      .name(drivingType.getName())
                                      .description(drivingType.getDescription())

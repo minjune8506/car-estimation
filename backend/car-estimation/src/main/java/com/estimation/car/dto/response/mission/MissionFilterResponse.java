@@ -6,12 +6,12 @@ import lombok.Getter;
 
 @Getter
 @Builder
-public class MissionFilterResponseDto {
+public class MissionFilterResponse {
     private final int id;
     private final String name;
 
-    public static MissionFilterResponseDto from(final Mission mission) {
-        return MissionFilterResponseDto.builder()
+    public static MissionFilterResponse from(final Mission mission) {
+        return MissionFilterResponse.builder()
                                        .id(mission.getId())
                                        .name(mission.getName())
                                        .build();
