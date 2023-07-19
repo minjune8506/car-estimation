@@ -6,6 +6,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
@@ -24,4 +25,10 @@ public class InteriorColor {
 
     @Column(length = 10)
     private String code;
+
+    @Builder
+    public InteriorColor(String name, String code) {
+        this.name = name;
+        this.code = code;
+    }
 }

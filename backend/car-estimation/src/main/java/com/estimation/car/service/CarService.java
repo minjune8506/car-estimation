@@ -28,13 +28,13 @@ public class CarService {
     private final SpecColorRepository specColorRepository;
     private final SpecColorExtractor colorExtractor;
 
-    public CarResponse findCar(int carId) {
+    public CarResponse findCar(final int carId) {
         Car car = carRepository.findById(carId)
                           .orElseThrow(() -> new CarNotFoundException(ErrorCode.CAR_NOT_FOUND));
         return CarResponse.from(car);
     }
 
-    public CarColorsResponse filterColor(int carId, int modelId) {
+    public CarColorsResponse filterColor(final int carId, final int modelId) {
         List<SpecColor> colors = specColorRepository.findCarSpecColorsBy(carId);
 
         List<ExteriorColor> exteriorColors = colorExtractor.extract(colors, SpecColor::getExteriorColor);

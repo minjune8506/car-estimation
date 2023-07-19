@@ -7,8 +7,8 @@ public class CarFixture {
 
     public static Car createCar(String name, CarCategory category) {
         return Car.builder()
-                  .category(category)
-                  .name(name)
-                  .build();
+                       .carCategory(category)
+                       .name(name)
+                       .build();
     }
 }

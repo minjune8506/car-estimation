@@ -23,7 +23,6 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.context.annotation.Import;
 
 import java.util.List;
-import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -71,7 +70,7 @@ class ModelCustomRepositoryTest {
         int carId = tucson.getId();
 
         // when
-        List<Model> models = modelRepository.filterModels(carId, Optional.empty(), Optional.empty());
+        List<Model> models = modelRepository.filterModels(carId, null, null);
 
         // then
         assertThat(models).hasSize(3);
@@ -99,7 +98,7 @@ class ModelCustomRepositoryTest {
         int engineId = diesel.getId();
 
         // when
-        List<Model> models = modelRepository.filterModels(carId, Optional.of(engineId), Optional.empty());
+        List<Model> models = modelRepository.filterModels(carId, engineId, null);
 
         // then
         assertThat(models).hasSize(2);
@@ -132,7 +131,7 @@ class ModelCustomRepositoryTest {
         int missionId = auto.getId();
 
         // when
-        List<Model> models = modelRepository.filterModels(carId, Optional.of(engineId), Optional.of(missionId));
+        List<Model> models = modelRepository.filterModels(carId, engineId, missionId);
 
         // then
         assertThat(models).hasSize(2);

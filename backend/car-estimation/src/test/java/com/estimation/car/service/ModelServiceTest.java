@@ -42,7 +42,7 @@ class ModelServiceTest {
                            .drivingType(DrivingTypeFixture._2WD)
                            .build();
 
-        given(repository.filterModels(anyInt(), Optional.ofNullable(any()), Optional.ofNullable(any()))).willReturn(List.of(model));
+        given(repository.filterModels(anyInt(), any(), any())).willReturn(List.of(model));
 
         // when
         ModelFilterResponse result = modelService.filterModel(1, null, null);
@@ -61,7 +61,7 @@ class ModelServiceTest {
     @Test
     void 해당하는_모델이_없는_경우_ModelNotFoundExcpetion을_발생시킨다() {
         // given
-        given(repository.filterModels(anyInt(), Optional.ofNullable(any()), Optional.ofNullable(any()))).willReturn(List.of());
+        given(repository.filterModels(anyInt(), any(), any())).willReturn(List.of());
 
         // when
         Throwable thrown = catchThrowable(() -> {

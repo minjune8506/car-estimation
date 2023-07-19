@@ -39,10 +39,12 @@ public class Car {
     private String imgPath;
 
     @Builder
-    public Car(String name, int lowPrice, CarCategory category) {
+    public Car(CarCategory carCategory, String name, String nameEn, int lowPrice, String imgPath) {
+        this.carCategory = carCategory;
         this.name = name;
+        this.nameEn = nameEn;
         this.lowPrice = lowPrice;
-        this.carCategory = category;
+        this.imgPath = imgPath;
     }
 
     public void changeCategory(CarCategory category) {

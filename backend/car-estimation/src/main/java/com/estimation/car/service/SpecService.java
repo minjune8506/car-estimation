@@ -11,14 +11,25 @@ import com.estimation.car.dto.response.spec.color.ChangeExteriorResponse;
 import com.estimation.car.dto.response.spec.color.ChangeInteriorResponse;
 import com.estimation.car.dto.response.spec.option.constraints.ConstraintCheckResponse;
 import com.estimation.car.dto.response.spec.option.constraints.SpecOptionConstraintResponse;
-import com.estimation.car.entity.*;
+import com.estimation.car.entity.ExteriorColor;
+import com.estimation.car.entity.InteriorColor;
+import com.estimation.car.entity.Model;
+import com.estimation.car.entity.Spec;
+import com.estimation.car.entity.SpecColor;
+import com.estimation.car.entity.SpecOption;
+import com.estimation.car.entity.SpecOptionConstraint;
 import com.estimation.car.repository.spec.color.SpecColorRepository;
 import com.estimation.car.repository.spec.option.SpecOptionRepository;
 import com.estimation.car.repository.spec.option.constraints.SpecOptionConstraintRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 import static java.util.stream.Collectors.groupingBy;
 
@@ -82,12 +93,12 @@ public class SpecService {
                        .toList();
     }
 
-    public Object changeColor(int modelId,
-                              int beforeExteriorColorId,
-                              int beforeInteriorColorId,
-                              int afterExteriorColorId,
-                              int afterInteriorColorId,
-                              List<Integer> options) {
+    public Object changeColor(final int modelId,
+                              final int beforeExteriorColorId,
+                              final int beforeInteriorColorId,
+                              final int afterExteriorColorId,
+                              final int afterInteriorColorId,
+                              final List<Integer> options) {
         List<SpecColor> specColors = specColorRepository.findSpecColorsToChangeBy(modelId);
 
         List<SpecColor> modelColors = specColors.stream()
@@ -124,7 +135,11 @@ public class SpecService {
         return changeModel(modelId, afterExteriorColorId, afterInteriorColorId, options, specColors);
     }
 
-    private ChangeModelResponse changeModel(int modelId, int afterExteriorColorId, int afterInteriorColorId, List<Integer> options, List<SpecColor> specColors) {
+    private ChangeModelResponse changeModel(final int modelId,
+                                            final int afterExteriorColorId,
+                                            final int afterInteriorColorId,
+                                            final List<Integer> options,
+                                            final List<SpecColor> specColors) {
         List<SpecColor> possibleOtherModelsColor = specColors.stream()
                                                            .filter(specColor -> specColor.getInteriorColorId() == afterInteriorColorId)
                                                            .toList();
@@ -156,13 +171,13 @@ public class SpecService {
         return ChangeModelResponse.from(targetModel, exteriorColor, interiorColor, delOptions, addOptions);
     }
 
-    private List<SpecOption> filterOptionsToAdd(char targetModelSpec, List<SpecOption> modelOptions) {
+    private List<SpecOption> filterOptionsToAdd(final char targetModelSpec, final List<SpecOption> modelOptions) {
         return modelOptions.stream()
                        .filter(modelOption -> modelOption.getSpecCode() == targetModelSpec && modelOption.getDefaultYn() == 'Y')
                        .toList();
     }
 
-    private List<SpecOption> filterOptionsToDelete(int modelId, List<Integer> options, List<SpecOption> modelOptions) {
+    private List<SpecOption> filterOptionsToDelete(final int modelId, final List<Integer> options, final List<SpecOption> modelOptions) {
         List<Integer> modelOptionsId = modelOptions.stream()
                                                .filter(specOption -> specOption.getOptionCategoryId() == PACKAGE_OPTION_CATEGORY)
                                                .map(SpecOption::getOptionId)
@@ -173,7 +188,7 @@ public class SpecService {
         return specOptionRepository.findSpecOptionsBy(modelId, delOptionsId);
     }
 
-    public ConstraintCheckResponse checkOptionConstraints(int modelId, List<Integer> selectedOptions, int targetOptionId) {
+    public ConstraintCheckResponse checkOptionConstraints(final int modelId, final List<Integer> selectedOptions, final int targetOptionId) {
         List<SpecOption> targetOption = specOptionRepository.findSpecOptionsBy(modelId, List.of(targetOptionId));
         if (targetOption.size() != 1) {
             throw new OptionNotFoundException(ErrorCode.OPTION_NOT_FOUND);
