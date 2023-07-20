@@ -96,6 +96,7 @@ public class SpecColorRepositoryImpl implements SpecColorCustomRepository {
                                JPAExpressions.select(model.engine.id, model.mission.id, model.drivingType.id)
                                        .from(model)
                                        .where(model.id.eq(modelId))))
+                       .orderBy(model.id.asc())
                        .fetch();
     }
 }
