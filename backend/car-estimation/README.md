@@ -10,15 +10,18 @@ Java 17
 
 ### application.yml
 
-- spring.datasource에 데이터베이스 정보 입력
-- env.cors.frontend에 프론트엔드 주소 입력 (cors 설정)
+- 데이터베이스 정보 입력
+- 프론트엔드 주소 입력 (cors 설정)
 
 ### 빌드 & 실행
 
 ```bash
 > ./gradlew clean build
 
-> java -jar build/libs/car-estimation-0.0.1.jar
+> java -jar -Dspring.profiles.active=prod build/libs/car-estimation-0.0.1.jar # prod
+
+> java -jar -Dspring.profiles.active=dev build/libs/car-estimation-0.0.1.jar # dev SQL 출력
+
 ```
 
 ## API 문서

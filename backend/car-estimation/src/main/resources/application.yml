@@ -5,13 +5,17 @@ spring:
     username: root
     password: test
   jpa:
-    show-sql: true
     hibernate:
       ddl-auto: validate
-    properties:
-      hibernate:
-        format_sql: true
 
 env:
   cors:
     frontend: http://localhost:5173
+---
+spring:
+  profiles:
+    active: prod
+---
+spring:
+  profiles:
+    active: dev
