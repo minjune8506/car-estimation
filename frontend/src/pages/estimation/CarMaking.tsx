@@ -287,6 +287,7 @@ export default function CarMaking() {
       {colorChangeData &&
         (colorChangeData as ChangeExteriorColor).changeExteriorYn && (
           <Modal
+            position="fixed"
             accept={true}
             onAccept={() => setColorChangeData(undefined)}
             acceptButtonText="확인"
@@ -298,6 +299,7 @@ export default function CarMaking() {
       {colorChangeData &&
         (colorChangeData as ChangeInteriorColor).changeInteriorYn && (
           <Modal
+            position="fixed"
             accept={true}
             onAccept={() => setColorChangeData(undefined)}
             acceptButtonText="확인"
