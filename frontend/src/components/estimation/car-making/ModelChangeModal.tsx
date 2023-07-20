@@ -1,7 +1,5 @@
 import { IconContext } from "react-icons";
 import { RiArrowRightSLine } from "react-icons/ri";
-import { AiFillCheckCircle } from "react-icons/ai";
-import { BsFillXCircleFill } from "react-icons/bs";
 import { Model } from "src/types/Model";
 import { convertPrice } from "src/common/utils/price-utils";
 import { ChangeModel, SpecOption } from "src/types/Spec";
@@ -9,6 +7,7 @@ import BackDrop from "src/components/common/BackDrop";
 import styled from "styled-components";
 import { useLocation, useNavigate } from "react-router-dom";
 import QueryString from "qs";
+import OptionChange from "./OptionChange";
 
 interface Props {
   beforeModel: Model;
@@ -58,7 +57,11 @@ function ModelChangeModal({
   };
 
   return (
-    <BackDrop width={window.screen.width} height={window.screen.availHeight}>
+    <BackDrop
+      width={window.screen.width}
+      height={window.screen.availHeight}
+      position="fixed"
+    >
       <ModalBody>
         <div className="flex flex-col text-sm font-bold bg-white justify-center items-center p-6 ">
           <div className="text-lg py-4">
@@ -104,27 +107,11 @@ function ModelChangeModal({
                 >
                   {data.delOptions.map((delOption) => {
                     return (
-                      <li
+                      <OptionChange
                         key={delOption.optionId}
-                        className="flex flex-row w-full items-center justify-center py-6"
-                        style={{ borderBottom: "0.5px solid gray" }}
-                      >
-                        <div className="relative mr-2">
-                          <img
-                            src={`/images/car/${carNameEn}/option/${delOption.img}`}
-                            className="w-16 h-12"
-                          />
-                          <div className="absolute -top-1 -right-1">
-                            <IconContext.Provider
-                              value={{ color: "red", size: "15px" }}
-                            >
-                              <BsFillXCircleFill />
-                            </IconContext.Provider>
-                          </div>
-                        </div>
-                        <div className="grow">{delOption.optionName}</div>
-                        <div>{convertPrice(delOption.price)}원</div>
-                      </li>
+                        option={delOption}
+                        carNameEn={carNameEn}
+                      ></OptionChange>
                     );
                   })}
                 </ul>
@@ -141,27 +128,12 @@ function ModelChangeModal({
                 >
                   {data.addOptions.map((addOption) => {
                     return (
-                      <li
+                      <OptionChange
                         key={addOption.optionId}
-                        className="flex flex-row w-full items-center justify-center py-6"
-                        style={{ borderBottom: "0.5px solid gray" }}
-                      >
-                        <div className="relative mr-2">
-                          <img
-                            src={`/images/car/${carNameEn}/option/${addOption.img}`}
-                            className="w-16 h-12 mr-2"
-                          />
-                          <div className="absolute -top-1 right-0">
-                            <IconContext.Provider
-                              value={{ color: "#007FA8", size: "15px" }}
-                            >
-                              <AiFillCheckCircle />
-                            </IconContext.Provider>
-                          </div>
-                        </div>
-                        <span className="grow">{addOption.optionName}</span>
-                        <span>{convertPrice(addOption.price)}원</span>
-                      </li>
+                        option={addOption}
+                        carNameEn={carNameEn}
+						add={true}
+                      ></OptionChange>
                     );
                   })}
                 </ul>
@@ -201,4 +173,8 @@ const ModalBody = styled.div`
   width: 800px;
   height: 700px;
   overflow-y: scroll;
+
+  @media (max-width: 800px) {
+    width: 500px;
+  }
 `;

@@ -1,11 +1,9 @@
-import { IconContext } from "react-icons";
-import { AiFillCheckCircle } from "react-icons/ai";
-import { BsFillXCircleFill } from "react-icons/bs";
 import { convertPrice } from "src/common/utils/price-utils";
 import { ConstraintCheck, SpecOption } from "src/types/Spec";
 import BackDrop from "src/components/common/BackDrop";
 import styled from "styled-components";
 import { ModelOptions } from "src/types/Model";
+import OptionChange from "./OptionChange";
 
 function deleteOptions(
   selectedOptions: SpecOption[],
@@ -78,7 +76,7 @@ function OptionConstraintsModal({
   const action = addOptions.length > 1 ? "추가" : "삭제";
 
   return (
-    <BackDrop>
+    <BackDrop position="fixed">
       <ModalBody>
         <div className="flex flex-col text-sm font-bold bg-white justify-center items-center p-6 ">
           <div className="text-lg py-4">
@@ -99,29 +97,14 @@ function OptionConstraintsModal({
                     borderBottom: "1px solid black",
                   }}
                 >
-                  {addOptions.map((option) => {
+                  {addOptions.map((addOption) => {
                     return (
-                      <li
-                        key={option.optionId}
-                        className="flex flex-row w-full items-center justify-center py-6"
-                        style={{ borderBottom: "0.5px solid gray" }}
-                      >
-                        <div className="relative mr-2">
-                          <img
-                            src={`/images/car/${carNameEn}/option/${option.img}`}
-                            className="w-16 h-12"
-                          />
-                          <div className="absolute -top-1 -right-1">
-                            <IconContext.Provider
-                              value={{ color: "#007FA8", size: "15px" }}
-                            >
-                              <AiFillCheckCircle />
-                            </IconContext.Provider>
-                          </div>
-                        </div>
-                        <div className="grow">{option.optionName}</div>
-                        <div>{convertPrice(option.price)}원</div>
-                      </li>
+                      <OptionChange
+                        key={addOption.optionId}
+                        option={addOption}
+                        carNameEn={carNameEn}
+                        add={true}
+                      ></OptionChange>
                     );
                   })}
                 </ul>
@@ -136,29 +119,13 @@ function OptionConstraintsModal({
                     borderBottom: "1px solid black",
                   }}
                 >
-                  {delOptions.map((option) => {
+                  {delOptions.map((delOption) => {
                     return (
-                      <li
-                        key={option.optionId}
-                        className="flex flex-row w-full items-center justify-center py-6"
-                        style={{ borderBottom: "0.5px solid gray" }}
-                      >
-                        <div className="relative mr-2">
-                          <img
-                            src={`/images/car/${carNameEn}/option/${option.img}`}
-                            className="w-16 h-12 mr-2"
-                          />
-                          <div className="absolute -top-1 right-0">
-                            <IconContext.Provider
-                              value={{ color: "red", size: "15px" }}
-                            >
-                              <BsFillXCircleFill />
-                            </IconContext.Provider>
-                          </div>
-                        </div>
-                        <span className="grow">{option.optionName}</span>
-                        <span>{convertPrice(option.price)}원</span>
-                      </li>
+                      <OptionChange
+                        key={delOption.optionId}
+                        option={delOption}
+                        carNameEn={carNameEn}
+                      ></OptionChange>
                     );
                   })}
                 </ul>
@@ -198,4 +165,8 @@ const ModalBody = styled.div`
   width: 800px;
   height: 700px;
   overflow-y: scroll;
+
+  @media (max-width: 800px) {
+    width: 500px;
+  }
 `;

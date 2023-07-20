@@ -37,6 +37,7 @@ export default function CarSelectModal({
   return (
     <BackDrop
       ref={outside}
+      position="absolute"
       onClick={(e) => {
         if (e.target === outside.current) {
           closeModal(false);
