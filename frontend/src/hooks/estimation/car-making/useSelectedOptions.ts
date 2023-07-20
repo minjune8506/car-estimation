@@ -55,6 +55,14 @@ function useSelectedOptions() {
         });
       }
     });
+
+	// sort
+    modelOptions.forEach((spec) =>
+      spec.options.sort((a, b) => {
+        return a.optionId - b.optionId;
+      })
+    );
+
     const allOptions = modelOptions.flatMap((spec) => spec.options);
     // 변경된 옵션들이 선택되어 있을떄 처리
     const filtered = newSelectedOptions.filter((selected) => {
