@@ -1,0 +1,19 @@
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 2
+:sectlinks:
+:hide-uri-scheme:
+
+= 모델 정보 조회 API
+
+단일 모델 정보를 조회.
+
+== Success
+
+operation::model-info[snippets='http-request,path-parameters,http-response,response-fields']
+
+== Error
+
+operation::model-info-error[snippets='http-response']

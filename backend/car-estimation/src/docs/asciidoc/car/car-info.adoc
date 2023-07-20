@@ -1,0 +1,21 @@
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 2
+:sectlinks:
+:hide-uri-scheme:
+
+= 차량 정보 조회 API
+
+== API 정보
+
+단일 차량 정보 조회
+
+== Success
+
+operation::find-car[snippets='http-request,path-parameters,http-response,response-fields']
+
+== Error
+
+operation::find-car-error[snippets='http-response']
