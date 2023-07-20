@@ -13,3 +13,14 @@ npm run build
 
 npm run serve
 ```
+
+## 기술 스택
+
+- React
+- typescript
+- React-router
+- React-query
+- Recoil
+- tailwind
+- styled-components
+- tailwindcss
