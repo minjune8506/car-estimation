@@ -9,13 +9,14 @@ function deleteOptions(
   selectedOptions: SpecOption[],
   delOptions: SpecOption[]
 ) {
-  return selectedOptions.filter((selected) =>
-    delOptions.find((option) => selected.optionId !== option.optionId)
+  return selectedOptions.filter(
+    (selected) =>
+      !delOptions.find((option) => selected.optionId === option.optionId)
   );
 }
 
 function addOption(selectedOptions: SpecOption[], addOptions: SpecOption[]) {
-  return selectedOptions.concat(addOptions);
+  return [...selectedOptions, ...addOptions];
 }
 
 interface Props {
@@ -46,11 +47,8 @@ function OptionConstraintsModal({
   applyConstraint,
 }: Props) {
   const { delOptions, addOptions } = data;
-  console.log("delOptions", delOptions);
-  console.log("addOptions", addOptions);
   const deleted = deleteOptions(selectedOptions, delOptions);
   const remainOptions = addOption(deleted, addOptions);
-  console.log("remain Options", remainOptions);
 
   const priceDiff =
     addOptions.reduce((acc, cur) => acc + cur.price, 0) -
