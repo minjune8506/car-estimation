@@ -45,11 +45,8 @@ function ModelCard({ modelInfo }: ModelCardProps) {
       >
         <img src={`/images/${modelInfo.imgPath}`} alt="차량 이미지"></img>
       </div>
-      <div className="flex flex-row justify-between my-4">
+      <div className="flex flex-row justify-between my-4 text-gray-500">
         <span className="text-sm">{modelInfo.basicInfo}</span>
-        <span className="text-sm cursor-pointer text-[#002C5F]">
-          상세 품목 &gt;
-        </span>
       </div>
       <hr />
       <div className="flex flex-row justify-evenly my-4 w-full">
