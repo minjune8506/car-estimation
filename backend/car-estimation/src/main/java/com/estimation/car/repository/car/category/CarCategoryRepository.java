@@ -10,6 +10,6 @@ import java.util.List;
 @Repository
 public interface CarCategoryRepository extends JpaRepository<CarCategory, Integer> {
 
-    @Query("select cc from car_category cc join fetch cc.cars")
+    @Query("select cc from car_category cc join fetch cc.cars order by cc.id")
     List<CarCategory> findAllCategoryWithCar();
 }

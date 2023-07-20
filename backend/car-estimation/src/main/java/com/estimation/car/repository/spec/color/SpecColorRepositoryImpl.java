@@ -71,6 +71,7 @@ public class SpecColorRepositoryImpl implements SpecColorCustomRepository {
                        .where(specColor.spec.model.id.eq(modelId),
                                specColor.exteriorColor.id.eq(exteriorColorId),
                                specColor.interiorColor.id.eq(interiorColorId))
+                       .orderBy(specColor.spec.id.asc(), specColor.exteriorColor.id.asc(), specColor.interiorColor.id.asc())
                        .fetch();
     }
 
@@ -82,6 +83,7 @@ public class SpecColorRepositoryImpl implements SpecColorCustomRepository {
                        .join(specColor.interiorColor, interiorColor).fetchJoin()
                        .where(spec.model.id.eq(modelId),
                                spec.specCode.eq(specCode))
+                       .orderBy(specColor.spec.id.asc(), specColor.exteriorColor.id.asc(), specColor.interiorColor.id.asc())
                        .fetch();
     }
 
