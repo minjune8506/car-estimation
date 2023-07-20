@@ -21,7 +21,6 @@ import static com.estimation.car.util.ApiDocumentUtils.getDocumentResponse;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
-import static org.springframework.restdocs.snippet.Attributes.key;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -64,19 +63,19 @@ class CarCategoryControllerTest {
                 .andExpect(jsonPath("$.data[0].categoryName").value("SUV"))
                 .andExpect(jsonPath("$.data[0].cars[0].carName").value("투싼"))
                 .andDo(document("category-cars",
-                        getDocumentRequest(),
-                        getDocumentResponse(),
-                        commonResponseBody().and(
-                                fieldWithPath("data").type(JsonFieldType.ARRAY).description("결과 데이터"),
-                                fieldWithPath("data[].categoryId").type(JsonFieldType.NUMBER).description("카테고리 아이디"),
-                                fieldWithPath("data[].categoryName").type(JsonFieldType.STRING).description("카테고리 이름"),
-                                fieldWithPath("data[].cars[].carId").type(JsonFieldType.NUMBER).description("차량 아이디"),
-                                fieldWithPath("data[].cars[].carName").type(JsonFieldType.STRING).description("차량 이름"),
-                                fieldWithPath("data[].cars[].carNameEn").type(JsonFieldType.STRING).description("차량 영어 이름"),
-                                fieldWithPath("data[].cars[].lowPrice").type(JsonFieldType.NUMBER).description("최저 가격"),
-                                fieldWithPath("data[].cars[].carImg").type(JsonFieldType.STRING)
-                                        .description("차량 이미지")
-                                        .attributes(key("Nullable").value("true")))
-                ));
+                                getDocumentRequest(),
+                                getDocumentResponse(),
+                                commonResponseBody().and(
+                                        fieldWithPath("data").type(JsonFieldType.ARRAY).description("결과 데이터"),
+                                        fieldWithPath("data[].categoryId").type(JsonFieldType.NUMBER).description("카테고리 아이디"),
+                                        fieldWithPath("data[].categoryName").type(JsonFieldType.STRING).description("카테고리 이름"),
+                                        fieldWithPath("data[].cars[].carId").type(JsonFieldType.NUMBER).description("차량 아이디"),
+                                        fieldWithPath("data[].cars[].carName").type(JsonFieldType.STRING).description("차량 이름"),
+                                        fieldWithPath("data[].cars[].carNameEn").type(JsonFieldType.STRING).description("차량 영어 이름"),
+                                        fieldWithPath("data[].cars[].lowPrice").type(JsonFieldType.NUMBER).description("최저 가격"),
+                                        fieldWithPath("data[].cars[].carImg").type(JsonFieldType.STRING)
+                                                .description("차량 이미지"))
+                        )
+                );
     }
 }

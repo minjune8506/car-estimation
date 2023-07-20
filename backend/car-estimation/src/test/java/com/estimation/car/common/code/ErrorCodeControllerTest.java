@@ -36,8 +36,8 @@ class ErrorCodeControllerTest {
     @Test
     void ErrorCode_출력() throws Exception {
         this.mockMvc.perform(get("/codes/error"))
-                    .andExpect(status().isOk())
-                    .andDo(print());
+                .andExpect(status().isOk())
+                .andDo(print());
     }
 
     private List<FieldDescriptor> fieldDescriptor() {
@@ -46,13 +46,13 @@ class ErrorCodeControllerTest {
         for (ErrorCode errorCode : ErrorCode.values()) {
             FieldDescriptor attributes =
                     fieldWithPath(errorCode.getStatus().getReasonPhrase()).type(JsonFieldType.OBJECT)
-                                                                          .attributes(
-                                                                                  key("status").value(errorCode.getStatus()
-                                                                                                               .value()),
-                                                                                  key("reasonPhrase").value(errorCode.getStatus()
-                                                                                                                     .getReasonPhrase()),
-                                                                                  key("code").value(errorCode.getValue()),
-                                                                                  key("message").value(errorCode.getMessage()));
+                            .attributes(
+                                    key("http status").value(errorCode.getStatus()
+                                                                     .value()),
+                                    key("reason phrase").value(errorCode.getStatus()
+                                                                       .getReasonPhrase()),
+                                    key("error code").value(errorCode.getValue()),
+                                    key("message").value(errorCode.getMessage()));
             fieldDescriptors.add(attributes);
         }
 
@@ -63,7 +63,7 @@ class ErrorCodeControllerTest {
     public void ErrorCode_문서화() throws Exception {
 
         this.mockMvc.perform(get("/codes/error"))
-                    .andExpect(status().isOk())
-                    .andDo(document("error-code", errorCodeSnippet(fieldDescriptor())));
+                .andExpect(status().isOk())
+                .andDo(document("error-code", errorCodeSnippet(fieldDescriptor())));
     }
 }

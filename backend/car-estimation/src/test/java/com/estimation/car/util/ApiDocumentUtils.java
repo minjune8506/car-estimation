@@ -4,6 +4,7 @@ import org.springframework.restdocs.operation.preprocess.OperationRequestPreproc
 import org.springframework.restdocs.operation.preprocess.OperationResponsePreprocessor;
 import org.springframework.restdocs.payload.ResponseFieldsSnippet;
 
+import static org.springframework.restdocs.operation.preprocess.Preprocessors.modifyHeaders;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessRequest;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessResponse;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.prettyPrint;
@@ -12,11 +13,11 @@ import static org.springframework.restdocs.payload.PayloadDocumentation.response
 
 public class ApiDocumentUtils {
     public static OperationRequestPreprocessor getDocumentRequest() {
-        return preprocessRequest(prettyPrint());
+        return preprocessRequest(prettyPrint(), modifyHeaders().remove("Host"));
     }
 
     public static OperationResponsePreprocessor getDocumentResponse() {
-        return preprocessResponse(prettyPrint()); // (3)
+        return preprocessResponse(prettyPrint(), modifyHeaders().remove("Vary")); // (3)
     }
 
     public static ResponseFieldsSnippet commonResponseBody() {

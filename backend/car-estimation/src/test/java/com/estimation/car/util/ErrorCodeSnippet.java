@@ -13,7 +13,6 @@ public class ErrorCodeSnippet extends AbstractFieldsSnippet {
     public ErrorCodeSnippet(List<FieldDescriptor> descriptors,
                             boolean ignoreUndocumentedFields) {
         super("error-code", descriptors, null, ignoreUndocumentedFields);
-        System.out.println(descriptors.size());
     }
 
     @Override
