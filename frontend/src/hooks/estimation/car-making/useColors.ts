@@ -66,7 +66,7 @@ export function useColors({ spec, setSpec, selectedOptions, state }: Props) {
       setExteriorColor(initialColor.exterior);
       setInteriorColor(initialColor.interior);
     }
-  }, [specsQuery.data]);
+  }, [specsQuery.data, state]);
 
   useEffect(() => {
     if (carColorsQuery.data) {

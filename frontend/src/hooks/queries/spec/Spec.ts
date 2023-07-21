@@ -36,12 +36,7 @@ export function useSpecCheck(
   exteriorColorId?: number
 ) {
   return useQuery<CheckSpec | CheckSpecFail, Error>({
-    queryKey: SpecKeys.check(
-      modelId,
-      specCode,
-      interiorColorId,
-      exteriorColorId
-    ),
+    queryKey: SpecKeys.check(specCode, interiorColorId, exteriorColorId),
     queryFn: async () => {
       const data = specAPI.fetchSpecCheck(
         modelId,

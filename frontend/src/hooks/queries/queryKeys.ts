@@ -63,7 +63,6 @@ export const SpecKeys = {
   findByCode: (specCode: string, modelId: number) =>
     [...SpecKeys.all, { specCode, modelId }] as const,
   check: (
-    modelId: number,
     specCode: string,
     interiorColorId?: number,
     exteriorColorId?: number
@@ -71,12 +70,9 @@ export const SpecKeys = {
     [
       ...SpecKeys.all,
       "check",
-      { modelId, specCode, interiorColorId, exteriorColorId },
+      { specCode, interiorColorId, exteriorColorId },
     ] as const,
-  optionConstraints: (
-    modelId: number,
-    selectedOptions: number[]
-  ) =>
+  optionConstraints: (modelId: number, selectedOptions: number[]) =>
     [
       ...SpecKeys.all,
       "option",

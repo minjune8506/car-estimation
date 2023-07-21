@@ -6,8 +6,9 @@ import { ChangeModel, SpecOption } from "src/types/Spec";
 import BackDrop from "src/components/common/BackDrop";
 import styled from "styled-components";
 import { useLocation, useNavigate } from "react-router-dom";
-import QueryString from "qs";
 import OptionChange from "./OptionChange";
+import { getCarIdFrom } from "src/common/utils/location-utils";
+import { ExteriorColor, InteriorColor } from "src/types/Color";
 
 interface Props {
   beforeModel: Model;
@@ -16,6 +17,8 @@ interface Props {
   data: ChangeModel;
   carNameEn: string;
   cancel: () => void;
+  changeExteriorColor: (color: ExteriorColor) => void;
+  changeInteriorColor: (color: InteriorColor) => void;
 }
 
 function ModelChangeModal({
@@ -25,13 +28,12 @@ function ModelChangeModal({
   selectedOption,
   carNameEn,
   cancel,
+  changeExteriorColor,
+  changeInteriorColor,
 }: Props) {
   const navigate = useNavigate();
   const location = useLocation();
-  const queryParams = QueryString.parse(location.search, {
-    ignoreQueryPrefix: true,
-  });
-  const carId = parseInt(queryParams.carId as string);
+  const carId = getCarIdFrom(location);
 
   const remainOptions = selectedOption.filter(
     (selected) =>
@@ -53,6 +55,8 @@ function ModelChangeModal({
       },
       relative: "route",
     });
+    changeExteriorColor(data.exteriorColor);
+    changeInteriorColor(data.interiorColor);
     cancel();
   };
 
@@ -132,7 +136,7 @@ function ModelChangeModal({
                         key={addOption.optionId}
                         option={addOption}
                         carNameEn={carNameEn}
-						add={true}
+                        add={true}
                       ></OptionChange>
                     );
                   })}
