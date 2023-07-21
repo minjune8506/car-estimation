@@ -5,6 +5,7 @@ import { getModelIdFrom } from "src/common/utils/location-utils";
 import { useLocation } from "react-router-dom";
 import { BASE_SPEC } from "src/common/constants/constants";
 import { specAPI } from "src/hooks/queries/spec/api";
+import { action } from "src/common/utils/action";
 
 function useSelectedOptions() {
   const [selectedOptions, setSelectedOptions] = useState<SpecOption[]>([]);
@@ -31,32 +32,29 @@ function useSelectedOptions() {
       if (!constraintSpec) return;
 
       if (constraint.action === Action.ADD) {
-        constraintSpec.options = [
-          ...constraintSpec.options,
-          { ...constraint.option, enable: "Y" },
-        ];
+        constraintSpec.options = action.add(
+          constraintSpec.options,
+          constraint.option
+        );
       } else if (constraint.action === Action.DELETE) {
-        constraintSpec.options = constraintSpec.options.filter(
-          (option) => option.optionId !== constraint.option.optionId
+        constraintSpec.options = action.delete(
+          constraintSpec.options,
+          constraint.option
         );
       } else if (constraint.action === Action.ENABLE) {
-        constraintSpec.options = constraintSpec.options.map((option) => {
-          if (option.optionId === constraint.option.optionId) {
-            option.enable = "Y";
-          }
-          return option;
-        });
+        constraintSpec.options = action.enable(
+          constraintSpec.options,
+          constraint.option
+        );
       } else if (constraint.action === Action.DISABLE) {
-        constraintSpec.options = constraintSpec.options.map((option) => {
-          if (option.optionId === constraint.option.optionId) {
-            option.enable = "N";
-          }
-          return option;
-        });
+        constraintSpec.options = action.disable(
+          constraintSpec.options,
+          constraint.option
+        );
       }
     });
 
-	// sort
+    // sort
     modelOptions.forEach((spec) =>
       spec.options.sort((a, b) => {
         return a.optionId - b.optionId;

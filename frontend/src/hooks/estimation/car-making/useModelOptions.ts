@@ -29,12 +29,9 @@ function useModelOptions() {
     [modelOptions]
   );
 
-  const findSpecDefaultOptions = useCallback(
-    (specInfo: ModelOptions) => {
-      return specInfo.options.filter((option) => option.defaultYn === "Y");
-    },
-    [modelOptions]
-  );
+  const findSpecDefaultOptions = (specInfo: ModelOptions) => {
+    return specInfo.options.filter((option) => option.defaultYn === "Y");
+  };
 
   const getBasicOptions = useCallback(() => {
     return modelOptions.map((spec) => ({
