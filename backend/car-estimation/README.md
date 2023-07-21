@@ -22,6 +22,8 @@ Java 17
 
 > java -jar -Dspring.profiles.active=dev build/libs/car-estimation-0.0.1.jar # dev SQL 출력
 
+# 윈도우 환경에서 실행시 "-Dspring.protifles.active=?"
+# 한글 폴더명이 포함되어 있을시 .gradle 위치 변경
 ```
 
 ## API 문서
